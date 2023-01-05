@@ -37,6 +37,7 @@ class Datatable
 			$SQL.= $GROUP_BY;
 		}
 	 	//------------------------------------------------
+		// echo $SQL; die;
 		$query = $this->obj->db->query($SQL);
 		$filtered = $query->num_rows();
 

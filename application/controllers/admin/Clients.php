@@ -13,13 +13,54 @@ class Clients extends MY_Controller {
 		}
 
 		//-----------------------------------------------------------------------
+		public function admins(){
+			$data['view'] = 'admin/users/admins';
+			$this->load->view('layout', $data);
+		}
+
+		//-----------------------------------------------------------------------
 		public function terminated_client(){
 			$data['view'] = 'admin/users/terminated_clients';
 			$this->load->view('layout', $data);
 		}
 		//-----------------------------------------------------------------------
 		public function terminated_clients(){
-			$records = $this->user_model->get_all_users(1);
+			$records = $this->user_model->get_all_users('user');
+			$data = array();
+			$i = 0;
+			// print_r($records); die;
+			foreach ($records['data']  as $row) 
+			{  
+				$status = ($row['is_active'] == 0)? 'inactive': 'active'.'<span>';
+				$disabled = ($row['is_admin'] == 1)? 'disabled': ''.'<span>';
+				$data[]= array(
+					++$i,
+					$row['country'],
+					$row['currency'],
+					$row['unit'],
+					$row['company_name'],
+					$row['company_abbreviation'],
+					$row['accounting_term'],
+					$row['start_year'],
+					$row['email'],
+					date('F j, Y',strtotime($row['created_at'])),
+					// '<span class="btn bg-teal  waves-effect" title="status">'.getGroupyName($row['role']).'<span>',	// get Group name by ID (getGroupyName() is a helper function)
+					// '<span class="btn bg-blue  waves-effect" title="status">'.$status.'<span>',			
+					
+					'<a title="View" class="view btn btn-sm btn-info" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">visibility</i></a>
+					<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">edit</i></a>
+					<a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/delete/'.$row['client_id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
+					',
+					
+				);
+			}
+			$records['data']=$data;
+			echo json_encode($records);
+		}
+		//-----------------------------------------------------------------------
+
+		public function get_admins(){
+			$records = $this->user_model->get_all_users('admin');
 			$data = array();
 			$i = 0;
 			// print_r($records); die;
@@ -52,6 +93,8 @@ class Clients extends MY_Controller {
 			echo json_encode($records);						   
 		}
 		//-----------------------------------------------------------------------
+
+
 		public function datatable_json(){
 			$records = $this->user_model->get_all_users();
 			$data = array();
@@ -116,6 +159,7 @@ class Clients extends MY_Controller {
 						'address' => $this->input->post('email'),
 						'password' =>  password_hash($this->input->post('password'), PASSWORD_BCRYPT),
 						'role' => $this->input->post('group'),
+						'is_admin' => $this->input->post('group'),
 						'is_verify' => 1,
 						'created_at' => date('Y-m-d : h:m:s'),
 						'updated_at' => date('Y-m-d : h:m:s'),
@@ -186,6 +230,7 @@ class Clients extends MY_Controller {
 						'address' => $this->input->post('email'),
 						'password' =>  password_hash($this->input->post('password'), PASSWORD_BCRYPT),
 						'role' => $this->input->post('group'),
+						'is_admin' => $this->input->post('group'),
 						'is_verify' => 1,
 						'is_active' => $this->input->post('status'),
 						'created_at' => date('Y-m-d : h:m:s'),

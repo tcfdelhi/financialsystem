@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title><?=isset($title)?$title:'Registration - CI Material Admin' ?></title>
+    <title><?=isset($title)?$title:'Registration - Financial System' ?></title>
     <!-- Favicon-->
     <link rel="icon" href="<?= base_url() ?>public/favicon.ico" type="image/x-icon">
     <!-- Google Fonts -->
@@ -28,7 +28,7 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">CI Material Admin</a>
+            <a href="javascript:void(0);">Financial System</a>
         </div>
         <?php if(isset($msg) || validation_errors() !== ''): ?>
             <div class="alert alert-warning alert-dismissible">

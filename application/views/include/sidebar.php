@@ -3,60 +3,66 @@
 
 <!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
-  <!-- User Info -->
-  <div class="user-info bg-indigo">
-    <div class="image">
-      <img src="<?= base_url() ?>public/images/user.png" width="48" height="48" alt="User" />
-    </div>
-    <div class="info-container">
-      <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= strtoupper($this->session->userdata('name')); ?></div>
-      <div class="email"><?= $this->session->userdata('email'); ?></div>
-      <div class="btn-group user-helper-dropdown">
-        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-        <ul class="dropdown-menu pull-right">
-          <li id=""><a href="<?= base_url('admin/profile'); ?>"><i class="material-icons">person</i>Profile</a></li>
-          <li role="seperator" class="divider"></li>
-          <li id=""><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-          <li id=""><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-          <li id=""><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-          <li role="seperator" class="divider"></li>
-          <li id=""><a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i>Sign Out</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <!-- #User Info -->
-  <!-- Menu -->
-  <div class="menu">
-    <ul class="list">
-      <li class="header">MAIN NAVIGATION</li>
-      <li id="dashboard">
-        <a href="<?= base_url('admin/dashboard'); ?>">
-          <i class="material-icons">home</i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li id="users">
-        <a href="javascript:void(0);" class="menu-toggle">
-          <i class="material-icons">person</i>
-          <span>Clients</span>
-        </a>
-        <ul class="ml-menu">
-			<li id="user_list">
-			  <a href="<?= base_url('admin/clients'); ?>">Manage Clients</a>
+	<!-- User Info -->
+	<div class="user-info bg-indigo">
+		<div class="image">
+			<img src="<?= base_url() ?>public/images/user.png" width="48" height="48" alt="User" />
+		</div>
+		<div class="info-container">
+			<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= strtoupper($this->session->userdata('name')); ?></div>
+			<div class="email"><?= $this->session->userdata('email'); ?></div>
+			<!-- <div class="btn-group user-helper-dropdown">
+				<i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+				<ul class="dropdown-menu pull-right">
+					<li id=""><a href="<?= base_url('admin/profile'); ?>"><i class="material-icons">person</i>Profile</a></li>
+					<li role="seperator" class="divider"></li>
+					<li id=""><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
+					<li id=""><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
+					<li id=""><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+					<li role="seperator" class="divider"></li>
+					<li id=""><a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i>Sign Out</a></li>
+				</ul>
+			</div> -->
+		</div>
+	</div>
+	<!-- #User Info -->
+	<!-- Menu -->
+	<div class="menu">
+		<ul class="list">
+			<li class="header">MAIN NAVIGATION</li>
+			<li id="dashboard">
+				<a href="<?= base_url('admin/dashboard'); ?>">
+					<i class="material-icons">home</i>
+					<span>Home</span>
+				</a>
 			</li>
-          <li id="add">
-            <a href="<?= base_url('admin/clients/terminated_client'); ?>">Manage Terminated Clients</a>
-          </li>
-          <!-- <li id="group">
+			<li id="users">
+				<a href="javascript:void(0);" class="menu-toggle">
+					<i class="material-icons">person</i>
+					<span>Clients</span>
+				</a>
+				<ul class="ml-menu">
+					<li id="admins">
+						<a href="<?= base_url('admin/clients/admins'); ?>">Manage Admins</a>
+					</li>
+					<li id="user_list">
+						<a href="<?= base_url('admin/clients'); ?>">Manage Clients</a>
+					</li>
+					<li id="add">
+						<a href="<?= base_url('admin/clients/terminated_client'); ?>">Manage Terminated Clients</a>
+					</li>
+					<!-- <li id="group">
             <a href="<?= base_url('admin/group'); ?>">User Group</a>
           </li> -->
-          <!-- <li id="profile">
+					<!-- <li id="profile">
             <a href="<?= base_url('admin/profile'); ?>">User Profile</a>
           </li> -->
-        </ul>
-      </li>
-      <!-- <li id="ci_examples">
+				</ul>
+			</li>
+			<li id="signout">
+				<a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i><span>Sign Out</span></a>
+			</li>
+			<!-- <li id="ci_examples">
         <a href="javascript:void(0);" class="menu-toggle">
           <i class="material-icons">code</i>
           <span>CI Examples</span>
@@ -88,7 +94,7 @@
           </li>
         </ul>
       </li> -->
-      <!-- <li id="location">
+			<!-- <li id="location">
         <a href="javascript:void(0);" class="menu-toggle">
           <i class="material-icons">my_location</i>
           <span>Locations</span>
@@ -450,20 +456,20 @@
           <span>Information</span>
         </a>
       </li> -->
-    </ul>
-  </div>
-  <!-- #Menu -->
-  <!-- Footer -->
-  <!-- <div class="legal">
+		</ul>
+	</div>
+	<!-- #Menu -->
+	<!-- Footer -->
+	<!-- <div class="legal">
     <div class="copyright">
       <a href="javascript:void(0);"><?= $this->general_settings['copyright'] ?></a>.
     </div>
   </div> -->
-  <!-- #Footer -->
+	<!-- #Footer -->
 </aside>
 <!-- #END# Left Sidebar -->
 
 <script>
-  $("#<?= $cur_tab; ?>").addClass('active');
-  $("#<?= $sub_tab; ?>").addClass('active');
+	$("#<?= $cur_tab; ?>").addClass('active');
+	$("#<?= $sub_tab; ?>").addClass('active');
 </script>

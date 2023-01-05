@@ -7417,7 +7417,7 @@ fieldset[disabled] .form-control {
     .dropdown-menu ul.menu .menu-info {
       display: inline-block;
       position: relative;
-      top: 3px;
+      top: -5px;
       left: 5px; }
       .dropdown-menu ul.menu .menu-info h4 {
         margin: 0;
@@ -7730,7 +7730,8 @@ fieldset[disabled] .form-control {
 
 /* Login Page ================================== */
 .login-page {
-  background: url(../images/login_bg.jpg);
+  /* background: url(../images/login_bg.jpg); */
+  background-color: #3F51B5;
   padding-left: 0;
   max-width: 360px;
   margin: 5% auto;
