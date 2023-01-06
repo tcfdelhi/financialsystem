@@ -42,9 +42,6 @@
 					<span>Clients</span>
 				</a>
 				<ul class="ml-menu">
-					<li id="admins">
-						<a href="<?= base_url('admin/clients/admins'); ?>">Manage Admins</a>
-					</li>
 					<li id="user_list">
 						<a href="<?= base_url('admin/clients'); ?>">Manage Clients</a>
 					</li>
@@ -59,6 +56,28 @@
           </li> -->
 				</ul>
 			</li>
+
+			<li id="ci_examples">
+				<a href="javascript:void(0);" class="menu-toggle">
+					<i class="material-icons">settings</i>
+					<span>Settings</span>
+				</a>
+				<ul class="ml-menu">
+					<li id="admins">
+						<a href="<?= base_url('admin/settings'); ?>">Manage Users</a>
+					</li>
+					<li id="ajax_datatable">
+						<a href="<?= base_url('admin/settings/currency'); ?>">Manage Currency</a>
+					</li>
+					<li id="pagination">
+						<a href="<?= base_url('admin/settings/languages'); ?>">Manage Languages</a>
+					</li>
+					<!-- <li id="signout">
+						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
+					</li> -->
+				</ul>
+			</li>
+
 			<li id="signout">
 				<a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i><span>Sign Out</span></a>
 			</li>

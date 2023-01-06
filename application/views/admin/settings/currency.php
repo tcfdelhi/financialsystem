@@ -8,9 +8,9 @@
 		<div class="card">
 			<div class="header">
 				<h2 style="display: inline-block;">
-					Clients LIST
+					Currency List
 				</h2>
-				<a href="<?= base_url('admin/clients/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> ADD NEW CLIENT</a>
+				<a href="<?= base_url('admin/settings/add_currency'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> ADD NEW CURRENCY</a>
 			</div>
 			<div class="body">
 				<div class="table-responsive">
@@ -18,18 +18,26 @@
 						<thead>
 							<tr>
 								<th>#ID</th>
-								<th>Country</th>
-								<th>Currency</th>
-								<th>Unit</th>
-								<th>Company Name</th>
-								<th>Company Abbreviation</th>
-								<th>Accounting Term</th>
-								<th>Start Year</th>
-								<th>Email</th>
-								<th>Created Date</th>
+								<th>Currency Name</th>
+								<th>Currency Form </th>
 								<th>Action</th>
 							</tr>
 						</thead>
+						<tbody>
+							<?php $count = 0;
+							foreach ($currency as $row) : ?>
+								<tr>
+									<td><?= ++$count; ?></td>
+									<td><?= $row['name']; ?></td>
+									<td><?= $row['short_name']; ?></td>
+									<td>
+										<a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/settings/add_currency/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
+										<a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/settings/delete_currency/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
+										</a>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -45,14 +53,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Terminate</h4>
+				<h4 class="modal-title">Delete</h4>
 			</div>
 			<div class="modal-body">
-				<p>As you sure you want to terminate.</p>
+				<p>As you sure you want to delete.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<a class="btn btn-danger btn-ok">Terminate</a>
+				<a class="btn btn-danger btn-ok">Delete</a>
 			</div>
 		</div>
 	</div>
@@ -63,82 +71,7 @@
 <script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
 <script type="text/javascript">
 	//---------------------------------------------------
-	var table = $('#na_datatable').DataTable({
-		"processing": true,
-		"serverSide": true,
-		"ajax": "<?= base_url('admin/clients/datatable_json') ?>",
-		"order": [
-			[5, 'desc']
-		],
-		"columnDefs": [{
-				"targets": 0,
-				"name": "ci_users.id",
-				'searchable': false,
-				'orderable': true
-			},
-			{
-				"targets": 1,
-				"name": "country",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 2,
-				"name": "currency",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 3,
-				"name": "unit",
-				'searchable': false,
-				'orderable': false
-			},
-			{
-				"targets": 4,
-				"name": "company_name",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 5,
-				"name": "company_abbreviation",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 6,
-				"name": "accounting_term",
-				'searchable': false,
-				'orderable': false,
-				// 'width': '100px'
-			},
-			{
-				"targets": 7,
-				"name": "start_year",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 8,
-				"name": "ci_users.email",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 9,
-				"name": "ci_users.created_at",
-				'searchable': false,
-				'orderable': true
-			},
-			{
-				"targets": 10,
-				"name": "ci_users.created_at",
-				'searchable': false,
-				'orderable': true
-			}
-		]
-	});
+	var table = $('#na_datatable').DataTable();
 </script>
 <!-- Autosize Plugin Js -->
 <script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
@@ -152,6 +85,6 @@
 	$('#confirm-delete').on('show.bs.modal', function(e) {
 		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 	});
-	$("#users").addClass('active');
-	$("#user_list").addClass('active');
+	$("#ci_examples").addClass('active');
+	$("#ajax_datatable").addClass('active');
 </script>

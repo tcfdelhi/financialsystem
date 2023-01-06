@@ -104,7 +104,7 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix col-md-6">
+                    <!-- <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="group">Group</label>
                         </div>
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 form-control-label">

@@ -16,6 +16,7 @@ class Datatable
 		{
 			$SQL.= " WHERE (1)";
 		}
+		// echo $SQL; die;
 		$query = $this->obj->db->query($SQL);
 		$total = $query->num_rows();
 		//------------------------------------------------

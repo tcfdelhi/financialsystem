@@ -18,9 +18,9 @@
                             <?= isset($msg) ? $msg : ''; ?>
                         </div>
                     <?php endif; ?>
-                    <?php echo form_open(base_url('admin/clients/edit/' . $user['id']), 'class="form-horizontal"') ?>
+                    <?php echo form_open(base_url('admin/clients/edit/' . $user['client_id']), 'class="form-horizontal"') ?>
 
-                    <div class="row clearfix">
+                    <!-- <div class="row clearfix">
                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="group">Group</label>
                         </div>
@@ -40,10 +40,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="country">Choose Country</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -60,8 +60,8 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="currency">Select Currency</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -79,8 +79,8 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="unit">Select Unit</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -98,8 +98,8 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="name">Company Name</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -113,8 +113,8 @@
 
 
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="abbreviation">Company Abbreviation</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -126,8 +126,8 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="term">Accounting Term</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -139,8 +139,8 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="year">Start Year</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -152,8 +152,8 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="email">Register Id(Email Address)</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -164,8 +164,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="password">Password</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -177,8 +177,8 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="status">User Status</label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -194,7 +194,7 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix">
+                    <div class="row clearfix col-md-6">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
                             <input type="submit" name="submit" value="UPDATE" class="btn btn-primary m-t-15 waves-effect">
                         </div>

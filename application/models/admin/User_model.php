@@ -2,17 +2,19 @@
 	class User_model extends CI_Model{
 		public function add_user($data){
 			$this->db->insert('ci_users', $data);
-			$insert_id = $this->db->insert_id();
-			return  $insert_id;
+			// $insert_id = $this->db->insert_id();
+			// return  $insert_id;
+			return true;
 		}
 		//---------------------------------------------------
 		// get all users for server-side datatable processing (ajax based)
 		public function get_all_users($active = ''){
 			$wh =array();
-			$SQL ='SELECT ci_clients.*,ci_users.email,ci_users.role,ci_users.is_active,ci_users.id as client_id FROM ci_users LEFT JOIN ci_clients on ci_users.id=ci_clients.user_id';
-			if($active == 'user') $wh[] = " is_admin = 0 and is_active = 1";
-			if($active == 'admin') $wh[] = " is_admin = 1 and is_active = 1";
+			$SQL ='SELECT ci_clients.*,ci_users.email,ci_users.role,ci_users.is_active,ci_users.id as client_id FROM ci_users LEFT JOIN ci_clients on ci_users.client_id=ci_clients.id';
+			if($active == 'user') $wh[] = " is_admin = 0 and is_active = 0";
+			else if($active == 'admin') $wh[] = " is_admin = 1 and is_active = 1";
 			else $wh[] = " is_admin = 0 and is_active = 1";
+			
 			if(count($wh)>0)
 			{
 				$WHERE = implode(' and ',$wh);
@@ -89,20 +91,20 @@
 		//---------------------------------------------------
 		// Get user detial by ID
 		public function get_user_by_id($id){
-			$query = $this->db->get_where('ci_users', array('id' => $id));
+			$query = $this->db->get_where('ci_users', array('client_id' => $id));
 			return $result = $query->row_array();
 		}
 
 		// Get client detial by User ID
 		public function get_client_by_user_id($id){
-			$query = $this->db->get_where('ci_clients', array('user_id' => $id));
+			$query = $this->db->get_where('ci_clients', array('id' => $id));
 			return $result = $query->row_array();
 		}
 
 		//---------------------------------------------------
 		// Edit user Record
 		public function edit_user($data, $id){
-			$this->db->where('id', $id);
+			$this->db->where('client_id', $id);
 			$this->db->update('ci_users', $data);
 			return true;
 		}
@@ -110,7 +112,7 @@
 		//---------------------------------------------------
 		// Edit client Record
 		public function edit_client($data, $id){
-			$this->db->where('user_id', $id);
+			$this->db->where('id', $id);
 			$this->db->update('ci_clients', $data);
 			return true;
 		}
@@ -132,7 +134,8 @@
 
 		public function add_client($data){
 			$this->db->insert('ci_clients', $data);
-			return true;
+			$insert_id = $this->db->insert_id();
+			return  $insert_id;
 		}
 
 
