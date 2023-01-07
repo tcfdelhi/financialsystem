@@ -74,9 +74,9 @@
                             <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
                             <label for="rememberme">Remember Me</label>
                         </div>
-                        <div class="col-xs-5 text-right">
+                        <!-- <div class="col-xs-5 text-right">
                             <a  href="<?= base_url('auth/forgot_password'); ?>">Forgot password?</a>
-                        </div>
+                        </div> -->
                     </div>
                     
                     <?php if($this->recaptcha->_status): ?>
@@ -92,9 +92,9 @@
                             <input type="submit" name="submit" id="submit" class="btn btn-block btn-success waves-effect" value="Submit">
                         </div>
                     </div>
-                    <div class="m-t-25 align-center">
+                    <!-- <div class="m-t-25 align-center">
                         <a href="<?= base_url('auth/register'); ?>">Don't have an account? Sign Up</a>
-                    </div>
+                    </div> -->
                 <?php echo form_close(); ?>
             </div>
         </div>
