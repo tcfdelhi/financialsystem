@@ -24,6 +24,7 @@ class Settings extends MY_Controller
 	//-----------------------------------------------------------------------
 	public function add($id = 0)
 	{
+		$data['country'] = $this->user_model->get_countries();
 		if ($id != 0) $data['admin'] =  $this->db->get_where('ci_users', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 		if ($this->input->post('submit')) {
@@ -80,12 +81,13 @@ class Settings extends MY_Controller
 
 	public function get_admins()
 	{
+		$login_user_id =  $this->session->userdata('admin_id');
 		$records = $this->settings_model->get_admins();
 		$data = array();
 		$i = 0;
 
 		foreach ($records['data']  as $row) {
-			$disabled = ($row['is_admin'] == 1) ? 'disabled' : '' . '<span>';
+			$disabled = ($row['id'] == $login_user_id) ? 'disabled' : '' . '<span>';
 			$data[] = array(
 				++$i,
 				$row['firstname'],
@@ -171,14 +173,22 @@ class Settings extends MY_Controller
 		if ($id != 0) $data['id'] =  $id;
 
 		if ($this->input->post('submit')) {
-			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+			$this->form_validation->set_rules('english', 'English', 'trim|required');
+			$this->form_validation->set_rules('japanese', 'Japanese', 'trim|required');
+			$this->form_validation->set_rules('vietnamese', 'Vietnamese', 'trim|required');
+			$this->form_validation->set_rules('thai', 'Thai', 'trim|required');
+			$this->form_validation->set_rules('indonesian', 'Indonesian', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
 				$data['view'] = 'admin/settings/add_language';
 				$this->load->view('layout', $data);
 			} else {
 				// Prepare Language data
 				$user_data = array(
-					'name' => $this->input->post('name'),
+					'english' => $this->input->post('english'),
+					'japanese' => $this->input->post('japanese'),
+					'vietnamese' => $this->input->post('vietnamese'),
+					'thai' => $this->input->post('thai'),
+					'indonesian' => $this->input->post('indonesian'),
 				);
 
 				if ($id == 0) $result = $this->settings_model->add_language($user_data);
@@ -207,7 +217,7 @@ class Settings extends MY_Controller
 		// Add User Activity
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'User has been deleted successfully!');
-		redirect(base_url('admin/settings/languages'));
+		redirect(base_url('admin/settings'));
 	}
 
 	public function delete_language($id = 0)

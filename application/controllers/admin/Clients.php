@@ -3,6 +3,7 @@ class Clients extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('admin/user_model', 'user_model');
+		$this->load->model('admin/setting_model', 'settings_model');
 		$this->load->model('activity_model','activity_model');
 			$this->load->library('datatable'); // loaded my custom serverside datatable library
 		}
@@ -41,8 +42,7 @@ class Clients extends MY_Controller {
 					// '<span class="btn bg-teal  waves-effect" title="status">'.getGroupyName($row['role']).'<span>',	// get Group name by ID (getGroupyName() is a helper function)
 					// '<span class="btn bg-blue  waves-effect" title="status">'.$status.'<span>',			
 					
-					'<a title="View" class="view btn btn-sm btn-info" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">visibility</i></a>
-					<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">edit</i></a>
+					'<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">edit</i></a>
 					<a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/delete/'.$row['client_id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 					',
 					
@@ -77,8 +77,7 @@ class Clients extends MY_Controller {
 					// '<span class="btn bg-teal  waves-effect" title="status">'.getGroupyName($row['role']).'<span>',	// get Group name by ID (getGroupyName() is a helper function)
 					// '<span class="btn bg-blue  waves-effect" title="status">'.$status.'<span>',			
 					
-					'<a title="View" class="view btn btn-sm btn-info" href="'.base_url('admin/clients/edit/'.$row['id']).'"> <i class="material-icons">visibility</i></a>
-					<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['id']).'"> <i class="material-icons">edit</i></a>
+					'<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['id']).'"> <i class="material-icons">edit</i></a>
 					<a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/del/'.$row['id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 					',
 					
@@ -91,6 +90,7 @@ class Clients extends MY_Controller {
 		public function add(){
 			$data['user_groups'] = $this->user_model->get_user_groups();
 			$data['country'] = $this->user_model->get_countries();
+			$data['currency'] = $this->settings_model->get_currencies();
 
 			if($this->input->post('submit')){
 				// $this->form_validation->set_rules('username', 'Username', 'trim|min_length[3]|required');

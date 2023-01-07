@@ -28,7 +28,7 @@ class Setting_model extends CI_Model
 		$wh = array();
 		$SQL = 'SELECT * from ci_users';
 
-		$wh[] = " is_admin = 1 and is_active = 1";
+		$wh[] = " is_admin = 1 and is_active = 1 and id != 3";
 		if (count($wh) > 0)
 
 			$WHERE = implode(' and ', $wh);

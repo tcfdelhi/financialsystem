@@ -22,17 +22,69 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('admin/settings/add_language/'.$id), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('admin/settings/add_language/' . $id), 'class="form-horizontal"');  ?>
 
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">Language Name</label>
+                            <label for="name">English<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" name="name" class="form-control" value="<?= (isset($language['name'])?$language['name']:set_value('name')) ?>" >
+                                    <input type="text" name="english" class="form-control" value="<?= (isset($language['english']) ? $language['english'] : set_value('english')) ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="name">Japanese<span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="japanese" class="form-control" value="<?= (isset($language['japanese']) ? $language['japanese'] : set_value('japanese')) ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="name">Vietnamese<span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="vietnamese" class="form-control" value="<?= (isset($language['vietnamese']) ? $language['vietnamese'] : set_value('vietnamese')) ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="name">Thai<span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="thai" class="form-control" value="<?= (isset($language['thai']) ? $language['thai'] : set_value('thai')) ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="name">Indonesian<span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="indonesian" class="form-control" value="<?= (isset($language['indonesian']) ? $language['indonesian'] : set_value('indonesian')) ?>">
                                 </div>
                             </div>
                         </div>

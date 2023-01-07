@@ -206,10 +206,11 @@
     </div>
 </div>
 <!-- Autosize Plugin Js -->
-<script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
+<!-- <script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script> -->
 <!-- Custom Js -->
-<script src="<?= base_url() ?>public/js/pages/forms/basic-form-elements.js"></script>
+<!-- <script src="<?= base_url() ?>public/js/pages/forms/basic-form-elements.js"></script> -->
 
 <script>
     $("#users").addClass('active');
+    $("#user_list").addClass('active');
 </script>

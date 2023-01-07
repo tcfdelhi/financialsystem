@@ -18,7 +18,11 @@
 						<thead>
 							<tr>
 								<th>#ID</th>
-								<th>Language</th>
+								<th>English</th>
+								<th>Japanese</th>
+								<th>Vietnamese</th>
+								<th>Thai</th>
+								<th>Indonesian</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -27,11 +31,15 @@
 							foreach ($currency as $row) : ?>
 								<tr>
 									<td><?= ++$count; ?></td>
-									<td><?= $row['name']; ?></td>
+									<td><?= $row['english']; ?></td>
+									<td><?= $row['japanese']; ?></td>
+									<td><?= $row['vietnamese']; ?></td>
+									<td><?= $row['thai']; ?></td>
+									<td><?= $row['indonesian']; ?></td>
 									<td>
-										<a title="Delete" class="delete btn btn-sm btn-danger pull-right '.$disabled.'" data-href="<?= base_url('admin/settings/delete_language/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
+										<a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/settings/add_language/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
+										<a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/settings/delete_language/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
 										</a>
-										<a title="Edit" class="update btn btn-sm btn-primary pull-right" href="<?= base_url('admin/settings/add_language/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
 									</td>
 								</tr>
 							<?php endforeach; ?>

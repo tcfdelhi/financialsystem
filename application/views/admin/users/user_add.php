@@ -27,7 +27,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">Company Name</label>
+                            <label for="name">Company Name<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -42,7 +42,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="abbreviation">Company Abbreviation</label>
+                            <label for="abbreviation">Company Abbreviation<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -55,7 +55,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term">Accounting Term</label>
+                            <label for="term">Accounting Term<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -68,7 +68,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="year">Start Year</label>
+                            <label for="year">Start Year<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -81,7 +81,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="email">Register Id(Email Address)</label>
+                            <label for="email">Register Id(Email Address)<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -93,7 +93,7 @@
                     </div>
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="password">Password</label>
+                            <label for="password">Password<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -124,7 +124,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 form-control-label">
-                            <label for="country">Choose Country</label>
+                            <label for="country">Choose Country<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -142,17 +142,16 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="currency">Select Currency</label>
+                            <label for="currency">Select Currency<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="currency">
                                         <option value="">-- Please select --</option>
-                                        <option value="INR">INR</option>
-                                        <option value="USD">USD</option>
-                                        <option value="EURO">EURO</option>
-                                        <option value="GBP">GBP</option>
+                                        <?php foreach ($currency as $group) : ?>
+                                            <option value="<?= $group['short_name']; ?>"><?= $group['name'].'  ('.$group['short_name']; ?>)</option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -161,7 +160,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="unit">Select Unit</label>
+                            <label for="unit">Select Unit<span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -216,4 +215,6 @@
 </div>
 <script>
     $("#users").addClass('active');
+    $("#user_list").addClass('active');
+    $("#add").removeClass('active');
 </script>
