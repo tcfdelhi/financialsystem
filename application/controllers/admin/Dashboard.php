@@ -1,11 +1,14 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
-class Dashboard extends MY_Controller {
-	public function __construct(){
+<?php defined('BASEPATH') or exit('No direct script access allowed');
+class Dashboard extends MY_Controller
+{
+	public function __construct()
+	{
 		parent::__construct();
-		$this->load->model('admin/dashboard_model','dashboard_model');
+		$this->load->model('admin/dashboard_model', 'dashboard_model');
 	}
 
-	public function index(){
+	public function index()
+	{
 
 		// var_dump($this->general_settings); exit();
 		$data['all_users'] = $this->dashboard_model->get_all_users();
@@ -14,5 +17,18 @@ class Dashboard extends MY_Controller {
 		$data['title'] = 'Dashboard';
 		$data['view'] = 'admin/dashboard/index';
 		$this->load->view('layout', $data);
+	}
+
+	public function set_session_language()
+	{
+ 	 
+		$this->load->library('session');
+		if (($this->uri->segment(4) != '')) {
+			$sessionyear = $this->uri->segment(4);
+			if ($sessionyear) {
+				$this->session->set_userdata('session_language', $sessionyear);
+				redirect('admin/dashboard');
+			}
+		}
 	}
 }

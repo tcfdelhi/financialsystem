@@ -11,7 +11,7 @@ class Settings extends MY_Controller
 		$this->load->model('admin/user_model', 'user_model');
 		$this->load->model('admin/setting_model', 'settings_model');
 		$this->load->model('activity_model', 'activity_model');
-		$this->load->library('datatable'); // loaded my custom serverside datatable library
+		$this->load->library('datatable'); // loaded my custom serverside datatable library		
 	}
 
 	//-----------------------------------------------------------------------
@@ -211,7 +211,8 @@ class Settings extends MY_Controller
 		}
 	}
 
-	public function delete($id = 0){
+	public function delete($id = 0)
+	{
 
 		$this->db->delete('ci_users', array('id' => $id));
 		// Add User Activity
@@ -236,5 +237,58 @@ class Settings extends MY_Controller
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'Currency has been deleted successfully!');
 		redirect(base_url('admin/settings/currency'));
+	}
+
+	public function import_excel()
+	{
+
+		if (isset($_FILES['uploadFile'])) {
+			$path = 'uploads\excel';
+
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'xlsx|xls';
+			$config['remove_spaces'] = TRUE;
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if (!$this->upload->do_upload('uploadFile')) {
+				$error = array('error' => $this->upload->display_errors());
+			} else {
+				$data = array('upload_data' => $this->upload->data());
+			}
+			if (empty($error)) {
+				if (!empty($data['upload_data']['file_name'])) {
+					$import_xls_file = $data['upload_data']['file_name'];
+				} else {
+					$import_xls_file = 0;
+				}
+
+				$inputFileName = $data['upload_data']['full_path'];
+				// echo $inputFileName; die;
+				try {
+					$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+					$spreadSheet = $reader->load($inputFileName);
+					$excelSheet = $spreadSheet->getActiveSheet();
+					$spreadSheetAry = $excelSheet->toArray();
+					$data = [];
+					foreach ($spreadSheetAry as $key => $value) {
+						if($key == 0) continue;
+						$user_data = array(
+							'english' => $value[0],
+							'japanese' => $value[1],
+							'vietnamese' => $value[2],
+							'thai' => $value[2],
+							'indonesian' => $value[4],
+						);
+						$this->settings_model->add_language($user_data);
+					}
+					redirect(base_url('admin/settings/languages'));
+				} catch (Exception $e) {
+					die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
+						. '": ' . $e->getMessage());
+				}
+			} else {
+				echo $error['error'];
+			}
+		}
 	}
 }

@@ -10,6 +10,10 @@
 				<h2 style="display: inline-block;">
 					languages List
 				</h2>
+
+				<button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i>Import Excel</button>
+
+
 				<a href="<?= base_url('admin/settings/add_language'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> ADD NEW LANGUAGE</a>
 			</div>
 			<div class="body">
@@ -72,25 +76,55 @@
 	</div>
 </div>
 
-<!-- Jquery DataTable Plugin Js -->
-<script src="<?= base_url() ?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
-<script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-<script type="text/javascript">
-	//---------------------------------------------------
-	var table = $('#na_datatable').DataTable();
-</script>
-<!-- Autosize Plugin Js -->
-<script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
-<!-- Custom Js -->
-<script src="<?= base_url() ?>public/js/pages/tables/jquery-datatable.js"></script>
-<script>
-	//Textare auto growth
-	autosize($('textarea.auto-growth'));
+<!-- Import Excel Modal -->
+<div class="modal fade" id="importModal" role="dialog">
+	<div class="modal-dialog">
 
-	//Delete Dialogue
-	$('#confirm-delete').on('show.bs.modal', function(e) {
-		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-	});
-	$("#ci_examples").addClass('active');
-	$("#pagination").addClass('active');
-</script>
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Upload Excel file</h4>
+			</div>
+			<div class="modal-body">
+				<form action="<?php echo base_url('admin/settings/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+					<div class="col-lg-12">
+						<div class="form-group">
+							<input type="file" name="uploadFile" class="filestyle" data-icon="false">
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<input type="submit" value="Upload file" name="submit">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Jquery DataTable Plugin Js -->
+	<script src="<?= base_url() ?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
+	<script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+	<script type="text/javascript">
+		//---------------------------------------------------
+		var table = $('#na_datatable').DataTable();
+	</script>
+	<!-- Autosize Plugin Js -->
+	<script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
+	<!-- Custom Js -->
+	<script src="<?= base_url() ?>public/js/pages/tables/jquery-datatable.js"></script>
+	<script>
+		//Textare auto growth
+		autosize($('textarea.auto-growth'));
+
+		//Delete Dialogue
+		$('#confirm-delete').on('show.bs.modal', function(e) {
+			$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+		});
+		$("#ci_examples").addClass('active');
+		$("#pagination").addClass('active');
+	</script>

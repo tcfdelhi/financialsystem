@@ -71,27 +71,45 @@
                         <li class="body">
                             <ul class="menu tasks">
                                 <?php
-                                $sql = "SELECT * FROM ci_languages";
-                                $query = $this->db->query($sql);
+                                // $sql = "DESCRIBE  ci_languages";
+                                // $query = $this->db->query($sql);
 
-                                foreach ($query->result() as $row) { ?>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                <?= $row->name ?>
-                                                <!-- <small>32%</small> -->
-                                            </h4>
-                                            <!-- <div class="progress">
+                                // foreach ($query->result() as $row) { print_r($row); die; 
+                                ?>
+                                <li>
+                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/english">
+                                        <h4>
+                                            English
+                                            <!-- <small>32%</small> -->
+                                        </h4>
+                                        <!-- <div class="progress">
                                                 <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
                                                 </div>
                                             </div> -->
-                                        </a>
-                                    </li>
-                                <?php }
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/japanese">
+                                        <h4>Japanese</h4>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/vietnamese">
+                                        <h4>Vietnamese</h4>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/thai">
+                                        <h4>Thai</h4>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/indonesian">
+                                        <h4>Indonesian</h4>
+                                    </a>
+                                </li>
+                                <?php //}
                                 ?>
-
-
-
                             </ul>
                         </li>
                         <li class="footer">
