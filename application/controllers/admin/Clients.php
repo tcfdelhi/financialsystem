@@ -163,6 +163,8 @@ class Clients extends MY_Controller {
 		//-----------------------------------------------------------------------
 		public function edit($id = 0){
 			$data['country'] = $this->user_model->get_countries();
+			$data['user'] = $this->user_model->get_user_by_id($id);
+
 			if($this->input->post('submit')){
 				// $this->form_validation->set_rules('username', 'Username', 'trim|min_length[3]|required');
 				$this->form_validation->set_rules('country', 'Country', 'trim|required');
@@ -172,7 +174,16 @@ class Clients extends MY_Controller {
 				$this->form_validation->set_rules('company_abbreviation', 'Company Abbreviation', 'trim|required');
 				$this->form_validation->set_rules('accounting_term', 'Accounting Term', 'trim|required');
 				$this->form_validation->set_rules('start_year', 'Start Year', 'trim|required');
-				$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|required');
+
+				if($this->input->post('email') != $data['user']['email']) {
+
+					$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|is_unique[ci_users.email]|required');
+				}
+				else {
+					$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|required');
+
+				}
+
 				$this->form_validation->set_rules('password', 'Password', 'trim|required');
 				// $this->form_validation->set_rules('group', 'Group', 'trim|required');
 

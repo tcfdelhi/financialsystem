@@ -29,7 +29,7 @@
 	<!-- Menu -->
 	<div class="menu">
 		<ul class="list">
-			<li class="header">MAIN NAVIGATION</li>
+			<li class="header"><?= languagedata($this->session->userdata('session_language'),"Main Navigation");?></li>
 			<li id="dashboard">
 				<a href="<?= base_url('admin/dashboard'); ?>">
 					<i class="material-icons">home</i>
@@ -71,6 +71,31 @@
 					</li>
 					<li id="pagination">
 						<a href="<?= base_url('admin/settings/languages'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Languages");?></a>
+					</li>
+					<!-- <li id="signout">
+						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
+					</li> -->
+				</ul>
+			</li>
+
+			<!-- BS Code tab -->
+			<li id="bs_code">
+				<a href="javascript:void(0);" class="menu-toggle">
+					<i class="material-icons">code</i>
+					<span><?= languagedata($this->session->userdata('session_language'),"BS Codes");?></span>
+				</a>
+				<ul class="ml-menu">
+					<li id="codes">
+						<a href="<?= base_url('admin/bscode'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Codes");?></a>
+					</li>
+					<li id="major_item">
+						<a href="<?= base_url('admin/bscode/major_item'); ?>"><?= languagedata($this->session->userdata('session_language'),"Major items of BS");?></a>
+					</li>
+					<li id="medium_item">
+						<a href="<?= base_url('admin/bscode/medium_item'); ?>"><?= languagedata($this->session->userdata('session_language'),"Medium item of BS");?></a>
+					</li>
+					<li id="cash_flow">
+						<a href="<?= base_url('admin/bscode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'),"Cash Flow category");?></a>
 					</li>
 					<!-- <li id="signout">
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>

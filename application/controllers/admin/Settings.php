@@ -100,8 +100,7 @@ class Settings extends MY_Controller
 				// <a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">edit</i></a>
 				// <a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/delete/'.$row['client_id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				// ',
-				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('admin/settings/add/' . $row['id']) . '"> <i class="material-icons">edit</i></a>
-				<a title="Delete" class="delete btn btn-sm btn-danger ' . $disabled . '" data-href="' . base_url('admin/settings/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
+				'<a title="Delete" class="delete btn btn-sm btn-danger ' . $disabled . '" data-href="' . base_url('admin/settings/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				',
 
 			);
@@ -244,6 +243,7 @@ class Settings extends MY_Controller
 
 		if (isset($_FILES['uploadFile'])) {
 			$path = 'uploads\excel';
+			// echo $path; die;
 
 			$config['upload_path'] = $path;
 			$config['allowed_types'] = 'xlsx|xls';

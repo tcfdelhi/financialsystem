@@ -88,7 +88,7 @@
 			</div>
 			<div class="modal-body">
 				<form action="<?php echo base_url('admin/settings/import_excel'); ?>" method="POST" enctype="multipart/form-data">
-				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+					<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<div class="col-lg-12">
 						<div class="form-group">
 							<input type="file" name="uploadFile" class="filestyle" data-icon="false">
@@ -98,6 +98,7 @@
 						<input type="submit" value="Upload file" name="submit">
 					</div>
 				</form>
+				<a href="<?= base_url('uploads/excel/import.xlsx') ?>">Download Sample File</a>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -105,26 +106,27 @@
 		</div>
 
 	</div>
+</div>
 
-	<!-- Jquery DataTable Plugin Js -->
-	<script src="<?= base_url() ?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
-	<script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-	<script type="text/javascript">
-		//---------------------------------------------------
-		var table = $('#na_datatable').DataTable();
-	</script>
-	<!-- Autosize Plugin Js -->
-	<script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
-	<!-- Custom Js -->
-	<script src="<?= base_url() ?>public/js/pages/tables/jquery-datatable.js"></script>
-	<script>
-		//Textare auto growth
-		autosize($('textarea.auto-growth'));
+<!-- Jquery DataTable Plugin Js -->
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+	//---------------------------------------------------
+	var table = $('#na_datatable').DataTable();
+</script>
+<!-- Autosize Plugin Js -->
+<script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
+<!-- Custom Js -->
+<script src="<?= base_url() ?>public/js/pages/tables/jquery-datatable.js"></script>
+<script>
+	//Textare auto growth
+	autosize($('textarea.auto-growth'));
 
-		//Delete Dialogue
-		$('#confirm-delete').on('show.bs.modal', function(e) {
-			$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-		});
-		$("#ci_examples").addClass('active');
-		$("#pagination").addClass('active');
-	</script>
+	//Delete Dialogue
+	$('#confirm-delete').on('show.bs.modal', function(e) {
+		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+	});
+	$("#ci_examples").addClass('active');
+	$("#pagination").addClass('active');
+</script>
