@@ -18,14 +18,14 @@
 						<thead>
 							<tr>
 								<th>#ID</th>
-								<th>Country</th>
-								<th>Currency</th>
-								<th>Unit</th>
 								<th>Company Name</th>
 								<th>Company Abbreviation</th>
 								<th>Accounting Term</th>
+								<th>Country</th>
+								
+								<th>Unit</th>
 								<th>Start Year</th>
-								<th>Email</th>
+								<!-- <th>Email</th> -->
 								<th>Created Date</th>
 								<th>Action</th>
 							</tr>
@@ -84,55 +84,43 @@
 			},
 			{
 				"targets": 2,
-				"name": "currency",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 3,
 				"name": "unit",
 				'searchable': false,
 				'orderable': false
 			},
 			{
-				"targets": 4,
+				"targets": 3,
 				"name": "company_name",
 				'searchable': true,
 				'orderable': true
 			},
 			{
-				"targets": 5,
+				"targets": 4,
 				"name": "company_abbreviation",
 				'searchable': true,
 				'orderable': true
 			},
 			{
-				"targets": 6,
+				"targets": 5,
 				"name": "accounting_term",
 				'searchable': false,
 				'orderable': false,
 				// 'width': '100px'
 			},
 			{
-				"targets": 7,
+				"targets": 6,
 				"name": "start_year",
 				'searchable': true,
 				'orderable': true
 			},
 			{
-				"targets": 8,
+				"targets": 7,
 				"name": "ci_users.email",
 				'searchable': true,
 				'orderable': true
 			},
 			{
-				"targets": 9,
-				"name": "ci_users.created_at",
-				'searchable': false,
-				'orderable': true
-			},
-			{
-				"targets": 10,
+				"targets": 8,
 				"name": "ci_users.created_at",
 				'searchable': false,
 				'orderable': true

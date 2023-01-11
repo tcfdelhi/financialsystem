@@ -70,14 +70,13 @@ class Clients extends MY_Controller {
 				$disabled = ($row['is_admin'] == 1)? 'disabled': ''.'<span>';
 				$data[]= array(
 					++$i,
-					$row['country'],
-					$row['currency'],
-					$row['unit'],
-					$row['company_name'],
+					$row['company_name'].'<p>'.$row['email'].'</p>',
 					$row['company_abbreviation'],
 					$row['accounting_term'],
+					$row['country'],
+					$row['unit'],
 					$row['start_year'],
-					$row['email'],
+					// $row['email'],
 					date('F j, Y',strtotime($row['created_at'])),
 					// '<span class="btn bg-teal  waves-effect" title="status">'.getGroupyName($row['role']).'<span>',	// get Group name by ID (getGroupyName() is a helper function)
 					// '<span class="btn bg-blue  waves-effect" title="status">'.$status.'<span>',			
