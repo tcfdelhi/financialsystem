@@ -366,6 +366,9 @@ class Bscode extends MY_Controller
 						$data['cash_flow'] = $cash_flow;
 						$result = $this->bs_model->add_code($data);
 					}
+					if($result){
+						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
+					}
 					// echo "<pre>";
 					// print_r($allDataInSheet);
 					// die;

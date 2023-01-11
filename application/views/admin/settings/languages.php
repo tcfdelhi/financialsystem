@@ -91,17 +91,17 @@
 					<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<div class="col-lg-12">
 						<div class="form-group">
-							<input type="file" name="uploadFile" class="filestyle" data-icon="false">
+							<input type="file" name="uploadFile" class="filestyle" data-icon="false" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"  required>
 						</div>
 					</div>
 					<div class="col-lg-12">
-						<input type="submit" value="Upload file" name="submit">
+						<input type="submit" value="Upload file" name="submit" class="btn btn-primary" style="margin-bottom: 10px;">
 					</div>
 				</form>
 				<a href="<?= base_url('uploads/excel/import.xlsx') ?>">Download Sample File</a>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
 
