@@ -48,7 +48,7 @@ class Bscode extends MY_Controller
 				// <a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/delete/'.$row['client_id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				// ',
 				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('admin/bscode/add_code/' . $row['id']) . '"> <i class="material-icons">edit</i></a>
-				<a title="Delete" class="delete btn btn-sm btn-danger  data-href="' . base_url('admin/bscode/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
+				<a title="Delete" class="delete btn btn-sm btn-danger"  data-href="' . base_url('admin/bscode/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				',
 
 			);
@@ -252,7 +252,13 @@ class Bscode extends MY_Controller
 	}
 
 
-
+	public function delete($id = 0 )
+	{
+		$this->db->delete('ci_bs_code', array('id' => $id));
+		$this->activity_model->add(3);
+		$this->session->set_flashdata('msg', 'BS Code has been deleted successfully!');
+		redirect(base_url('admin/bscode'));
+	}
 	public function delete_major($id = 0)
 	{
 
@@ -284,7 +290,7 @@ class Bscode extends MY_Controller
 	public function import_excel()
 	{
 		if ($this->input->post('submit')) {
-			$path = 'uploads/bscode/';
+			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bscode';
 			require_once APPPATH . "third_party/PHPExcel.php";
 
 			$config['upload_path'] = $path;
@@ -309,7 +315,7 @@ class Bscode extends MY_Controller
 					$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 					$objPHPExcel = $objReader->load($inputFileName);
 					$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
-					
+
 
 					foreach ($allDataInSheet as $key => $value) {
 
@@ -318,8 +324,8 @@ class Bscode extends MY_Controller
 
 						$cash_flow_category = $value['E'];
 						$cash_flow = $value['F'];
-						$cash_flow_category_id = $this->db->get_where('ci_cash_flow_category', array('name' => "$cash_flow_category",'cash_flow'=>"$cash_flow"))->row()->id;
-						if(empty($cash_flow_category_id)) {
+						$cash_flow_category_id = $this->db->get_where('ci_cash_flow_category', array('name' => "$cash_flow_category", 'cash_flow' => "$cash_flow"))->row()->id;
+						if (empty($cash_flow_category_id)) {
 							$cash_cat_data['name'] = $cash_flow_category;
 							$cash_cat_data['cash_flow'] = $cash_flow;
 							$this->db->insert('ci_cash_flow_category', $cash_cat_data);
@@ -329,7 +335,7 @@ class Bscode extends MY_Controller
 						// Major Item
 						$major_item = $value['C'];
 						$major_item_id = $this->db->get_where('ci_major_item', array('name' => "$major_item"))->row()->id;
-						if(empty($major_item_id)) {
+						if (empty($major_item_id)) {
 							$major_data['name'] = $major_item;
 							$this->db->insert('ci_major_item', $major_data);
 							$major_item_id = $this->db->insert_id();
@@ -339,7 +345,7 @@ class Bscode extends MY_Controller
 						// Medium Item
 						$medium_item = $value['D'];
 						$medium_item_id = $this->db->get_where('ci_medium_item', array('name' => "$medium_item"))->row()->id;
-						if(empty($medium_item_id)) {
+						if (empty($medium_item_id)) {
 							$medium_data['name'] = $medium_item;
 							$this->db->insert('ci_medium_item', $medium_data);
 							$medium_item_id = $this->db->insert_id();

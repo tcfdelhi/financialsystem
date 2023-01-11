@@ -242,7 +242,7 @@ class Settings extends MY_Controller
 	{
 
 		if (isset($_FILES['uploadFile'])) {
-			$path = 'uploads\excel';
+			$path = 'uploads'.DIRECTORY_SEPARATOR.'excel';
 			// echo $path; die;
 			require_once APPPATH . "third_party/PHPExcel.php";
 

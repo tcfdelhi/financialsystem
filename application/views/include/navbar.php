@@ -79,33 +79,34 @@
                                 <li>
                                     <a href="<?= base_url() ?>admin/dashboard/set_session_language/english">
                                         <h4>
-                                            English
-                                            <!-- <small>32%</small> -->
+                                            <img height="25" width="25" src="<?= base_url('uploads/Flags/english.png') ?>" style="margin-right: 3px;">English
                                         </h4>
-                                        <!-- <div class="progress">
-                                                <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
-                                                </div>
-                                            </div> -->
                                     </a>
                                 </li>
                                 <li>
                                     <a href="<?= base_url() ?>admin/dashboard/set_session_language/japanese">
-                                        <h4>Japanese</h4>
+                                        <h4>
+                                            <img height="25" width="25" src="<?= base_url('uploads/Flags/japan.png') ?>" style="margin-right: 3px;">
+                                            Japanese
+                                        </h4>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="<?= base_url() ?>admin/dashboard/set_session_language/vietnamese">
-                                        <h4>Vietnamese</h4>
+                                        <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/vietnam.png') ?>" style="margin-right: 3px;">Vietnamese
+                                        </h4>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="<?= base_url() ?>admin/dashboard/set_session_language/thai">
-                                        <h4>Thai</h4>
+                                        <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/thailand.png') ?>" style="margin-right: 3px;">Thai
+                                        </h4>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="<?= base_url() ?>admin/dashboard/set_session_language/indonesian">
-                                        <h4>Indonesian</h4>
+                                        <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/indonesia.png') ?>" style="margin-right: 3px;">Indonesian
+                                        </h4>
                                     </a>
                                 </li>
                                 <?php //}

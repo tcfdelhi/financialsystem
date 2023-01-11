@@ -29,24 +29,24 @@
 	<!-- Menu -->
 	<div class="menu">
 		<ul class="list">
-			<li class="header"><?= languagedata($this->session->userdata('session_language'),"Main Navigation");?></li>
+			<li class="header"><?= languagedata($this->session->userdata('session_language'), "Main Navigation"); ?></li>
 			<li id="dashboard">
 				<a href="<?= base_url('admin/dashboard'); ?>">
 					<i class="material-icons">home</i>
-					<span><?= languagedata($this->session->userdata('session_language'),"Home");?></span>
+					<span><?= languagedata($this->session->userdata('session_language'), "Home"); ?></span>
 				</a>
 			</li>
 			<li id="users">
 				<a href="javascript:void(0);" class="menu-toggle">
 					<i class="material-icons">person</i>
-					<span><?= languagedata($this->session->userdata('session_language'),"Clients");?></span>
+					<span><?= languagedata($this->session->userdata('session_language'), "Clients"); ?></span>
 				</a>
 				<ul class="ml-menu">
 					<li id="user_list">
-						<a href="<?= base_url('admin/clients'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Clients");?></a>
+						<a href="<?= base_url('admin/clients'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage Clients"); ?></a>
 					</li>
 					<li id="add">
-						<a href="<?= base_url('admin/clients/terminated_client'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Terminated Clients");?></a>
+						<a href="<?= base_url('admin/clients/terminated_client'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage Terminated Clients"); ?></a>
 					</li>
 					<!-- <li id="group">
             <a href="<?= base_url('admin/group'); ?>">User Group</a>
@@ -57,45 +57,46 @@
 				</ul>
 			</li>
 
-			<li id="ci_examples">
-				<a href="javascript:void(0);" class="menu-toggle">
-					<i class="material-icons">settings</i>
-					<span><?= languagedata($this->session->userdata('session_language'),"Settings");?></span>
-				</a>
-				<ul class="ml-menu">
-					<li id="admins">
-						<a href="<?= base_url('admin/settings'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Users");?></a>
-					</li>
-					<li id="ajax_datatable">
-						<a href="<?= base_url('admin/settings/currency'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Currency");?></a>
-					</li>
-					<li id="pagination">
-						<a href="<?= base_url('admin/settings/languages'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Languages");?></a>
-					</li>
-					<!-- <li id="signout">
-						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
-					</li> -->
-				</ul>
-			</li>
-
+			
 			<!-- BS Code tab -->
 			<li id="bs_code">
 				<a href="javascript:void(0);" class="menu-toggle">
 					<i class="material-icons">code</i>
-					<span><?= languagedata($this->session->userdata('session_language'),"BS Codes");?></span>
+					<span><?= languagedata($this->session->userdata('session_language'), "BS Codes"); ?></span>
 				</a>
 				<ul class="ml-menu">
 					<li id="codes">
-						<a href="<?= base_url('admin/bscode'); ?>"><?= languagedata($this->session->userdata('session_language'),"Manage Codes");?></a>
+						<a href="<?= base_url('admin/bscode'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage Codes"); ?></a>
 					</li>
 					<li id="major_item">
-						<a href="<?= base_url('admin/bscode/major_item'); ?>"><?= languagedata($this->session->userdata('session_language'),"Major items of BS");?></a>
+						<a href="<?= base_url('admin/bscode/major_item'); ?>"><?= languagedata($this->session->userdata('session_language'), "Major items of BS"); ?></a>
 					</li>
 					<li id="medium_item">
-						<a href="<?= base_url('admin/bscode/medium_item'); ?>"><?= languagedata($this->session->userdata('session_language'),"Medium item of BS");?></a>
+						<a href="<?= base_url('admin/bscode/medium_item'); ?>"><?= languagedata($this->session->userdata('session_language'), "Medium item of BS"); ?></a>
 					</li>
 					<li id="cash_flow">
-						<a href="<?= base_url('admin/bscode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'),"Cash Flow category");?></a>
+						<a href="<?= base_url('admin/bscode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
+					</li>
+					<!-- <li id="signout">
+						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
+					</li> -->
+				</ul>
+			</li>
+			
+			<li id="ci_examples">
+				<a href="javascript:void(0);" class="menu-toggle">
+					<i class="material-icons">settings</i>
+					<span><?= languagedata($this->session->userdata('session_language'), "Settings"); ?></span>
+				</a>
+				<ul class="ml-menu">
+					<li id="admins">
+						<a href="<?= base_url('admin/settings'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage Users"); ?></a>
+					</li>
+					<li id="ajax_datatable">
+						<a href="<?= base_url('admin/settings/currency'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage Currency"); ?></a>
+					</li>
+					<li id="pagination">
+						<a href="<?= base_url('admin/settings/languages'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage Languages"); ?></a>
 					</li>
 					<!-- <li id="signout">
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
@@ -103,8 +104,9 @@
 				</ul>
 			</li>
 
+
 			<li id="signout">
-				<a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i><span><?= languagedata($this->session->userdata('session_language'),"Sign Out");?></span></a>
+				<a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i><span><?= languagedata($this->session->userdata('session_language'), "Sign Out"); ?></span></a>
 			</li>
 			<!-- <li id="ci_examples">
         <a href="javascript:void(0);" class="menu-toggle">
