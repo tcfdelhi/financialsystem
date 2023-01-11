@@ -22,8 +22,26 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('admin/bscode/add_code/'.$id), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('admin/bscode/add_code/' . $id), 'class="form-horizontal"');  ?>
 
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="client_id">
+                                        <option value="">-- Please select --</option>
+                                        <?php foreach ($clients as $group) : ?>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['client_id']==$group['id']?"selected":"") ?> ><?= $group['firstname'].'  '.$group['lastname'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -32,7 +50,7 @@
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" name="code" class="form-control" value="<?= set_value('code') ?>">
+                                    <input type="text" name="code" class="form-control" value="<?= $code_data['code']  ?>">
                                 </div>
                             </div>
                         </div>
@@ -45,7 +63,7 @@
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" name="title" class="form-control" value="<?= set_value('title') ?>">
+                                    <input type="text" name="title" class="form-control" value="<?= $code_data['title'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -61,7 +79,7 @@
                                     <select class="form-control show-tick" name="major_item">
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($major_items as $group) : ?>
-                                            <option value="<?= $group['id']; ?>"><?= $group['name'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['major_item']==$group['id']?"selected":"") ?> ><?= $group['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -79,7 +97,7 @@
                                     <select class="form-control show-tick" name="medium_item">
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($medium_items as $group) : ?>
-                                            <option value="<?= $group['id']; ?>"><?= $group['name'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['medium_item']==$group['id']?"selected":"") ?> ><?= $group['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -97,7 +115,7 @@
                                     <select class="form-control show-tick" name="cash_flow_category">
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($cash_flow_categories as $group) : ?>
-                                            <option value="<?= $group['id']; ?>"><?= $group['name'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['cash_flow_category']==$group['id']?"selected":"") ?> ><?= $group['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -113,8 +131,8 @@
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="cash_flow">
                                         <option value="">-- Please select --</option>
-                                        <option value="-1">-1</option>
-                                        <option value="1">1</option>
+                                        <option value="-1" <?= ($code_data['cash_flow']=='-1'?"selected":"") ?> >-1</option>
+                                        <option value="1" <?= ($code_data['cash_flow']=='1'?"selected":"") ?>>1</option>
                                     </select>
                                 </div>
                             </div>

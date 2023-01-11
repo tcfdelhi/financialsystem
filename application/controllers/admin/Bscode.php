@@ -64,6 +64,8 @@ class Bscode extends MY_Controller
 		$data['major_items'] = $this->bs_model->get_major_items();
 		$data['medium_items'] = $this->bs_model->get_medium_items();
 		$data['cash_flow_categories'] = $this->bs_model->get_cash_flow_categories();
+		$data['clients'] = $this->bs_model->get_clients();
+		// print_r($data['clients']); die;
 
 
 		if ($id != 0) $data['code_data'] =  $this->db->get_where('ci_bs_code', array('id' => $id))->row_array();
@@ -84,6 +86,7 @@ class Bscode extends MY_Controller
 			} else {
 				// Prepare Client data
 				$user_data = array(
+					'client_id' => $this->input->post('client_id'),
 					'code' => $this->input->post('code'),
 					'title' => $this->input->post('title'),
 					'major_item' => $this->input->post('major_item'),
@@ -290,7 +293,7 @@ class Bscode extends MY_Controller
 	public function import_excel()
 	{
 		if ($this->input->post('submit')) {
-			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bscode';
+			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bscode'.DIRECTORY_SEPARATOR;
 			require_once APPPATH . "third_party/PHPExcel.php";
 
 			$config['upload_path'] = $path;
