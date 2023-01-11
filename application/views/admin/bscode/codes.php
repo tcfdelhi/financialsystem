@@ -50,17 +50,40 @@
             </div>
             <div class="modal-body">
                 <form action="<?php echo base_url('admin/bscode/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+
+                    <!-- <div class="row clearfix col-md-6"> -->
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5">
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-12 col-md-4 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="client_id" required>
+                                        <option value="">-- Please select --</option>
+                                        <?php foreach ($clients as $group) : ?>
+                                            <option value="<?= $group['id']; ?>"><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+
+
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <input type="file" name="uploadFile" class="filestyle" data-icon="false">
+                            <input type="file" name="uploadFile" class="filestyle" data-icon="false" required>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <input type="submit" value="Upload file" name="submit">
                     </div>
                 </form>
-                <!-- <a href="<?= base_url('uploads/excel/import.xlsx') ?>">Download Sample File</a> -->
+                <div class="col-md-12">
+                    <a href="<?= base_url('uploads/bscode/BS_Import_Acc_code_Form.xlsx') ?>">Download Sample File</a>
+
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

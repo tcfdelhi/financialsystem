@@ -18,7 +18,7 @@ class Bscode extends MY_Controller
 	//-----------------------------------------------------------------------
 	public function index()
 	{
-
+		$data['clients'] = $this->bs_model->get_clients();
 		$data['view'] = 'admin/bscode/codes';
 		$this->load->view('layout', $data);
 	}
@@ -293,6 +293,7 @@ class Bscode extends MY_Controller
 	public function import_excel()
 	{
 		if ($this->input->post('submit')) {
+			$client_id = $this->input->post('client_id');
 			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bscode'.DIRECTORY_SEPARATOR;
 			require_once APPPATH . "third_party/PHPExcel.php";
 
@@ -356,6 +357,7 @@ class Bscode extends MY_Controller
 
 
 						// Prepare Data For Bs Codes
+						$data['client_id'] = $client_id;
 						$data['code'] = $value['A'];
 						$data['title'] = $value['B'];
 						$data['major_item'] = $major_item_id;
