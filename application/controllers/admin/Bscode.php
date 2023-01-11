@@ -47,7 +47,7 @@ class Bscode extends MY_Controller
 				// <a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">edit</i></a>
 				// <a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/delete/'.$row['client_id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				// ',
-				'<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/bscode/add_code/'.$row['id']).'"> <i class="material-icons">edit</i></a>
+				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('admin/bscode/add_code/' . $row['id']) . '"> <i class="material-icons">edit</i></a>
 				<a title="Delete" class="delete btn btn-sm btn-danger  data-href="' . base_url('admin/bscode/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				',
 
@@ -64,7 +64,7 @@ class Bscode extends MY_Controller
 		$data['major_items'] = $this->bs_model->get_major_items();
 		$data['medium_items'] = $this->bs_model->get_medium_items();
 		$data['cash_flow_categories'] = $this->bs_model->get_cash_flow_categories();
-	
+
 
 		if ($id != 0) $data['code_data'] =  $this->db->get_where('ci_bs_code', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
@@ -217,7 +217,7 @@ class Bscode extends MY_Controller
 		if ($id != 0) $data['id'] =  $id;
 
 		if ($this->input->post('submit')) {
-			
+
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			$this->form_validation->set_rules('cash_flow', 'Cash Flow Rate', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
@@ -251,7 +251,7 @@ class Bscode extends MY_Controller
 		}
 	}
 
-	
+
 
 	public function delete_major($id = 0)
 	{
@@ -279,5 +279,97 @@ class Bscode extends MY_Controller
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'Currency has been deleted successfully!');
 		redirect(base_url('admin/bscode/cash_flow'));
+	}
+
+	public function import_excel()
+	{
+		if ($this->input->post('submit')) {
+			$path = 'uploads/bscode/';
+			require_once APPPATH . "third_party/PHPExcel.php";
+
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'xlsx|xls|csv';
+			$config['remove_spaces'] = TRUE;
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if (!$this->upload->do_upload('uploadFile')) {
+				$error = array('error' => $this->upload->display_errors());
+			} else {
+				$data = array('upload_data' => $this->upload->data());
+			}
+			if (empty($error)) {
+				if (!empty($data['upload_data']['file_name'])) {
+					$import_xls_file = $data['upload_data']['file_name'];
+				} else {
+					$import_xls_file = 0;
+				}
+				$inputFileName = $path . $import_xls_file;
+				try {
+					$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+					$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+					$objPHPExcel = $objReader->load($inputFileName);
+					$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+					
+
+					foreach ($allDataInSheet as $key => $value) {
+
+						$data = [];
+						if ($key == 1) continue;
+
+						$cash_flow_category = $value['E'];
+						$cash_flow = $value['F'];
+						$cash_flow_category_id = $this->db->get_where('ci_cash_flow_category', array('name' => "$cash_flow_category",'cash_flow'=>"$cash_flow"))->row()->id;
+						if(empty($cash_flow_category_id)) {
+							$cash_cat_data['name'] = $cash_flow_category;
+							$cash_cat_data['cash_flow'] = $cash_flow;
+							$this->db->insert('ci_cash_flow_category', $cash_cat_data);
+							$cash_flow_category_id = $this->db->insert_id();
+						}
+
+						// Major Item
+						$major_item = $value['C'];
+						$major_item_id = $this->db->get_where('ci_major_item', array('name' => "$major_item"))->row()->id;
+						if(empty($major_item_id)) {
+							$major_data['name'] = $major_item;
+							$this->db->insert('ci_major_item', $major_data);
+							$major_item_id = $this->db->insert_id();
+						}
+
+
+						// Medium Item
+						$medium_item = $value['D'];
+						$medium_item_id = $this->db->get_where('ci_medium_item', array('name' => "$medium_item"))->row()->id;
+						if(empty($medium_item_id)) {
+							$medium_data['name'] = $medium_item;
+							$this->db->insert('ci_medium_item', $medium_data);
+							$medium_item_id = $this->db->insert_id();
+						}
+
+
+						// Prepare Data For Bs Codes
+						$data['code'] = $value['A'];
+						$data['title'] = $value['B'];
+						$data['major_item'] = $major_item_id;
+						$data['medium_item'] = $medium_item_id;
+						$data['cash_flow_category'] = $cash_flow_category_id;
+						$data['cash_flow'] = $cash_flow;
+						$result = $this->bs_model->add_code($data);
+					}
+					// echo "<pre>";
+					// print_r($allDataInSheet);
+					// die;
+					redirect("admin/bscode", 'refresh');
+				} catch (Exception $e) {
+					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
+						. '": ' . $e->getMessage());
+					unlink($path . $data['upload_data']['file_name']);
+					redirect("admin/bscode", 'refresh');
+				}
+			} else {
+				$this->session->set_flashdata('error', $error['error']);
+				unlink($path . $data['upload_data']['file_name']);
+				redirect("admin/bscode", 'refresh');
+			}
+		}
 	}
 }

@@ -244,6 +244,7 @@ class Settings extends MY_Controller
 		if (isset($_FILES['uploadFile'])) {
 			$path = 'uploads\excel';
 			// echo $path; die;
+			require_once APPPATH . "third_party/PHPExcel.php";
 
 			$config['upload_path'] = $path;
 			$config['allowed_types'] = 'xlsx|xls';
@@ -263,21 +264,20 @@ class Settings extends MY_Controller
 				}
 
 				$inputFileName = $data['upload_data']['full_path'];
-				// echo $inputFileName; die;
 				try {
-					$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-					$spreadSheet = $reader->load($inputFileName);
-					$excelSheet = $spreadSheet->getActiveSheet();
-					$spreadSheetAry = $excelSheet->toArray();
+					$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+					$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+					$objPHPExcel = $objReader->load($inputFileName);
+					$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
 					$data = [];
-					foreach ($spreadSheetAry as $key => $value) {
+					foreach ($allDataInSheet as $key => $value) {
 						if($key == 0) continue;
 						$user_data = array(
-							'english' => $value[0],
-							'japanese' => $value[1],
-							'vietnamese' => $value[2],
-							'thai' => $value[2],
-							'indonesian' => $value[4],
+							'english' => $value['A'],
+							'japanese' => $value['B'],
+							'vietnamese' => $value['C'],
+							'thai' => $value['D'],
+							'indonesian' => $value['E'],
 						);
 						$this->settings_model->add_language($user_data);
 					}

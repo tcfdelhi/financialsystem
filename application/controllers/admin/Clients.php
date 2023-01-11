@@ -42,7 +42,7 @@ class Clients extends MY_Controller {
 					// '<span class="btn bg-teal  waves-effect" title="status">'.getGroupyName($row['role']).'<span>',	// get Group name by ID (getGroupyName() is a helper function)
 					// '<span class="btn bg-blue  waves-effect" title="status">'.$status.'<span>',			
 					
-					'<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">edit</i></a>
+					'<a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/restore/'.$row['client_id']).'"> <i class="material-icons">restore</i></a>
 					<a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/delete/'.$row['client_id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 					',
 					
@@ -53,6 +53,11 @@ class Clients extends MY_Controller {
 		}
 		//-----------------------------------------------------------------------
 
+		public function restore($id = 0){
+			$this->db->where('id', $id);
+			$this->db->update('ci_users', array('is_active'=>1));
+			redirect(base_url('admin/clients/terminated_client'));
+		}
 
 		public function datatable_json(){
 			$records = $this->user_model->get_all_users();
@@ -264,7 +269,9 @@ class Clients extends MY_Controller {
 		//-----------------------------------------------------------------------
 		public function delete($id = 0){
 
-			$this->db->delete('ci_users', array('client_id' => $id));
+			$client_id = $this->db->get_where('ci_users', array('id' => $id))->row()->client_id;
+			$this->db->delete('ci_clients', array('id' => $client_id));
+			$this->db->delete('ci_users', array('id' => $id));
 			// Add User Activity
 			$this->activity_model->add(3);
 			$this->session->set_flashdata('msg', 'Client has been deleted successfully!');
