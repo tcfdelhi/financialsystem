@@ -10,7 +10,12 @@ class Bs_model extends CI_Model
 	public function get_codes()
 	{
 		// $query = $this->db->get('ci_bs_code');
-		$query = 'SELECT * from ci_bs_code';
+		$query = 'SELECT 
+		ci_bs_code.*,ci_major_item.name as major_name , ci_medium_item.name as medium_name,ci_cash_flow_category.name as cat
+		from ci_bs_code 
+		INNER JOIN ci_major_item on ci_bs_code.major_item = ci_major_item.id 
+		INNER JOIN ci_medium_item on ci_bs_code.medium_item = ci_medium_item.id 
+		INNER JOIN ci_cash_flow_category on ci_bs_code.cash_flow_category = ci_cash_flow_category.id';
 		$WHERE = "";
 		return $this->datatable->LoadJson($query, $WHERE);
 	}

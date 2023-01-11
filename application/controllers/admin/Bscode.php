@@ -37,9 +37,9 @@ class Bscode extends MY_Controller
 				++$i,
 				$row['code'],
 				$row['title'],
-				$row['major_item'],
-				$row['medium_item'],
-				$row['cash_flow_category'],
+				$row['major_name'],
+				$row['medium_name'],
+				$row['cat'],
 				$row['cash_flow'],
 
 
