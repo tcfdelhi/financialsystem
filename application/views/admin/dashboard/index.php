@@ -11,7 +11,7 @@
                     <i class="material-icons">face</i>
                 </div>
                 <div class="content">
-                    <div class="text">NEW USERS</div>
+                    <div class="text"><?= languagedata($this->session->userdata('session_language'), "Active Clients"); ?></div>
                     <div class="number count-to" data-from="0" data-to="<?= $all_users; ?>" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     <i class="material-icons">people</i>
                 </div>
                 <div class="content">
-                    <div class="text">ACTIVE USERS</div>
+                    <div class="text"><?= languagedata($this->session->userdata('session_language'), "Bs Reports"); ?></div>
                     <div class="number count-to" data-from="0" data-to="<?= $active_users; ?>" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>

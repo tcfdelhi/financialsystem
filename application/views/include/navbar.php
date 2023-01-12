@@ -63,7 +63,7 @@
                 <!-- Tasks -->
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                        <i class="material-icons">flag</i>
+                        <i class="material-icons">language</i>
                         <span class="label-count">5</span>
                     </a>
                     <ul class="dropdown-menu">
@@ -75,38 +75,62 @@
                                 // $query = $this->db->query($sql);
 
                                 // foreach ($query->result() as $row) { print_r($row); die; 
+                                // print_r($this->session->userdata()); die;
+                                // Change Languages URL for user and admin
+                                if ($this->session->userdata('is_admin_login') == 1)  $status = TRUE;
+                                else $status = FALSE;
                                 ?>
                                 <li>
-                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/english">
-                                        <h4>
-                                            <img height="25" width="25" src="<?= base_url('uploads/Flags/english.png') ?>" style="margin-right: 3px;">English
-                                        </h4>
+                                    <?php
+                                    if ($status) echo "<a href=" . base_url() . "admin/dashboard/set_session_language/english>";
+                                    else echo "<a href=" . base_url() . "user/profile/set_session_language/english>";
+                                    ?>
+
+                                    <h4>
+                                        <img height="25" width="25" src="<?= base_url('uploads/Flags/english.png') ?>" style="margin-right: 3px;">English
+                                    </h4>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/japanese">
-                                        <h4>
-                                            <img height="25" width="25" src="<?= base_url('uploads/Flags/japan.png') ?>" style="margin-right: 3px;">
-                                            Japanese
-                                        </h4>
+                                    <?php
+                                    if ($status) echo "<a href=" . base_url() . "admin/dashboard/set_session_language/japanese>";
+                                    else echo "<a href=" . base_url() . "user/profile/set_session_language/japanese>";
+                                    ?>
+                                    <h4>
+                                        <img height="25" width="25" src="<?= base_url('uploads/Flags/japan.png') ?>" style="margin-right: 3px;">
+                                        Japanese
+                                    </h4>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/vietnamese">
-                                        <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/vietnam.png') ?>" style="margin-right: 3px;">Vietnamese
-                                        </h4>
+                                    <?php
+                                    if ($status) echo "<a href=" . base_url() . "admin/dashboard/set_session_language/vietnamese>";
+                                    else echo "<a href=" . base_url() . "user/profile/set_session_language/vietnamese>";
+                                    ?>
+
+                                    <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/vietnam.png') ?>" style="margin-right: 3px;">Vietnamese
+                                    </h4>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/thai">
-                                        <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/thailand.png') ?>" style="margin-right: 3px;">Thai
-                                        </h4>
+                                    <?php
+                                    if ($status) echo "<a href=" . base_url() . "admin/dashboard/set_session_language/thai>";
+                                    else echo "<a href=" . base_url() . "user/profile/set_session_language/thai>";
+                                    ?>
+
+                                    <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/thailand.png') ?>" style="margin-right: 3px;">Thai
+                                    </h4>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= base_url() ?>admin/dashboard/set_session_language/indonesian">
-                                        <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/indonesia.png') ?>" style="margin-right: 3px;">Indonesian
-                                        </h4>
+
+                                    <?php
+                                    if ($status) echo "<a href=" . base_url() . "admin/dashboard/set_session_language/indonesian>";
+                                    else echo "<a href=" . base_url() . "user/profile/set_session_language/indonesian>";
+                                    ?>
+
+                                    <h4><img height="25" width="25" src="<?= base_url('uploads/Flags/indonesia.png') ?>" style="margin-right: 3px;">Indonesian
+                                    </h4>
                                     </a>
                                 </li>
                                 <?php //}

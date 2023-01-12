@@ -24,10 +24,35 @@ class Bscode extends MY_Controller
 	}
 
 	//-----------------------------------------------------------------------
+	public function list($year = 0, $client_id = 0)
+	{
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST'){
+			$year  = $this->input->post('year');
+			$client_id  = $this->input->post('client_id');
+
+		}
+		else{
+			redirect(base_url('admin/bscode'));
+		}
+
+
+		$data['year'] = $year;
+		$data['client_id'] = $client_id;
+		$data['clients'] = $this->bs_model->get_clients();
+		$data['view'] = 'admin/bscode/list';
+		$this->load->view('layout', $data);
+	}
+
+
+	//-----------------------------------------------------------------------
 
 	public function get_codes()
 	{
-		$records = $this->bs_model->get_codes();
+		$year  = $this->input->get('year');
+		$client_id  = $this->input->get('client_id');
+
+		$records = $this->bs_model->get_codes($year, $client_id);
 		$data = array();
 		$i = 0;
 
@@ -35,6 +60,8 @@ class Bscode extends MY_Controller
 
 			$data[] = array(
 				++$i,
+				$row['year'],
+				$row['firstname'] . '  ' . $row['lastname'],
 				$row['code'],
 				$row['title'],
 				$row['major_name'],
@@ -79,6 +106,7 @@ class Bscode extends MY_Controller
 			$this->form_validation->set_rules('medium_item', 'Medium item of BS', 'trim|required');
 			$this->form_validation->set_rules('cash_flow_category', 'Cash Flow category', 'trim|required');
 			$this->form_validation->set_rules('cash_flow', 'Increase and Decrease in Cash Flow', 'trim|required');
+			$this->form_validation->set_rules('year', 'Financial Year', 'trim|required');
 
 			if ($this->form_validation->run() == FALSE) {
 				$data['view'] = 'admin/bscode/add_code';
@@ -93,6 +121,7 @@ class Bscode extends MY_Controller
 					'medium_item' => $this->input->post('medium_item'),
 					'cash_flow_category' =>  $this->input->post('cash_flow_category'),
 					'cash_flow' => $this->input->post('cash_flow'),
+					'year' => $this->input->post('year'),
 				);
 				$data = $this->security->xss_clean($user_data);
 				if ($id == 0) $result = $this->bs_model->add_code($data);
@@ -255,7 +284,7 @@ class Bscode extends MY_Controller
 	}
 
 
-	public function delete($id = 0 )
+	public function delete($id = 0)
 	{
 		$this->db->delete('ci_bs_code', array('id' => $id));
 		$this->activity_model->add(3);
@@ -294,7 +323,8 @@ class Bscode extends MY_Controller
 	{
 		if ($this->input->post('submit')) {
 			$client_id = $this->input->post('client_id');
-			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bscode'.DIRECTORY_SEPARATOR;
+			$year = $this->input->post('year');
+			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bscode' . DIRECTORY_SEPARATOR;
 			require_once APPPATH . "third_party/PHPExcel.php";
 
 			$config['upload_path'] = $path;
@@ -357,6 +387,7 @@ class Bscode extends MY_Controller
 
 
 						// Prepare Data For Bs Codes
+						$data['year'] = $year;
 						$data['client_id'] = $client_id;
 						$data['code'] = $value['A'];
 						$data['title'] = $value['B'];
@@ -366,7 +397,7 @@ class Bscode extends MY_Controller
 						$data['cash_flow'] = $cash_flow;
 						$result = $this->bs_model->add_code($data);
 					}
-					if($result){
+					if ($result) {
 						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
 					}
 					// echo "<pre>";

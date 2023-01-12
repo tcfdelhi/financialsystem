@@ -7,16 +7,20 @@ class Bs_model extends CI_Model
 	}
 
 	//-----------------------------------------------------
-	public function get_codes()
+	public function get_codes($year = 0 , $client_id = 0)
 	{
 		// $query = $this->db->get('ci_bs_code');
 		$query = 'SELECT 
-		ci_bs_code.*,ci_major_item.name as major_name , ci_medium_item.name as medium_name,ci_cash_flow_category.name as cat
+		ci_bs_code.*,ci_major_item.name as major_name , ci_medium_item.name as medium_name,ci_cash_flow_category.name as cat, ci_users.firstname,ci_users.lastname
 		from ci_bs_code 
+		INNER JOIN ci_users on ci_bs_code.client_id = ci_users.client_id 
 		INNER JOIN ci_major_item on ci_bs_code.major_item = ci_major_item.id 
 		INNER JOIN ci_medium_item on ci_bs_code.medium_item = ci_medium_item.id 
 		INNER JOIN ci_cash_flow_category on ci_bs_code.cash_flow_category = ci_cash_flow_category.id';
-		$WHERE = "";
+
+		// Year And client condition
+		if($year != 0 and $client_id != 0) $WHERE = "ci_bs_code.year = $year and ci_bs_code.client_id = $client_id";
+		else $WHERE = "";
 		return $this->datatable->LoadJson($query, $WHERE);
 	}
 

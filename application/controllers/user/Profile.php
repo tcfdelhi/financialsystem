@@ -100,4 +100,16 @@ class Profile extends UR_Controller
 			$this->load->view('layout', $data);
 		}
 	}
+
+	public function set_session_language()
+	{
+		$this->load->library('session');
+		if (($this->uri->segment(4) != '')) {
+			$sessionyear = $this->uri->segment(4);
+			if ($sessionyear) {
+				$this->session->set_userdata('session_language', $sessionyear);
+				redirect(base_url('/'));
+			}
+		}
+	}
 }

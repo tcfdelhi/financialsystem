@@ -8,7 +8,7 @@ class User_model extends CI_Model
 		$id = $this->session->userdata('user_id');
 		// $query = $this->db->get_where('ci_users', array('id' => $id));
 		// return $result = $query->row_array();
-		$SQL = 'SELECT ci_clients.*,ci_users.email,ci_users.role,ci_users.is_active,ci_users.id as client_id,ci_users.firstname,ci_users.lastname FROM ci_users LEFT JOIN ci_clients on ci_users.client_id=ci_clients.id where ci_users.id ='.$id;
+		$SQL = 'SELECT ci_clients.*,ci_users.email,ci_users.role,ci_users.is_active,ci_users.id as client_id,ci_users.firstname,ci_users.lastname FROM ci_users LEFT JOIN ci_clients on ci_users.client_id=ci_clients.id where ci_users.id =' . $id;
 		$query = $this->db->query($SQL);
 		return $query->row_array();
 	}
@@ -28,7 +28,8 @@ class User_model extends CI_Model
 		return true;
 	}
 	//--------------------------------------------------------------------
-	public function get_countries(){
+	public function get_countries()
+	{
 		$this->db->select('name');
 		return $this->db->get('ci_countries')->result_array();
 	}
@@ -41,12 +42,13 @@ class User_model extends CI_Model
 	}
 
 	// Edit client Record
-	public function edit_client($data, $id){
+	public function edit_client($data, $id)
+	{
 		$this->db->where('id', $id);
 		$this->db->update('ci_clients', $data);
 		return true;
 	}
-	public function get_codes()
+	public function get_codes($year = 0)
 	{
 		$id = $this->session->userdata('user_id');
 		$query = 'SELECT 
@@ -55,7 +57,40 @@ class User_model extends CI_Model
 		INNER JOIN ci_major_item on ci_bs_code.major_item = ci_major_item.id 
 		INNER JOIN ci_medium_item on ci_bs_code.medium_item = ci_medium_item.id 
 		INNER JOIN ci_cash_flow_category on ci_bs_code.cash_flow_category = ci_cash_flow_category.id';
-		$WHERE = "ci_bs_code.client_id=".$id;
+
+		$client_id = $this->db->get_where('ci_users', array('id' => $id))->row()->client_id;
+		// Year And client condition
+		if ($year != 0) $WHERE = "ci_bs_code.year = $year and ci_bs_code.client_id = $client_id";
+		else $WHERE = "";
+
+		// $WHERE = "ci_bs_code.client_id=".$id;
 		return $this->datatable->LoadJson($query, $WHERE);
+	}
+	//-----------------------------------------------------
+	public function add_code($data)
+	{
+		$this->db->insert('ci_bs_code', $data);
+		return true;
+	}
+
+	//-----------------------------------------------------
+	public function get_major_items()
+	{
+		$query = $this->db->get('ci_major_item');
+		return $query->result_array();
+	}
+
+	//-----------------------------------------------------
+	public function get_medium_items()
+	{
+		$query = $this->db->get('ci_medium_item');
+		return $query->result_array();
+	}
+
+	//-----------------------------------------------------
+	public function get_cash_flow_categories()
+	{
+		$query = $this->db->get('ci_cash_flow_category');
+		return $query->result_array();
 	}
 }

@@ -27,19 +27,26 @@
 	<!-- #User Info -->
 	<!-- Menu -->
 	<div class="menu">
+
+
 		<ul class="list">
 			<li class="header">MAIN NAVIGATION</li>
+
+
 			<li id="profile">
 				<a href="<?= base_url('user/profile'); ?>">
 					<i class="material-icons">person</i>
-					<span>Profile</span>
+					<span><?= languagedata($this->session->userdata('session_language'), "Profile"); ?></span>
 				</a>
 			</li>
 			<li id="bscodes">
 				<a href="<?= base_url('user/bscode'); ?>">
 					<i class="material-icons">code</i>
-					<span>BS Codes</span>
+					<span><?= languagedata($this->session->userdata('session_language'), "BS Codes"); ?></span>
 				</a>
+			</li>
+			<li id="signout">
+				<a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i><span><?= languagedata($this->session->userdata('session_language'), "Sign Out"); ?></span></a>
 			</li>
 			<!-- <li id="helper">
 				<a href="<?= base_url('user/helper'); ?>">

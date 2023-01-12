@@ -35,7 +35,7 @@
                                     <select class="form-control show-tick" name="client_id">
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($code_data['client_id']==$group['id']?"selected":"") ?> ><?= $group['firstname'].'  '.$group['lastname'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['client_id'] == $group['id'] ? "selected" : "") ?>><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -79,7 +79,7 @@
                                     <select class="form-control show-tick" name="major_item">
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($major_items as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($code_data['major_item']==$group['id']?"selected":"") ?> ><?= $group['name'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['major_item'] == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -97,7 +97,7 @@
                                     <select class="form-control show-tick" name="medium_item">
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($medium_items as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($code_data['medium_item']==$group['id']?"selected":"") ?> ><?= $group['name'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['medium_item'] == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -115,7 +115,7 @@
                                     <select class="form-control show-tick" name="cash_flow_category">
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($cash_flow_categories as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($code_data['cash_flow_category']==$group['id']?"selected":"") ?> ><?= $group['name'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['cash_flow_category'] == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -131,8 +131,28 @@
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="cash_flow">
                                         <option value="">-- Please select --</option>
-                                        <option value="-1" <?= ($code_data['cash_flow']=='-1'?"selected":"") ?> >-1</option>
-                                        <option value="1" <?= ($code_data['cash_flow']=='1'?"selected":"") ?>>1</option>
+                                        <option value="-1" <?= ($code_data['cash_flow'] == '-1' ? "selected" : "") ?>>-1</option>
+                                        <option value="1" <?= ($code_data['cash_flow'] == '1' ? "selected" : "") ?>>1</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="password"><?= languagedata($this->session->userdata('session_language'), "Select Financial Year"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="year">
+                                        <option value="">-- Please select --</option>
+                                        <option value="2019" <?= ($code_data['year'] == '2019' ? "selected" : "") ?>>2019</option>
+                                        <option value="2020" <?= ($code_data['year'] == '2020' ? "selected" : "") ?>>2020</option>
+                                        <option value="2021" <?= ($code_data['year'] == '2021' ? "selected" : "") ?>>2021</option>
+                                        <option value="2022" <?= ($code_data['year'] == '2022' ? "selected" : "") ?>>2022</option>
+                                        <option value="2023" <?= ($code_data['year'] == '2023' ? "selected" : "") ?>>2023</option>
                                     </select>
                                 </div>
                             </div>
