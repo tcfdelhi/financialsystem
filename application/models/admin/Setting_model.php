@@ -61,4 +61,12 @@ class Setting_model extends CI_Model
 		$this->db->insert('ci_languages', $data);
 		return true;
 	}
+
+	//--------------------------------------------------------------------
+	public function change_pwd($data, $id)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('ci_users', $data);
+		return true;
+	}
 }

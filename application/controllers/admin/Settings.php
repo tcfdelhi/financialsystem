@@ -242,7 +242,7 @@ class Settings extends MY_Controller
 	{
 
 		if (isset($_FILES['uploadFile'])) {
-			$path = 'uploads'.DIRECTORY_SEPARATOR.'excel';
+			$path = 'uploads' . DIRECTORY_SEPARATOR . 'excel';
 			// echo $path; die;
 			require_once APPPATH . "third_party/PHPExcel.php";
 
@@ -271,7 +271,7 @@ class Settings extends MY_Controller
 					$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
 					$data = [];
 					foreach ($allDataInSheet as $key => $value) {
-						if($key == 0) continue;
+						if ($key == 0) continue;
 						$user_data = array(
 							'english' => $value['A'],
 							'japanese' => $value['B'],
@@ -290,5 +290,35 @@ class Settings extends MY_Controller
 				echo $error['error'];
 			}
 		}
+	}
+
+	public function password()
+	{
+		$id = $this->session->userdata('admin_id');
+		
+		if ($this->input->post('submit')) {
+			$this->form_validation->set_rules('password', 'Password', 'trim|required');
+			$this->form_validation->set_rules('confirm_pwd', 'Confirm Password', 'trim|required|matches[password]');
+			if ($this->form_validation->run() == FALSE) {
+				$data['view'] = 'admin/settings/password';
+				$this->load->view('layout', $data);
+			} else {
+				$data = array(
+					'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT)
+				);
+				$data = $this->security->xss_clean($data);
+				$result = $this->settings_model->change_pwd($data, $id);
+				if ($result) {
+					$this->session->set_flashdata('msg', 'Password has been changed successfully!');
+					redirect(base_url('admin/settings'));
+				}
+			}
+		}
+		else {
+			$data['view'] = 'admin/settings/password';
+			$this->load->view('layout', $data);
+
+		}
+
 	}
 }

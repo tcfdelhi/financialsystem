@@ -5,9 +5,9 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    ADD NEW CURRENCY
+                <?= languagedata($this->session->userdata('session_language'), "Add New Currency"); ?>
                 </h2>
-                <a href="<?= base_url('admin/currency/'); ?>" class="btn bg-indigo waves-effect pull-right">Currency List</a>
+                <a href="<?= base_url('admin/currency/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Currency List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">
@@ -27,7 +27,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">Currency Name<span class="red"> *</span></label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'), "Currency Name"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -40,7 +40,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">Currency Short Form<span class="red"> *</span></label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'), "Currency Short Form"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">

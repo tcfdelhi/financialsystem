@@ -30,7 +30,7 @@
 
 
 		<ul class="list">
-			<li class="header">MAIN NAVIGATION</li>
+			<li class="header"><?= languagedata($this->session->userdata('session_language'), "Main Navigation"); ?></li>
 
 
 			<li id="profile">

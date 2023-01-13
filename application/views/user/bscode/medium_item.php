@@ -19,8 +19,8 @@
                         <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th>Name</th>
-                                <th>Action</th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Name"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
                             </tr>
                         </thead>
                         <tbody>

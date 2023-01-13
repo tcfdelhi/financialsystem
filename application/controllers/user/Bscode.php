@@ -15,6 +15,29 @@ class Bscode extends UR_Controller
 	//-----------------------------------------------------------------------
 	public function index()
 	{
+		$id = $this->session->userdata('user_id');
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+			$this->form_validation->set_rules('year', 'Year', 'trim|required|min_length[3]|max_length[4]');
+
+			if ($this->form_validation->run() == TRUE) {
+				
+				$year  = $this->input->post('year');
+				
+	
+				$record_exist = $this->db->get_where('ci_year', array('client_id' => $id, 'year' => $year))->row()->year;
+				if (empty($record_exist)) {
+	
+					$data['client_id'] = $id;
+					$data['year'] = $year;
+					$this->db->insert('ci_year', $data);
+					$this->session->set_flashdata('msg', 'Year Added Sucessfully');
+				} else {
+					$this->session->set_flashdata('error', 'Year Already Exist');
+				}
+			} 
+		}
+		$data['years'] = $this->db->get_where('ci_year', array('client_id' => $id))->result_array();
 		$data['view'] = 'user/bscode/codes';
 		$this->load->view('layout', $data);
 	}
@@ -28,7 +51,8 @@ class Bscode extends UR_Controller
 
 		else redirect(base_url('user/bscode'));
 
-
+		$id = $this->session->userdata('user_id');
+		$data['years'] = $this->db->get_where('ci_year', array('client_id' => $id))->result_array();
 		$data['year'] = $year;
 		$data['view'] = 'user/bscode/list';
 		$this->load->view('layout', $data);

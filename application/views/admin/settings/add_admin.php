@@ -7,7 +7,7 @@
                 <h2>
                     ADD NEW ADMIN
                 </h2>
-                <a href="<?= base_url('admin/settings/'); ?>" class="btn bg-indigo waves-effect pull-right">Admin List</a>
+                <a href="<?= base_url('admin/settings/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Admin List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">
@@ -26,7 +26,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">First Name<span class="red"> *</span></label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'), "First Name"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -39,7 +39,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">Last name<span class="red"> *</span></label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'), "Last name"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -53,7 +53,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="abbreviation">Email<span class="red"> *</span></label>
+                            <label for="abbreviation"><?= languagedata($this->session->userdata('session_language'), "Email"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -66,7 +66,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term">Password<span class="red"> *</span></label>
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Password"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -79,7 +79,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="year">Country<span class="red"> *</span></label>
+                            <label for="year"><?= languagedata($this->session->userdata('session_language'), "Country"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">

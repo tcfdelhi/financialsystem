@@ -52,11 +52,9 @@
                             <div class="form-group">
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="year">
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
+                                        <?php foreach ($years as $group) : ?>
+                                            <option value="<?= $group['year']; ?>"><?= $group['year'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>

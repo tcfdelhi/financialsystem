@@ -8,9 +8,9 @@
 		<div class="card">
 			<div class="header">
 				<h2 style="display: inline-block;">
-					Clients LIST
+				<?= languagedata($this->session->userdata('session_language'), "Clients List"); ?>
 				</h2>
-				<a href="<?= base_url('admin/clients/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> ADD NEW CLIENT</a>
+				<a href="<?= base_url('admin/clients/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Client"); ?></a>
 			</div>
 			<div class="body">
 				<div class="table-responsive">
@@ -18,16 +18,16 @@
 						<thead>
 							<tr>
 								<th>#ID</th>
-								<th>Company Name</th>
-								<th>Company Abbreviation</th>
-								<th>Accounting Term</th>
-								<th>Country</th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Company Name"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Company Abbreviation"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Accounting Term"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Country"); ?></th>
 								
-								<th>Unit</th>
-								<th>Start Year</th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Unit"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Start Year"); ?></th>
 								<!-- <th>Email</th> -->
-								<th>Created Date</th>
-								<th>Action</th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Created Date"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
 							</tr>
 						</thead>
 					</table>
@@ -45,14 +45,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Terminate</h4>
+				<h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Terminate"); ?></h4>
 			</div>
 			<div class="modal-body">
-				<p>As you sure you want to terminate.</p>
+				<p><?= languagedata($this->session->userdata('session_language'), "Are you sure you want to terminate."); ?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<a class="btn btn-danger btn-ok">Terminate</a>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?= languagedata($this->session->userdata('session_language'), "Close"); ?></button>
+				<a class="btn btn-danger btn-ok"><?= languagedata($this->session->userdata('session_language'), "Terminate"); ?></a>
 			</div>
 		</div>
 	</div>

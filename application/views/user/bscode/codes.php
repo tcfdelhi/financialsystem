@@ -31,12 +31,10 @@
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <select class="form-control show-tick" name="year">
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
+                                    <select class="form-control show-tick" name="year" required>
+                                        <?php foreach ($years as $group) : ?>
+                                            <option value="<?= $group['year']; ?>"><?= $group['year'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -47,15 +45,45 @@
                     <div class="row clearfix col-md-12">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
                             <input type="submit" name="submit" value="View Bs Codes" class="btn btn-primary m-t-15 waves-effect">
+                            <input type="button" value="Add New Financial Year" class="btn btn-primary m-l-40 m-t-15 waves-effect add_new_year">
                         </div>
                     </div>
                     <?php echo form_close(); ?>
+
+                    <!-- Add New Financial Year -->
+                    <?php echo form_open(base_url('user/bscode'), 'class="form-horizontal new_year"');  ?>
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="password"><?= languagedata($this->session->userdata('session_language'), "Add New Financial Year"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-4 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="number" class="form-control" value="" name="year">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix col-md-1">
+                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
+                            <input type="submit" name="submit" value="Add" class="btn btn-primary waves-effect">
+                        </div>
+                    </div>
+                    <?php echo form_close(); ?>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+    $(".add_new_year").click(function() {
+        $(".new_year").toggle({
+            duration: 100
+        });
+    });
 
+
+    $(".new_year").hide();
     $("#bscodes").addClass('active');
 </script>

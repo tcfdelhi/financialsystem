@@ -8,9 +8,9 @@
 		<div class="card">
 			<div class="header">
 				<h2 style="display: inline-block;">
-					Admin's LIST
+				<?= languagedata($this->session->userdata('session_language'), "Admin's List"); ?>
 				</h2>
-				<a href="<?= base_url('admin/settings/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> ADD NEW ADMIN</a>
+				<a href="<?= base_url('admin/settings/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Add New Admin"); ?></a>
 			</div>
 			<div class="body">
 				<div class="table-responsive">
@@ -18,11 +18,11 @@
 						<thead>
 							<tr>
 								<th>#ID</th>
-								<th>First name</th>
-								<th>Email</th>
-								<th>Country</th>
-								<th>Created Date</th>
-								<th>Action</th>
+								<th><?= languagedata($this->session->userdata('session_language'), "First name"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Email"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Country"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Created Date"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
 							</tr>
 						</thead>
 					</table>
@@ -40,14 +40,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Delete</h4>
+				<h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></h4>
 			</div>
 			<div class="modal-body">
-				<p>As you sure you want to delete.</p>
+				<p><?= languagedata($this->session->userdata('session_language'), "Are you sure you want to delete"); ?></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<a class="btn btn-danger btn-ok">Delete</a>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?= languagedata($this->session->userdata('session_language'), "Close"); ?></button>
+				<a class="btn btn-danger btn-ok"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></a>
 			</div>
 		</div>
 	</div>

@@ -72,4 +72,11 @@ class Bs_model extends CI_Model
 		$query = $this->db->query($SQL);
 		return $query->result_array();
 	}
+	public function get_years(){
+
+		$this->db->distinct();
+		$this->db->select('year');		
+		$query = $this->db->get('ci_year');
+		return $query->result_array();
+	}
 }

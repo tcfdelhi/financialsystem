@@ -5,7 +5,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    EDIT USER
+                <?= languagedata($this->session->userdata('session_language'), "Edit User"); ?>
                 </h2>
             </div>
             <div class="body">
@@ -44,7 +44,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="country">Choose Country</label>
+                            <label for="country"><?= languagedata($this->session->userdata('session_language'), "Choose Country"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -62,17 +62,15 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="currency">Select Currency</label>
+                            <label for="currency"><?= languagedata($this->session->userdata('session_language'), "Select Currency"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="currency">
-                                        <option value="">-- Please select --</option>
-                                        <option value="INR" <?= ($client['currency'] == "INR" ? "selected" : '') ?>>INR</option>
-                                        <option value="USD" <?= ($client['currency'] == "USD" ? "selected" : '') ?>>USD</option>
-                                        <option value="EURO" <?= ($client['currency'] == "EURO" ? "selected" : '') ?>>EURO</option>
-                                        <option value="GBP" <?= ($client['currency'] == "GBP" ? "selected" : '') ?>>GBP</option>
+                                        <?php foreach ($currency as $group) : ?>
+                                            <option <?= ($client==$group['short_name']?"selected":"") ?> value="<?= $group['short_name']; ?>"><?= $group['name'] . '  (' . $group['short_name']; ?>)</option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -81,7 +79,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="unit">Select Unit</label>
+                            <label for="unit"><?= languagedata($this->session->userdata('session_language'), "Select Unit"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -100,7 +98,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">Company Name</label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'), "Company Name"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -115,7 +113,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="abbreviation">Company Abbreviation</label>
+                            <label for="abbreviation"><?= languagedata($this->session->userdata('session_language'), "Company Abbreviation"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -128,7 +126,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term">Accounting Term</label>
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Accounting Term"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -141,7 +139,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="year">Start Year</label>
+                            <label for="year"><?= languagedata($this->session->userdata('session_language'), "Start Year"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -154,7 +152,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="email">Register Id(Email Address)</label>
+                            <label for="email"><?= languagedata($this->session->userdata('session_language'), "Register Id(Email Address)"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -166,7 +164,7 @@
                     </div>
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="password">Password</label>
+                            <label for="password"><?= languagedata($this->session->userdata('session_language'), "Password"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -179,7 +177,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="status">User Status</label>
+                            <label for="status"><?= languagedata($this->session->userdata('session_language'), "User Status"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">

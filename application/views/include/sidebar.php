@@ -57,7 +57,7 @@
 				</ul>
 			</li>
 
-			
+
 			<!-- BS Code tab -->
 			<li id="bs_code">
 				<a href="javascript:void(0);" class="menu-toggle">
@@ -82,7 +82,7 @@
 					</li> -->
 				</ul>
 			</li>
-			
+
 			<li id="ci_examples">
 				<a href="javascript:void(0);" class="menu-toggle">
 					<i class="material-icons">settings</i>
@@ -97,6 +97,9 @@
 					</li>
 					<li id="pagination">
 						<a href="<?= base_url('admin/settings/languages'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage Languages"); ?></a>
+					</li>
+					<li id="change_password">
+						<a href="<?= base_url('admin/settings/password'); ?>"><?= languagedata($this->session->userdata('session_language'), "Change Password"); ?></a>
 					</li>
 					<!-- <li id="signout">
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>

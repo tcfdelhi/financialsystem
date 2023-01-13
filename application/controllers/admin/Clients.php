@@ -168,6 +168,7 @@ class Clients extends MY_Controller {
 		public function edit($id = 0){
 			$data['country'] = $this->user_model->get_countries();
 			$data['user'] = $this->user_model->get_user_by_id($id);
+			$data['currency'] = $this->settings_model->get_currencies();
 
 			if($this->input->post('submit')){
 				// $this->form_validation->set_rules('username', 'Username', 'trim|min_length[3]|required');

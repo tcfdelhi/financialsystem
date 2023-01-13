@@ -5,7 +5,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    ADD NEW ADMIN
+                <?= languagedata($this->session->userdata('session_language'), "Add New Admin"); ?>
                 </h2>
                 <a href="<?= base_url('admin/settings/'); ?>" class="btn bg-indigo waves-effect pull-right">Admin List</a>
             </div>
@@ -40,7 +40,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">First Name</label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'), "First Name"); ?></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -53,7 +53,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name">Last name</label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'), "Last name"); ?></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -67,7 +67,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="abbreviation">Email</label>
+                            <label for="abbreviation"><?= languagedata($this->session->userdata('session_language'), "Email"); ?></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -80,7 +80,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term">Password</label>
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Password"); ?></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -93,7 +93,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="year">Country</label>
+                            <label for="year"><?= languagedata($this->session->userdata('session_language'), "Country"); ?></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">

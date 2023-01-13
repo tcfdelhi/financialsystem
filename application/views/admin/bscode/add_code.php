@@ -147,12 +147,9 @@
                             <div class="form-group">
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="year">
-                                        <option value="">-- Please select --</option>
-                                        <option value="2019" <?= ($code_data['year'] == '2019' ? "selected" : "") ?>>2019</option>
-                                        <option value="2020" <?= ($code_data['year'] == '2020' ? "selected" : "") ?>>2020</option>
-                                        <option value="2021" <?= ($code_data['year'] == '2021' ? "selected" : "") ?>>2021</option>
-                                        <option value="2022" <?= ($code_data['year'] == '2022' ? "selected" : "") ?>>2022</option>
-                                        <option value="2023" <?= ($code_data['year'] == '2023' ? "selected" : "") ?>>2023</option>
+                                        <?php foreach ($years as $group) : ?>
+                                            <option value="<?= $group['year']; ?>" <?= ($code_data['year']==$group['year']?"selected":"") ?>><?= $group['year'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>

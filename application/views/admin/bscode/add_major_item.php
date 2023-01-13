@@ -7,7 +7,7 @@
                 <h2>
                 <?= languagedata($this->session->userdata('session_language'),"Add New Major item");?>
                 </h2>
-                <a href="<?= base_url('admin/bscode/major_item/'); ?>" class="btn bg-indigo waves-effect pull-right">Currency List</a>
+                <a href="<?= base_url('admin/bscode/major_item/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Major List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">

@@ -27,11 +27,9 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <select class="form-control show-tick submit_form" name="year">
-                                    <option value="2019" <?= ($year == '2019' ? "selected" : "") ?>>2019</option>
-                                    <option value="2020" <?= ($year == '2020' ? "selected" : "") ?>>2020</option>
-                                    <option value="2021" <?= ($year == '2021' ? "selected" : "") ?>>2021</option>
-                                    <option value="2022" <?= ($year == '2022' ? "selected" : "") ?>>2022</option>
-                                    <option value="2023" <?= ($year == '2023' ? "selected" : "") ?>>2023</option>
+                                    <?php foreach ($years as $group) : ?>
+                                        <option value="<?= $group['year']; ?>" <?= ($year==$group['year']?"selected":"") ?>><?= $group['year'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -45,14 +43,14 @@
                         <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th>Financial Year</th>
-                                <th>Accounting Code</th>
-                                <th>Title (Accounting Name)</th>
-                                <th>Major items of BS</th>
-                                <th>Medium item of BS</th>
-                                <th>Cash Flow category</th>
-                                <th>Increase and Decrease in Cash Flow</th>
-                                <th>Action</th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Financial Year"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Title (Accounting Name)"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Major items of BS"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Medium item of BS"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Increase and Decrease in Cash Flow"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
                             </tr>
                         </thead>
                     </table>
@@ -70,12 +68,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Upload Excel file</h4>
+                <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
             </div>
             <div class="modal-body">
                 <form action="<?php echo base_url('user/bscode/import_excel'); ?>" method="POST" enctype="multipart/form-data">
 
-                <div class="row clearfix col-md-6">
+                    <div class="row clearfix col-md-6">
                         <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
                             <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Year"); ?><span class="red"> *</span></label>
                         </div>
@@ -83,11 +81,9 @@
                             <div class="form-group">
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="year" required>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
+                                        <?php foreach ($years as $group) : ?>
+                                            <option value="<?= $group['year']; ?>"><?= $group['year'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -105,7 +101,7 @@
                     </div>
                 </form>
                 <div class="col-md-12">
-                    <a href="<?= base_url('uploads/bscode/BS_Import_Acc_code_Form.xlsx') ?>">Download Sample File</a>
+                    <a href="<?= base_url('uploads/bscode/BS_Import_Acc_code_Form.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>
 
                 </div>
             </div>
@@ -123,14 +119,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Delete</h4>
+                <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></h4>
             </div>
             <div class="modal-body">
-                <p>As you sure you want to delete.</p>
+                <p><?= languagedata($this->session->userdata('session_language'), "Are you sure you want to delete"); ?></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a class="btn btn-danger btn-ok">Delete</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?= languagedata($this->session->userdata('session_language'), "Close"); ?></button>
+                <a class="btn btn-danger btn-ok"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></a>
             </div>
         </div>
     </div>

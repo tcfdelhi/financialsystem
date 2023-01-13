@@ -18,6 +18,7 @@ class Bscode extends MY_Controller
 	//-----------------------------------------------------------------------
 	public function index()
 	{
+		$data['years'] = $this->bs_model->get_years();
 		$data['clients'] = $this->bs_model->get_clients();
 		$data['view'] = 'admin/bscode/codes';
 		$this->load->view('layout', $data);
@@ -36,7 +37,7 @@ class Bscode extends MY_Controller
 			redirect(base_url('admin/bscode'));
 		}
 
-
+		$data['years'] = $this->bs_model->get_years();
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
 		$data['clients'] = $this->bs_model->get_clients();
@@ -92,6 +93,7 @@ class Bscode extends MY_Controller
 		$data['medium_items'] = $this->bs_model->get_medium_items();
 		$data['cash_flow_categories'] = $this->bs_model->get_cash_flow_categories();
 		$data['clients'] = $this->bs_model->get_clients();
+		$data['years'] = $this->bs_model->get_years();
 		// print_r($data['clients']); die;
 
 
