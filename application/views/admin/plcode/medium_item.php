@@ -8,10 +8,10 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "Medium items of BS Listing"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "Medium items of PL Listing"); ?>
                 </h2>
 
-                <a href="<?= base_url('admin/bscode/add_cash_flow/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Cash Flow Category items"); ?></a>
+                <a href="<?= base_url('admin/plcode/add_medium_item/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Medium items"); ?></a>
             </div>
             <div class="body">
                 <div class="table-responsive">
@@ -25,13 +25,13 @@
                         </thead>
                         <tbody>
                             <?php $count = 0;
-                            foreach ($cash_flow_categories as $row) : ?>
+                            foreach ($medium_items as $row) : ?>
                                 <tr>
                                     <td><?= ++$count; ?></td>
                                     <td><?= $row['name']; ?></td>
                                     <td>
-                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/bscode/add_cash_flow/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
-                                        <a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/bscode/delete_cash_flow/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
+                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/plcode/add_medium_item/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
+                                        <a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/plcode/delete_medium/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
                                         </a>
                                     </td>
                                 </tr>
@@ -85,5 +85,6 @@
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-    $("#bs_code").addClass('active');
+    $("#pl_code").addClass('active');
+    $("#pl_medium_item").addClass('active');
 </script>

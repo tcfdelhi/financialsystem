@@ -77,6 +77,41 @@
 					<li id="cash_flow">
 						<a href="<?= base_url('admin/bscode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
 					</li>
+					<li id="list_view">
+						<a href="<?= base_url('admin/bscode/list_view'); ?>"><?= languagedata($this->session->userdata('session_language'), "List View BS Codes"); ?></a>
+					</li>
+					<!-- <li id="signout">
+						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
+					</li> -->
+				</ul>
+			</li>
+
+
+			<!-- BS Code tab -->
+			<li id="pl_code">
+				<a href="javascript:void(0);" class="menu-toggle">
+					<i class="material-icons">code</i>
+					<span><?= languagedata($this->session->userdata('session_language'), "PL Codes"); ?></span>
+				</a>
+				<ul class="ml-menu">
+					<li id="pl_codes">
+						<a href="<?= base_url('admin/plcode'); ?>"><?= languagedata($this->session->userdata('session_language'), "Manage PL Codes"); ?></a>
+					</li>
+					<li id="pl_major_item">
+						<a href="<?= base_url('admin/plcode/major_item'); ?>"><?= languagedata($this->session->userdata('session_language'), "Major items of PL"); ?></a>
+					</li>
+					<li id="pl_medium_item">
+						<a href="<?= base_url('admin/plcode/medium_item'); ?>"><?= languagedata($this->session->userdata('session_language'), "Medium item of PL"); ?></a>
+					</li>
+					<li id="pl_breakdown_cat">
+						<a href="<?= base_url('admin/plcode/breakdown_cat'); ?>"><?= languagedata($this->session->userdata('session_language'), "Breakdown Category"); ?></a>
+					</li>
+					<li id="pl_cash_flow_category">
+						<a href="<?= base_url('admin/plcode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
+					</li>
+					<li id="pl_list_view">
+						<a href="<?= base_url('admin/plcode/list_view'); ?>"><?= languagedata($this->session->userdata('session_language'), "List View PL Codes"); ?></a>
+					</li>
 					<!-- <li id="signout">
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
 					</li> -->

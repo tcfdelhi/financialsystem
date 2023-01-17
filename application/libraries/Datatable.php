@@ -46,11 +46,10 @@ class Datatable
 		$SQL.= $_GET['columns'][$_GET['order'][0]['column']]['name']." ";
 		$SQL.= $_GET['order'][0]['dir'];
 		$SQL.= " LIMIT ".$_GET['length']." OFFSET ".$_GET['start']." ";
-
+		// echo $SQL; die;
 		$query = $this->obj->db->query($SQL);
 		$data = $query->result_array();
 		
 		return array("recordsTotal"=>$total,"recordsFiltered"=>$filtered,'data' => $data);
 	}	
 }
-?>

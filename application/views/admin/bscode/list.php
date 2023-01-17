@@ -47,7 +47,7 @@
                             <div class="form-line">
                                 <select class="form-control show-tick submit_form" name="year">
                                     <?php foreach ($years as $group) : ?>
-                                        <option value="<?= $group['year']; ?>"><?= $group['year'] ?></option>
+                                        <option value="<?= $group['year']; ?>" <?= ($year==$group['year']?"selected":"") ?>><?= $group['year'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

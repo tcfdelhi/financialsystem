@@ -1,5 +1,5 @@
 <?php
-class Bs_model extends CI_Model
+class Pl_model extends CI_Model
 {
 	public function __construct()
 	{
@@ -9,17 +9,19 @@ class Bs_model extends CI_Model
 	//-----------------------------------------------------
 	public function get_codes($year = 0 , $client_id = 0)
 	{
-		// $query = $this->db->get('ci_bs_code');
+		// $query = $this->db->get('ci_pl_code');
 		$query = 'SELECT 
-		ci_bs_code.*,ci_major_item.name as major_name , ci_medium_item.name as medium_name,ci_cash_flow_category.name as cat, ci_users.firstname,ci_users.lastname
-		from ci_bs_code 
-		INNER JOIN ci_users on ci_bs_code.client_id = ci_users.client_id 
-		INNER JOIN ci_major_item on ci_bs_code.major_item = ci_major_item.id 
-		INNER JOIN ci_medium_item on ci_bs_code.medium_item = ci_medium_item.id 
-		INNER JOIN ci_cash_flow_category on ci_bs_code.cash_flow_category = ci_cash_flow_category.id';
+		ci_pl_code.*,ci_pl_major_item.name as major_name , ci_pl_medium_item.name as medium_name,ci_pl_cash_flow_category.name as cat, ci_users.firstname,ci_users.lastname,ci_pl_breakdown_cat.name as break_cat_name
+		from ci_pl_code 
+		INNER JOIN ci_users on ci_pl_code.client_id = ci_users.client_id 
+		INNER JOIN ci_pl_major_item on ci_pl_code.major_item = ci_pl_major_item.id 
+		INNER JOIN ci_pl_medium_item on ci_pl_code.medium_item = ci_pl_medium_item.id 
+		INNER JOIN ci_pl_breakdown_cat on ci_pl_code.breakdown_cat = ci_pl_breakdown_cat.id 
+		INNER JOIN ci_pl_cash_flow_category on ci_pl_code.cash_flow_category = ci_pl_cash_flow_category.id';
+		
 
 		// Year And client condition
-		if($year != 0 and $client_id != 0) $WHERE = "ci_bs_code.year = $year and ci_bs_code.client_id = $client_id";
+		if($year != 0 and $client_id != 0) $WHERE = "ci_pl_code.year = $year and ci_pl_code.client_id = $client_id";
 		else $WHERE = "";
 		return $this->datatable->LoadJson($query, $WHERE);
 	}
@@ -27,43 +29,55 @@ class Bs_model extends CI_Model
 	//-----------------------------------------------------
 	public function add_code($data)
 	{
-		$this->db->insert('ci_bs_code', $data);
+		$this->db->insert('ci_pl_code', $data);
 		return true;
 	}
 
 	//-----------------------------------------------------
 	public function get_major_items()
 	{
-		$query = $this->db->get('ci_major_item');
+		$query = $this->db->get('ci_pl_major_item');
 		return $query->result_array();
 	}
 	public function add_major_item($data)
 	{
-		$this->db->insert('ci_major_item', $data);
+		$this->db->insert('ci_pl_major_item', $data);
 		return true;
 	}
 
 	//-----------------------------------------------------
 	public function get_medium_items()
 	{
-		$query = $this->db->get('ci_medium_item');
+		$query = $this->db->get('ci_pl_medium_item');
 		return $query->result_array();
 	}
 	public function add_medium_item($data)
 	{
-		$this->db->insert('ci_medium_item', $data);
+		$this->db->insert('ci_pl_medium_item', $data);
+		return true;
+	}
+
+	public function get_breakdown_categories()
+	{
+		$query = $this->db->get('ci_pl_breakdown_cat');
+		return $query->result_array();
+	}
+
+	public function add_breakdown_categories($data)
+	{
+		$this->db->insert('ci_pl_breakdown_cat', $data);
 		return true;
 	}
 
 	//-----------------------------------------------------
 	public function get_cash_flow_categories()
 	{
-		$query = $this->db->get('ci_cash_flow_category');
+		$query = $this->db->get('ci_pl_cash_flow_category');
 		return $query->result_array();
 	}
 	public function add_cash_flow_categories($data)
 	{
-		$this->db->insert('ci_cash_flow_category', $data);
+		$this->db->insert('ci_pl_cash_flow_category', $data);
 		return true;
 	}
 	public function get_clients()
@@ -76,7 +90,7 @@ class Bs_model extends CI_Model
 
 		$this->db->distinct();
 		$this->db->select('year');		
-		$query = $this->db->get('ci_year');
+		$query = $this->db->get('ci_pl_year');
 		return $query->result_array();
 	}
 
@@ -84,7 +98,7 @@ class Bs_model extends CI_Model
 	{
 		$this->db->select('cash_flow');
 		$this->db->distinct('cash_flow');
-		$this->db->from('ci_cash_flow_category');
+		$this->db->from('ci_pl_cash_flow_category');
 		return $this->db->get()->result_array();
 	}
 }

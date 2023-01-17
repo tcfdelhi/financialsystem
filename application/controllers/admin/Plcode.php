@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Bscode extends MY_Controller
+class Plcode extends MY_Controller
 {
 
 	public function __construct()
@@ -10,7 +10,7 @@ class Bscode extends MY_Controller
 		parent::__construct();
 		$this->load->model('admin/user_model', 'user_model');
 		$this->load->model('admin/setting_model', 'settings_model');
-		$this->load->model('admin/bs_model', 'bs_model');
+		$this->load->model('admin/Pl_model', 'pl_model');
 		$this->load->model('activity_model', 'activity_model');
 		$this->load->library('datatable'); // loaded my custom serverside datatable library		
 	}
@@ -18,9 +18,9 @@ class Bscode extends MY_Controller
 	//-----------------------------------------------------------------------
 	public function index()
 	{
-		$data['years'] = $this->bs_model->get_years();
-		$data['clients'] = $this->bs_model->get_clients();
-		$data['view'] = 'admin/bscode/codes';
+		$data['years'] = $this->pl_model->get_years();
+		$data['clients'] = $this->pl_model->get_clients();
+		$data['view'] = 'admin/plcode/codes';
 		$this->load->view('layout', $data);
 	}
 
@@ -32,14 +32,14 @@ class Bscode extends MY_Controller
 			$year  = $this->input->post('year');
 			$client_id  = $this->input->post('client_id');
 		} else {
-			redirect(base_url('admin/bscode'));
+			redirect(base_url('admin/plcode'));
 		}
 
-		$data['years'] = $this->bs_model->get_years();
+		$data['years'] = $this->pl_model->get_years();
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
-		$data['clients'] = $this->bs_model->get_clients();
-		$data['view'] = 'admin/bscode/list';
+		$data['clients'] = $this->pl_model->get_clients();
+		$data['view'] = 'admin/plcode/list';
 		$this->load->view('layout', $data);
 	}
 
@@ -51,7 +51,7 @@ class Bscode extends MY_Controller
 		$year  = $this->input->get('year');
 		$client_id  = $this->input->get('client_id');
 
-		$records = $this->bs_model->get_codes($year, $client_id);
+		$records = $this->pl_model->get_codes($year, $client_id);
 		$data = array();
 		$i = 0;
 
@@ -65,6 +65,7 @@ class Bscode extends MY_Controller
 				$row['title'],
 				$row['major_name'],
 				$row['medium_name'],
+				$row['break_cat_name'],
 				$row['cat'],
 				$row['cash_flow'],
 
@@ -73,8 +74,8 @@ class Bscode extends MY_Controller
 				// <a title="Edit" class="update btn btn-sm btn-primary" href="'.base_url('admin/clients/edit/'.$row['client_id']).'"> <i class="material-icons">edit</i></a>
 				// <a title="Delete" class="delete btn btn-sm btn-danger '.$disabled.'" data-href="'.base_url('admin/clients/delete/'.$row['client_id']).'" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				// ',
-				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('admin/bscode/add_code/' . $row['id']) . '"> <i class="material-icons">edit</i></a>
-				<a title="Delete" class="delete btn btn-sm btn-danger"  data-href="' . base_url('admin/bscode/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
+				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('admin/plcode/add_code/' . $row['id']) . '"> <i class="material-icons">edit</i></a>
+				<a title="Delete" class="delete btn btn-sm btn-danger"  data-href="' . base_url('admin/plcode/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				',
 
 			);
@@ -87,15 +88,16 @@ class Bscode extends MY_Controller
 	//-----------------------------------------------------------------------
 	public function add_code($id = 0)
 	{
-		$data['major_items'] = $this->bs_model->get_major_items();
-		$data['medium_items'] = $this->bs_model->get_medium_items();
-		$data['cash_flow_categories'] = $this->bs_model->get_cash_flow_categories();
-		$data['clients'] = $this->bs_model->get_clients();
-		$data['years'] = $this->bs_model->get_years();
+		$data['major_items'] = $this->pl_model->get_major_items();
+		$data['medium_items'] = $this->pl_model->get_medium_items();
+		$data['cash_flow_categories'] = $this->pl_model->get_cash_flow_categories();
+		$data['breakdown_categories'] = $this->pl_model->get_breakdown_categories();
+		$data['clients'] = $this->pl_model->get_clients();
+		$data['years'] = $this->pl_model->get_years();
 		// print_r($data['clients']); die;
 
 
-		if ($id != 0) $data['code_data'] =  $this->db->get_where('ci_bs_code', array('id' => $id))->row_array();
+		if ($id != 0) $data['code_data'] =  $this->db->get_where('ci_pl_code', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 		if ($this->input->post('submit')) {
 
@@ -109,7 +111,7 @@ class Bscode extends MY_Controller
 			$this->form_validation->set_rules('year', 'Financial Year', 'trim|required');
 
 			if ($this->form_validation->run() == FALSE) {
-				$data['view'] = 'admin/bscode/add_code';
+				$data['view'] = 'admin/plcode/add_code';
 				$this->load->view('layout', $data);
 			} else {
 				// Prepare Client data
@@ -119,15 +121,16 @@ class Bscode extends MY_Controller
 					'title' => $this->input->post('title'),
 					'major_item' => $this->input->post('major_item'),
 					'medium_item' => $this->input->post('medium_item'),
+					'breakdown_cat' => $this->input->post('breakdown_cat'),
 					'cash_flow_category' =>  $this->input->post('cash_flow_category'),
 					'cash_flow' => $this->input->post('cash_flow'),
 					'year' => $this->input->post('year'),
 				);
 				$data = $this->security->xss_clean($user_data);
-				if ($id == 0) $result = $this->bs_model->add_code($data);
+				if ($id == 0) $result = $this->pl_model->add_code($data);
 				else {
 					$this->db->where('id', $id);
-					$this->db->update('ci_bs_code', $data);
+					$this->db->update('ci_pl_code', $data);
 					$result = true;
 				}
 
@@ -136,32 +139,32 @@ class Bscode extends MY_Controller
 					$this->activity_model->add(1);
 
 					$this->session->set_flashdata('msg', 'Code has been added successfully!');
-					redirect(base_url('admin/bscode'));
+					redirect(base_url('admin/plcode'));
 				}
 			}
 		} else {
 
-			$data['view'] = 'admin/bscode/add_code';
+			$data['view'] = 'admin/plcode/add_code';
 			$this->load->view('layout', $data);
 		}
 	}
 
 	public function major_item()
 	{
-		$data['view'] = 'admin/bscode/major_item';
-		$data['major_items'] =  $this->bs_model->get_major_items();
+		$data['view'] = 'admin/plcode/major_item';
+		$data['major_items'] =  $this->pl_model->get_major_items();
 		$this->load->view('layout', $data);
 	}
 
 	public function add_major_item($id = 0)
 	{
-		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_major_item', array('id' => $id))->row_array();
+		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_pl_major_item', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
-				$data['view'] = 'admin/bscode/add_major_item';
+				$data['view'] = 'admin/plcode/add_major_item';
 				$this->load->view('layout', $data);
 			} else {
 				// Prepare Currency data
@@ -169,10 +172,10 @@ class Bscode extends MY_Controller
 					'name' => $this->input->post('name')
 				);
 
-				if ($id == 0) $result = $this->bs_model->add_major_item($user_data);
+				if ($id == 0) $result = $this->pl_model->add_major_item($user_data);
 				else {
 					$this->db->where('id', $id);
-					$this->db->update('ci_major_item', $user_data);
+					$this->db->update('ci_pl_major_item', $user_data);
 					$result = true;
 				}
 
@@ -181,11 +184,11 @@ class Bscode extends MY_Controller
 					$this->activity_model->add(13);
 
 					$this->session->set_flashdata('msg', 'Currency has been added successfully!');
-					redirect(base_url('admin/bscode/major_item'));
+					redirect(base_url('admin/plcode/major_item'));
 				}
 			}
 		} else {
-			$data['view'] = 'admin/bscode/add_major_item';
+			$data['view'] = 'admin/plcode/add_major_item';
 			$this->load->view('layout', $data);
 		}
 	}
@@ -193,20 +196,20 @@ class Bscode extends MY_Controller
 	// Medium Item
 	public function medium_item()
 	{
-		$data['view'] = 'admin/bscode/medium_item';
-		$data['medium_items'] =  $this->bs_model->get_medium_items();
+		$data['view'] = 'admin/plcode/medium_item';
+		$data['medium_items'] =  $this->pl_model->get_medium_items();
 		$this->load->view('layout', $data);
 	}
 
 	public function add_medium_item($id = 0)
 	{
-		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_medium_item', array('id' => $id))->row_array();
+		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_pl_medium_item', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
-				$data['view'] = 'admin/bscode/add_medium_item';
+				$data['view'] = 'admin/plcode/add_medium_item';
 				$this->load->view('layout', $data);
 			} else {
 				// Prepare Currency data
@@ -214,10 +217,10 @@ class Bscode extends MY_Controller
 					'name' => $this->input->post('name')
 				);
 
-				if ($id == 0) $result = $this->bs_model->add_medium_item($user_data);
+				if ($id == 0) $result = $this->pl_model->add_medium_item($user_data);
 				else {
 					$this->db->where('id', $id);
-					$this->db->update('ci_medium_item', $user_data);
+					$this->db->update('ci_pl_medium_item', $user_data);
 					$result = true;
 				}
 
@@ -226,11 +229,11 @@ class Bscode extends MY_Controller
 					$this->activity_model->add(13);
 
 					$this->session->set_flashdata('msg', 'Medium has been added successfully!');
-					redirect(base_url('admin/bscode/medium_item'));
+					redirect(base_url('admin/plcode/medium_item'));
 				}
 			}
 		} else {
-			$data['view'] = 'admin/bscode/add_medium_item';
+			$data['view'] = 'admin/plcode/add_medium_item';
 			$this->load->view('layout', $data);
 		}
 	}
@@ -238,14 +241,14 @@ class Bscode extends MY_Controller
 	// Cash Flow Catgeoriers Section
 	public function cash_flow()
 	{
-		$data['view'] = 'admin/bscode/cash_flow_category';
-		$data['cash_flow_categories'] =  $this->bs_model->get_cash_flow_categories();
+		$data['view'] = 'admin/plcode/cash_flow_category';
+		$data['cash_flow_categories'] =  $this->pl_model->get_cash_flow_categories();
 		$this->load->view('layout', $data);
 	}
 
 	public function add_cash_flow($id = 0)
 	{
-		if ($id != 0) $data['cash_flow'] =  $this->db->get_where('ci_cash_flow_category', array('id' => $id))->row_array();
+		if ($id != 0) $data['cash_flow'] =  $this->db->get_where('ci_pl_cash_flow_category', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
 		if ($this->input->post('submit')) {
@@ -253,7 +256,7 @@ class Bscode extends MY_Controller
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			$this->form_validation->set_rules('cash_flow', 'Cash Flow Rate', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
-				$data['view'] = 'admin/bscode/add_cash_flow_category';
+				$data['view'] = 'admin/plcode/add_cash_flow_category';
 				$this->load->view('layout', $data);
 			} else {
 				// Prepare Currency data
@@ -261,10 +264,10 @@ class Bscode extends MY_Controller
 					'name' => $this->input->post('name'),
 					'cash_flow' => $this->input->post('cash_flow')
 				);
-				if ($id == 0) $result = $this->bs_model->add_cash_flow_categories($user_data);
+				if ($id == 0) $result = $this->pl_model->add_cash_flow_categories($user_data);
 				else {
 					$this->db->where('id', $id);
-					$this->db->update('ci_cash_flow_category', $user_data);
+					$this->db->update('ci_pl_cash_flow_category', $user_data);
 					$result = true;
 				}
 				// echo "s"; die;
@@ -274,11 +277,11 @@ class Bscode extends MY_Controller
 					$this->activity_model->add(13);
 
 					$this->session->set_flashdata('msg', 'Category has been added successfully!');
-					redirect(base_url('admin/bscode/cash_flow'));
+					redirect(base_url('admin/plcode/cash_flow'));
 				}
 			}
 		} else {
-			$data['view'] = 'admin/bscode/add_cash_flow_category';
+			$data['view'] = 'admin/plcode/add_cash_flow_category';
 			$this->load->view('layout', $data);
 		}
 	}
@@ -286,37 +289,37 @@ class Bscode extends MY_Controller
 
 	public function delete($id = 0)
 	{
-		$this->db->delete('ci_bs_code', array('id' => $id));
+		$this->db->delete('ci_pl_code', array('id' => $id));
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'BS Code has been deleted successfully!');
-		redirect(base_url('admin/bscode'));
+		redirect(base_url('admin/plcode'));
 	}
 	public function delete_major($id = 0)
 	{
 
-		$this->db->delete('ci_major_item', array('id' => $id));
+		$this->db->delete('ci_pl_major_item', array('id' => $id));
 		// Add User Activity
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'User has been deleted successfully!');
-		redirect(base_url('admin/bscode/major_item'));
+		redirect(base_url('admin/plcode/major_item'));
 	}
 
 	public function delete_medium($id = 0)
 	{
-		$this->db->delete('ci_medium_item', array('id' => $id));
+		$this->db->delete('ci_pl_medium_item', array('id' => $id));
 		// Add User Activity
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'Language has been deleted successfully!');
-		redirect(base_url('admin/bscode/medium_item'));
+		redirect(base_url('admin/plcode/medium_item'));
 	}
 
 	public function delete_cash_flow($id = 0)
 	{
-		$this->db->delete('ci_cash_flow_category', array('id' => $id));
+		$this->db->delete('ci_pl_cash_flow_category', array('id' => $id));
 		// Add User Activity
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'Currency has been deleted successfully!');
-		redirect(base_url('admin/bscode/cash_flow'));
+		redirect(base_url('admin/plcode/cash_flow'));
 	}
 
 	public function import_excel()
@@ -356,34 +359,45 @@ class Bscode extends MY_Controller
 						$data = [];
 						if ($key == 1) continue;
 
-						$cash_flow_category = $value['E'];
-						$cash_flow = $value['F'];
-						$cash_flow_category_id = $this->db->get_where('ci_cash_flow_category', array('name' => "$cash_flow_category", 'cash_flow' => "$cash_flow"))->row()->id;
+						$cash_flow_category = $value['F'];
+						$cash_flow = $value['G'];
+						$cash_flow_category_id = $this->db->get_where('ci_pl_cash_flow_category', array('name' => "$cash_flow_category", 'cash_flow' => "$cash_flow"))->row()->id;
 						if (empty($cash_flow_category_id)) {
 							$cash_cat_data['name'] = $cash_flow_category;
 							$cash_cat_data['cash_flow'] = $cash_flow;
-							$this->db->insert('ci_cash_flow_category', $cash_cat_data);
+							$this->db->insert('ci_pl_cash_flow_category', $cash_cat_data);
 							$cash_flow_category_id = $this->db->insert_id();
 						}
 
 						// Major Item
 						$major_item = $value['C'];
-						$major_item_id = $this->db->get_where('ci_major_item', array('name' => "$major_item"))->row()->id;
+						$major_item_id = $this->db->get_where('ci_pl_major_item', array('name' => "$major_item"))->row()->id;
 						if (empty($major_item_id)) {
 							$major_data['name'] = $major_item;
-							$this->db->insert('ci_major_item', $major_data);
+							$this->db->insert('ci_pl_major_item', $major_data);
 							$major_item_id = $this->db->insert_id();
 						}
 
 
 						// Medium Item
 						$medium_item = $value['D'];
-						$medium_item_id = $this->db->get_where('ci_medium_item', array('name' => "$medium_item"))->row()->id;
+						$medium_item_id = $this->db->get_where('ci_pl_medium_item', array('name' => "$medium_item"))->row()->id;
 						if (empty($medium_item_id)) {
 							$medium_data['name'] = $medium_item;
-							$this->db->insert('ci_medium_item', $medium_data);
+							$this->db->insert('ci_pl_medium_item', $medium_data);
 							$medium_item_id = $this->db->insert_id();
 						}
+
+
+						// Break Down category
+						$medium_item = $value['E'];
+						$breakdwon_cat = $this->db->get_where('ci_pl_breakdown_cat', array('name' => "$medium_item"))->row()->id;
+						if (empty($breakdwon_cat)) {
+							$medium_data['name'] = $medium_item;
+							$this->db->insert('ci_pl_breakdown_cat', $medium_data);
+							$breakdwon_cat = $this->db->insert_id();
+						}
+
 
 
 						// Prepare Data For Bs Codes
@@ -393,9 +407,10 @@ class Bscode extends MY_Controller
 						$data['title'] = $value['B'];
 						$data['major_item'] = $major_item_id;
 						$data['medium_item'] = $medium_item_id;
+						$data['breakdown_cat'] = $breakdwon_cat;
 						$data['cash_flow_category'] = $cash_flow_category_id;
 						$data['cash_flow'] = $cash_flow;
-						$result = $this->bs_model->add_code($data);
+						$result = $this->pl_model->add_code($data);
 					}
 					if ($result) {
 						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
@@ -403,28 +418,73 @@ class Bscode extends MY_Controller
 					// echo "<pre>";
 					// print_r($allDataInSheet);
 					// die;
-					redirect("admin/bscode", 'refresh');
+					redirect("admin/plcode", 'refresh');
 				} catch (Exception $e) {
 					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
 						. '": ' . $e->getMessage());
 					unlink($path . $data['upload_data']['file_name']);
-					redirect("admin/bscode", 'refresh');
+					redirect("admin/plcode", 'refresh');
 				}
 			} else {
 				$this->session->set_flashdata('error', $error['error']);
 				unlink($path . $data['upload_data']['file_name']);
-				redirect("admin/bscode", 'refresh');
+				redirect("admin/plcode", 'refresh');
 			}
 		}
 	}
 
 	public function list_view()
 	{
-		$data['major_items'] = $this->bs_model->get_major_items();
-		$data['medium_items'] = $this->bs_model->get_medium_items();
-		$data['cash_flow_categories'] = $this->bs_model->get_cash_flow_categories();
-		$data['cashflow'] = $this->bs_model->cashflow();
-		$data['view'] = 'admin/bscode/list_view';
+		$data['major_items'] = $this->pl_model->get_major_items();
+		$data['medium_items'] = $this->pl_model->get_medium_items();
+		$data['cash_flow_categories'] = $this->pl_model->get_cash_flow_categories();
+		$data['cashflow'] = $this->pl_model->cashflow();
+		$data['view'] = 'admin/plcode/list_view';
 		$this->load->view('layout', $data);
+	}
+
+	public function breakdown_cat(){
+		
+		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
+
+		$data['view'] = 'admin/plcode/breakdown_category';
+		$this->load->view('layout', $data);
+	}
+	
+	public function add_breakdown($id = 0)
+	{
+		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_pl_breakdown_cat', array('id' => $id))->row_array();
+		if ($id != 0) $data['id'] =  $id;
+
+		if ($this->input->post('submit')) {
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+			if ($this->form_validation->run() == FALSE) {
+				$data['view'] = 'admin/plcode/add_breakdown_category';
+				$this->load->view('layout', $data);
+			} else {
+				// Prepare Currency data
+				$user_data = array(
+					'name' => $this->input->post('name')
+				);
+
+				if ($id == 0) $result = $this->pl_model->add_breakdown_categories($user_data);
+				else {
+					$this->db->where('id', $id);
+					$this->db->update('ci_pl_breakdown_cat', $user_data);
+					$result = true;
+				}
+
+				if ($result) {
+					// Add User Activity
+					$this->activity_model->add(13);
+
+					$this->session->set_flashdata('msg', 'Currency has been added successfully!');
+					redirect(base_url('admin/plcode/breakdown_cat'));
+				}
+			}
+		} else {
+			$data['view'] = 'admin/plcode/add_breakdown_category';
+			$this->load->view('layout', $data);
+		}
 	}
 }

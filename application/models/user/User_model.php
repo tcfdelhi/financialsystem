@@ -93,4 +93,58 @@ class User_model extends CI_Model
 		$query = $this->db->get('ci_cash_flow_category');
 		return $query->result_array();
 	}
+
+	// All PL Data here
+	
+	//-----------------------------------------------------
+	public function get_pl_major_items()
+	{
+		$query = $this->db->get('ci_pl_major_item');
+		return $query->result_array();
+	}
+
+	//-----------------------------------------------------
+	public function get_pl_medium_items()
+	{
+		$query = $this->db->get('ci_pl_medium_item');
+		return $query->result_array();
+	}
+
+	//-----------------------------------------------------
+	public function get_pl_cash_flow_categories()
+	{
+		$query = $this->db->get('ci_pl_cash_flow_category');
+		return $query->result_array();
+	}
+
+	public function get_pl_breakdown_cats()
+	{
+		$query = $this->db->get('ci_pl_breakdown_cat');
+		return $query->result_array();
+	}
+
+	public function add_pl_code($data)
+	{
+		$this->db->insert('ci_pl_code', $data);
+		return true;
+	}
+	// Get Pl code
+	public function get_pl_codes($year = 0)
+	{
+		$id = $this->session->userdata('user_id');
+		$query = 'SELECT 
+		ci_pl_code.*,ci_pl_major_item.name as major_name , ci_pl_medium_item.name as medium_name,ci_pl_cash_flow_category.name as cat
+		from ci_pl_code 
+		INNER JOIN ci_pl_major_item on ci_pl_code.major_item = ci_pl_major_item.id 
+		INNER JOIN ci_pl_medium_item on ci_pl_code.medium_item = ci_pl_medium_item.id 
+		INNER JOIN ci_pl_breakdown_cat on ci_pl_code.breakdown_cat = ci_pl_breakdown_cat.id 
+		INNER JOIN ci_pl_cash_flow_category on ci_pl_code.cash_flow_category = ci_pl_cash_flow_category.id';
+
+		$client_id = $this->db->get_where('ci_users', array('id' => $id))->row()->client_id;
+		// Year And client condition
+		if ($year != 0) $WHERE = "ci_pl_code.year = $year and ci_pl_code.client_id = $client_id";
+		else $WHERE = "";
+
+		return $this->datatable->LoadJson($query, $WHERE);
+	}
 }

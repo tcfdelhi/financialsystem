@@ -11,10 +11,10 @@
 					languages List
 				</h2>
 
-				<button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i>Import Excel</button>
+				<button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
 
 
-				<a href="<?= base_url('admin/settings/add_language'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> ADD NEW LANGUAGE</a>
+				<a href="<?= base_url('admin/settings/add_language'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Language"); ?></a>
 			</div>
 			<div class="body">
 				<div class="table-responsive">
@@ -26,7 +26,7 @@
 								<th><?= languagedata($this->session->userdata('session_language'), "Japanese"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Vietnamese"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Thai"); ?></th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Indonesian"); ?>Indonesian</th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Indonesian"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
 							</tr>
 						</thead>

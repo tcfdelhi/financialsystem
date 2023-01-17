@@ -7,7 +7,7 @@
                 <h2>
                 <?= languagedata($this->session->userdata('session_language'), "Add New Language"); ?>
                 </h2>
-                <a href="<?= base_url('admin/currency/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Language's List"); ?></a>
+                <a href="<?= base_url('admin/currency/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Language List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">

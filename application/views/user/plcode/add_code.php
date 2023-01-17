@@ -7,7 +7,7 @@
                 <h2>
                     <?= languagedata($this->session->userdata('session_language'), "Add New Code"); ?>
                 </h2>
-                <a href="<?= base_url('user/bscode/'); ?>" class="btn bg-indigo waves-effect pull-right"> <?= languagedata($this->session->userdata('session_language'), "Codes List"); ?></a>
+                <a href="<?= base_url('user/plcode/'); ?>" class="btn bg-indigo waves-effect pull-right"> <?= languagedata($this->session->userdata('session_language'), "Codes List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">
@@ -22,7 +22,7 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('user/bscode/add_code/' . $id), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('user/plcode/add_code/' . $id), 'class="form-horizontal"');  ?>
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -52,7 +52,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Major items of BS"); ?><span class="red"> *</span></label>
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Major items of PL"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -70,7 +70,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="year"><?= languagedata($this->session->userdata('session_language'), "Medium item of BS"); ?><span class="red"> *</span></label>
+                            <label for="year"><?= languagedata($this->session->userdata('session_language'), "Medium item of PL"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -79,6 +79,24 @@
                                         <option value="">-- Please select --</option>
                                         <?php foreach ($medium_items as $group) : ?>
                                             <option value="<?= $group['id']; ?>" <?= ($code_data['medium_item'] == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="email"><?= languagedata($this->session->userdata('session_language'), "Breakdown Category"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="breakdown_cat">
+                                        <option value="">-- Please select --</option>
+                                        <?php foreach ($breakdown_cat as $group) : ?>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['breakdown_cat'] == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -149,5 +167,5 @@
     </div>
 </div>
 <script>
-    $("#bscodes").addClass('active');
+    $("#plcodes").addClass('active');
 </script>

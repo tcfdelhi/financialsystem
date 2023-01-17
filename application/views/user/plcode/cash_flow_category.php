@@ -19,8 +19,8 @@
                         <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Name"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
+                                <th>Name</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,7 +30,7 @@
                                     <td><?= ++$count; ?></td>
                                     <td><?= $row['name']; ?></td>
                                     <td>
-                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/bscode/add_cash_flow/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
+                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/settings/add_language/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
                                         <a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/bscode/delete_cash_flow/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
                                         </a>
                                     </td>
@@ -52,14 +52,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></h4>
+                <h4 class="modal-title">Delete</h4>
             </div>
             <div class="modal-body">
-                <p><?= languagedata($this->session->userdata('session_language'), "Are you sure you want to delete"); ?></p>
+                <p>As you sure you want to delete.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?= languagedata($this->session->userdata('session_language'), "Close"); ?></button>
-                <a class="btn btn-danger btn-ok"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
             </div>
         </div>
     </div>

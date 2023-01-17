@@ -5,9 +5,9 @@
         <div class="card">
             <div class="header">
                 <h2>
-                <?= languagedata($this->session->userdata('session_language'),"Add New Major item");?>
+                <?= languagedata($this->session->userdata('session_language'),"Add New Medium item");?>
                 </h2>
-                <a href="<?= base_url('admin/bscode/medium_item/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Medium List"); ?></a>
+                <a href="<?= base_url('admin/plcode/medium_item/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Medium List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">
@@ -22,7 +22,7 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('admin/bscode/add_medium_item/'.$id), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('admin/plcode/add_medium_item/'.$id), 'class="form-horizontal"');  ?>
 
 
                     <div class="row clearfix col-md-6">
@@ -50,6 +50,6 @@
     </div>
 </div>
 <script>
-    $("#bs_code").addClass('active');
-    $("#medium_item").addClass('active');
+    $("#pl_code").addClass('active');
+    $("#pl_medium_item").addClass('active');
 </script>

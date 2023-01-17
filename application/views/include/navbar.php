@@ -64,7 +64,7 @@
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                         <i class="material-icons">language</i>
-                        <span class="label-count">5</span>
+                        <!-- <span class="label-count">5</span> -->
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">Languages</li>

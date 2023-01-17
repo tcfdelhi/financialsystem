@@ -8,17 +8,36 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "BS Code Lists"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "PL Code Lists"); ?>
                 </h2>
 
 
                 <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
 
-                <a href="<?= base_url('user/bscode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Code"); ?></a>
+                <a href="<?= base_url('admin/plcode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Code"); ?></a>
             </div>
             <!-- Dropdown for filters -->
-            <?php echo form_open(base_url('user/bscode/list'), 'class="form-horizontal filter_record"');  ?>
+            <?php echo form_open(base_url('admin/plcode/list'), 'class="form-horizontal filter_record"');  ?>
             <div class="pull-right col-md-8 m-t-20">
+                <div class="row clearfix col-md-6">
+                    <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                        <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
+                    </div>
+                    <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select class="form-control show-tick submit_form" name="client_id">
+                                    <?php foreach ($clients as $group) : ?>
+                                        <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div class="row clearfix col-md-6">
                     <div class="col-lg-6 col-md-2 col-sm-4 col-xs-5 form-control-label">
                         <label for="password"><?= languagedata($this->session->userdata('session_language'), "Select Financial Year"); ?><span class="red"> *</span></label>
@@ -38,16 +57,20 @@
             </div>
             <?php echo form_close(); ?>
             <div class="body">
+
+
                 <div class="table-responsive">
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
                             <tr>
                                 <th>#ID</th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Financial Year"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Client"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Title (Accounting Name)"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Major items of BS"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Medium item of BS"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Breakdown Category"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Increase and Decrease in Cash Flow"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
@@ -71,7 +94,24 @@
                 <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('user/bscode/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo base_url('admin/plcode/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-12 col-md-4 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="client_id" required>
+                                        <?php foreach ($clients as $group) : ?>
+                                            <option value="<?= $group['id']; ?>"><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
@@ -90,6 +130,7 @@
                         </div>
                     </div>
 
+
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -101,7 +142,7 @@
                     </div>
                 </form>
                 <div class="col-md-12">
-                    <a href="<?= base_url('uploads/bscode/BS_Import_Acc_code_Form.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>
+                    <a href="<?= base_url('uploads/plcode/BS_Import_Acc_code_Form.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>
 
                 </div>
             </div>
@@ -140,11 +181,12 @@
     var table = $('#na_datatable').DataTable({
         "processing": true,
         "serverSide": true,
-        // "ajax": "<?= base_url('user/bscode/get_codes') ?>",
+        // "ajax": "<?= base_url('admin/plcode/get_codes') ?>",
         "ajax": {
-            "url": "<?= base_url('user/bscode/get_codes') ?>",
+            "url": "<?= base_url('admin/plcode/get_codes') ?>",
             "data": {
-                "year": "<?= $year ?>"
+                "year": "<?= $year ?>",
+                "client_id": "<?= $client_id ?>"
             }
         },
         "order": [
@@ -154,19 +196,19 @@
                 "targets": 0,
                 "name": "id",
                 'searchable': false,
-                'orderable': true
+                'orderable': false
             },
             {
                 "targets": 1,
                 "name": "username",
                 'searchable': true,
-                'orderable': true
+                'orderable': false
             },
             {
                 "targets": 2,
                 "name": "email",
                 'searchable': true,
-                'orderable': true
+                'orderable': false
             },
             {
                 "targets": 3,
@@ -189,7 +231,9 @@
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-    $("#bscodes").addClass('active');
+    $("#pl_code").addClass('active');
+    $("#pl_codes").addClass('active');
+
     $(".submit_form").change(function() {
         // alert('h');
         $(".filter_record").submit();

@@ -8,16 +8,16 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "BS Code Lists"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "PL Code Lists"); ?>
                 </h2>
 
 
                 <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
 
-                <a href="<?= base_url('user/bscode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Code"); ?></a>
+                <a href="<?= base_url('user/plcode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Code"); ?></a>
             </div>
             <!-- Dropdown for filters -->
-            <?php echo form_open(base_url('user/bscode/list'), 'class="form-horizontal filter_record"');  ?>
+            <?php echo form_open(base_url('user/plcode/list'), 'class="form-horizontal filter_record"');  ?>
             <div class="pull-right col-md-8 m-t-20">
                 <div class="row clearfix col-md-6">
                     <div class="col-lg-6 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -71,7 +71,7 @@
                 <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('user/bscode/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo base_url('user/plcode/import_excel'); ?>" method="POST" enctype="multipart/form-data">
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
@@ -101,7 +101,7 @@
                     </div>
                 </form>
                 <div class="col-md-12">
-                    <a href="<?= base_url('uploads/bscode/BS_Import_Acc_code_Form.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>
+                    <a href="<?= base_url('uploads/plcode/BS_Import_Acc_code_Form.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>
 
                 </div>
             </div>
@@ -140,9 +140,9 @@
     var table = $('#na_datatable').DataTable({
         "processing": true,
         "serverSide": true,
-        // "ajax": "<?= base_url('user/bscode/get_codes') ?>",
+        // "ajax": "<?= base_url('user/plcode/get_codes') ?>",
         "ajax": {
-            "url": "<?= base_url('user/bscode/get_codes') ?>",
+            "url": "<?= base_url('user/plcode/get_codes') ?>",
             "data": {
                 "year": "<?= $year ?>"
             }
@@ -189,7 +189,7 @@
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-    $("#bscodes").addClass('active');
+    $("#plcodes").addClass('active');
     $(".submit_form").change(function() {
         // alert('h');
         $(".filter_record").submit();

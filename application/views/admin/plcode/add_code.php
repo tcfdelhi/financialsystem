@@ -7,7 +7,7 @@
                 <h2>
                     <?= languagedata($this->session->userdata('session_language'), "Add New Code"); ?>
                 </h2>
-                <a href="<?= base_url('user/bscode/'); ?>" class="btn bg-indigo waves-effect pull-right"> <?= languagedata($this->session->userdata('session_language'), "Codes List"); ?></a>
+                <a href="<?= base_url('admin/plcode/'); ?>" class="btn bg-indigo waves-effect pull-right"> <?= languagedata($this->session->userdata('session_language'), "Codes List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">
@@ -22,7 +22,26 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('user/bscode/add_code/' . $id), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('admin/plcode/add_code/' . $id), 'class="form-horizontal"');  ?>
+
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="client_id">
+                                        <option value="">-- Please select --</option>
+                                        <?php foreach ($clients as $group) : ?>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['client_id'] == $group['id'] ? "selected" : "") ?>><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -88,6 +107,24 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="email"><?= languagedata($this->session->userdata('session_language'), "Breakdown Category"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="breakdown_cat">
+                                        <option value="">-- Please select --</option>
+                                        <?php foreach ($breakdown_categories as $group) : ?>
+                                            <option value="<?= $group['id']; ?>" <?= ($code_data['breakdown_cat'] == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="email"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
@@ -129,7 +166,7 @@
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="year">
                                         <?php foreach ($years as $group) : ?>
-                                            <option value="<?= $group['year']; ?>" <?= ($year == $group['year'] ? "selected" : "") ?>><?= $group['year'] ?></option>
+                                            <option value="<?= $group['year']; ?>" <?= ($code_data['year']==$group['year']?"selected":"") ?>><?= $group['year'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -149,5 +186,6 @@
     </div>
 </div>
 <script>
-    $("#bscodes").addClass('active');
+    $("#pl_code").addClass('active');
+    $("#pl_codes").addClass('active');
 </script>

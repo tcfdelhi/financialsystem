@@ -7,7 +7,7 @@
                 <h2>
                 <?= languagedata($this->session->userdata('session_language'),"Add New Major item");?>
                 </h2>
-                <a href="<?= base_url('admin/bscode/medium_item/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Medium List"); ?></a>
+                <a href="<?= base_url('admin/plcode/major_item/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Major List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">
@@ -22,12 +22,12 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('admin/bscode/add_medium_item/'.$id), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('admin/plcode/add_major_item/'.$id), 'class="form-horizontal"');  ?>
 
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name"><?= languagedata($this->session->userdata('session_language'),"Medium Item Name");?><span class="red"> *</span></label>
+                            <label for="name"><?= languagedata($this->session->userdata('session_language'),"Major Item Name");?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
@@ -50,6 +50,6 @@
     </div>
 </div>
 <script>
-    $("#bs_code").addClass('active');
-    $("#medium_item").addClass('active');
+    $("#pl_code").addClass('active');
+    $("#pl_major_item").addClass('active');
 </script>

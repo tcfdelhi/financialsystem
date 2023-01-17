@@ -8,10 +8,10 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "Medium items of BS Listing"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "Major items of BS Listing"); ?>
                 </h2>
 
-                <a href="<?= base_url('admin/bscode/add_cash_flow/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Cash Flow Category items"); ?></a>
+                <a href="<?= base_url('admin/bscode/add_major_item/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Major items"); ?></a>
             </div>
             <div class="body">
                 <div class="table-responsive">
@@ -25,13 +25,13 @@
                         </thead>
                         <tbody>
                             <?php $count = 0;
-                            foreach ($cash_flow_categories as $row) : ?>
+                            foreach ($major_items as $row) : ?>
                                 <tr>
                                     <td><?= ++$count; ?></td>
                                     <td><?= $row['name']; ?></td>
                                     <td>
-                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/bscode/add_cash_flow/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
-                                        <a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/bscode/delete_cash_flow/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
+                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/settings/add_language/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
+                                        <a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/bscode/delete_major/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
                                         </a>
                                     </td>
                                 </tr>
@@ -52,14 +52,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></h4>
+                <h4 class="modal-title">Delete</h4>
             </div>
             <div class="modal-body">
-                <p><?= languagedata($this->session->userdata('session_language'), "Are you sure you want to delete"); ?></p>
+                <p>As you sure you want to delete.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?= languagedata($this->session->userdata('session_language'), "Close"); ?></button>
-                <a class="btn btn-danger btn-ok"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
             </div>
         </div>
     </div>

@@ -5,9 +5,8 @@
         <div class="card">
             <div class="header">
                 <h2>
-                <?= languagedata($this->session->userdata('session_language'),"Add New Major item");?>
+                    <?= languagedata($this->session->userdata('session_language'), "Select Year And CLient"); ?>
                 </h2>
-                <a href="<?= base_url('admin/bscode/major_item/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Currency List"); ?></a>
             </div>
             <div class="body">
                 <div class="row clearfix">
@@ -22,39 +21,50 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('admin/bscode/add_cash_flow/'.$id), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('admin/plcode/list/'), 'class="form-horizontal"');  ?>
 
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name"><?= languagedata($this->session->userdata('session_language'),"Category Item Name");?><span class="red"> *</span></label>
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" name="name" class="form-control" value="<?= (isset($cash_flow['name'])?$cash_flow['name']:set_value('name')) ?>" >
+                                    <select class="form-control show-tick" name="client_id">
+                                        <!-- <option value="">-- Please select --</option> -->
+                                        <?php foreach ($clients as $group) : ?>
+                                            <option value="<?= $group['id']; ?>"><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
 
 
+
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="name"><?= languagedata($this->session->userdata('session_language'),"Increase and Decrease in Cash Flow");?><span class="red"> *</span></label>
+                            <label for="password"><?= languagedata($this->session->userdata('session_language'), "Select Financial Year"); ?><span class="red"> *</span></label>
                         </div>
                         <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" name="cash_flow" class="form-control" value="<?= (isset($cash_flow['cash_flow'])?$cash_flow['cash_flow']:set_value('cash_flow')) ?>" >
+                                    <select class="form-control show-tick" name="year">
+                                        <?php foreach ($years as $group) : ?>
+                                            <option value="<?= $group['year']; ?>"><?= $group['year'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                     <div class="row clearfix col-md-12">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                            <input type="submit" name="submit" value="ADD" class="btn btn-primary m-t-15 waves-effect">
+                            <input type="submit" name="submit" value="View Pl Codes" class="btn btn-primary m-t-15 waves-effect">
                         </div>
                     </div>
                     <?php echo form_close(); ?>
@@ -64,6 +74,6 @@
     </div>
 </div>
 <script>
-    $("#bs_code").addClass('active');
-    $("#cash_flow").addClass('active');
+    $("#pl_code").addClass('active');
+    $("#pl_codes").addClass('active');
 </script>

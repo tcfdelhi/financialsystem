@@ -8,7 +8,7 @@
 		<div class="card">
 			<div class="header">
 				<h2 style="display: inline-block;">
-				<?= languagedata($this->session->userdata('session_language'), "Admin's List"); ?>
+				<?= languagedata($this->session->userdata('session_language'), "Admin List"); ?>
 				</h2>
 				<a href="<?= base_url('admin/settings/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Add New Admin"); ?></a>
 			</div>
