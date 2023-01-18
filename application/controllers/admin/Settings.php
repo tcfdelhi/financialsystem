@@ -27,6 +27,19 @@ class Settings extends MY_Controller
 		$data['country'] = $this->user_model->get_countries();
 		if ($id != 0) $data['admin'] =  $this->db->get_where('ci_users', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
+
+		
+		if($id == 0 ) {
+			$data['title'] = "Add New Admin";
+			$data['button'] = "Add";
+		} 
+		else {
+			$data['title'] = "Update Admin";
+			$data['button'] = "Update";
+		}
+
+
+
 		if ($this->input->post('submit')) {
 
 			// $this->form_validation->set_rules('username', 'USername', 'trim|required');
@@ -122,6 +135,16 @@ class Settings extends MY_Controller
 		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_currency', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
+		
+		if($id == 0 ) {
+			$data['title'] = "Add New Currency";
+			$data['button'] = "Add";
+		} 
+		else {
+			$data['title'] = "Update Currency";
+			$data['button'] = "Update";
+		}
+
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			$this->form_validation->set_rules('short_name', 'Short name', 'trim|required');
@@ -170,6 +193,15 @@ class Settings extends MY_Controller
 	{
 		if ($id != 0) $data['language'] =  $this->db->get_where('ci_languages', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
+
+		if($id == 0 ) {
+			$data['title'] = "Add New Language";
+			$data['button'] = "Add";
+		} 
+		else {
+			$data['title'] = "Update Language";
+			$data['button'] = "Update";
+		}
 
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('english', 'English', 'trim|required');

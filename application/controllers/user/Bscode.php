@@ -193,6 +193,39 @@ class Bscode extends UR_Controller
 		}
 	}
 
+	public function export_excel($year = 0)
+	{
+		require_once APPPATH . "third_party/PHPExcel.php";
+
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel->setActiveSheetIndex(0);
+		$objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Accounting Code');
+		$objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Title(Accounting Name)');
+		$objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Major Item Of Bs');
+		$objPHPExcel->getActiveSheet()->SetCellValue('D1', 'Medium Item Of Bs');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E1', 'Cash Flow Category');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F1', 'Increase Or Decrease In Cash Flow');
+
+		$records = $this->user_model->get_codes_export($year);
+		// print_r($records); die;
+		$rowCount = 2;
+		foreach ($records as $list) {
+			$objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $list['code']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $list['title']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $list['major_name']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $list['medium_name']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $list['cat']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $list['cash_flow']);
+			$rowCount++;
+		}
+		$filename = "clients" . date("Y-m-d") . ".csv";
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="' . $filename . '"');
+		header('Cache-Control: max-age=0');
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+		$objWriter->save('php://output');
+	}
+
 	// Add bs Code here
 	public function add_code($id = 0)
 	{

@@ -8054,3 +8054,18 @@ html.ie11 .bs-searchbox .form-control {
 .red{
   color: red;
 }
+.inline-form-view {
+  display: inline-block;
+  width: 69%;
+}
+
+span, h1 , h2 , h3 , h4 , h5, h6 , p , a, .text , label, textarea, th{
+  text-transform: capitalize;
+}
+
+.export_excel_button{
+  
+    /* margin-top: -4% !important; */
+    margin-right: -5%;
+
+}

@@ -30,7 +30,7 @@
                                     <td><?= ++$count; ?></td>
                                     <td><?= $row['name']; ?></td>
                                     <td>
-                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/settings/add_language/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
+                                        <a title="Edit" class="update btn btn-sm btn-primary" href="<?= base_url('admin/bscode/add_medium_item/' . $row['id']) ?>"><i class="material-icons">edit</i></a>
                                         <a title="Delete" class="delete btn btn-sm btn-danger" data-href="<?= base_url('admin/bscode/delete_medium/' . $row['id']); ?>" data-toggle="modal" data-target="#confirm-delete"><i class="material-icons">delete</i>
                                         </a>
                                     </td>

@@ -12,6 +12,9 @@
                 </h2>
 
 
+                <a style="margin-left:66%" href="<?= base_url('user/plcode/export_excel/'.$year.'/'.$client_id); ?>" class="export_excel_button btn bg-indigo waves-effect"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a>
+
+
                 <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
 
                 <a href="<?= base_url('user/plcode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Code"); ?></a>

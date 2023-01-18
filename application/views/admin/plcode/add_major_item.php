@@ -5,7 +5,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                <?= languagedata($this->session->userdata('session_language'),"Add New Major item");?>
+                <?= languagedata($this->session->userdata('session_language'),$title);?>
                 </h2>
                 <a href="<?= base_url('admin/plcode/major_item/'); ?>" class="btn bg-indigo waves-effect pull-right"><?= languagedata($this->session->userdata('session_language'), "Major List"); ?></a>
             </div>
@@ -40,7 +40,7 @@
 
                     <div class="row clearfix col-md-12">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                            <input type="submit" name="submit" value="ADD" class="btn btn-primary m-t-15 waves-effect">
+                            <input type="submit" name="submit" value="<?= $button?>" class="btn btn-primary m-t-15 waves-effect">
                         </div>
                     </div>
                     <?php echo form_close(); ?>

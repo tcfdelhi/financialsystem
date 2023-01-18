@@ -8,7 +8,7 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "Major items of PL Listing"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "Breakdown Categories PL Listing"); ?>
                 </h2>
 
                 <a href="<?= base_url('admin/plcode/add_breakdown/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Add New Breakdown Category"); ?></a>

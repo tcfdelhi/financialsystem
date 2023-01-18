@@ -101,4 +101,27 @@ class Pl_model extends CI_Model
 		$this->db->from('ci_pl_cash_flow_category');
 		return $this->db->get()->result_array();
 	}
+
+	//-----------------------------------------------------
+	public function get_codes_export( $client_id = 0, $year = 0)
+	{
+
+		// Year And client condition
+		if($year != 0 and $client_id != 0) $WHERE = "where ci_pl_code.year = $year and ci_pl_code.client_id = $client_id";
+		else $WHERE = "";
+
+		$SQL = "SELECT 
+		ci_pl_code.*,ci_pl_major_item.name as major_name , ci_pl_medium_item.name as medium_name,ci_pl_cash_flow_category.name as cat, ci_users.firstname,ci_users.lastname,ci_pl_breakdown_cat.name as break_cat_name
+		from ci_pl_code 
+		INNER JOIN ci_users on ci_pl_code.client_id = ci_users.client_id 
+		INNER JOIN ci_pl_major_item on ci_pl_code.major_item = ci_pl_major_item.id 
+		INNER JOIN ci_pl_medium_item on ci_pl_code.medium_item = ci_pl_medium_item.id 
+		INNER JOIN ci_pl_breakdown_cat on ci_pl_code.breakdown_cat = ci_pl_breakdown_cat.id 
+		INNER JOIN ci_pl_cash_flow_category on ci_pl_code.cash_flow_category = ci_pl_cash_flow_category.id $WHERE";
+
+
+		// echo $SQL ;die; 
+		$query = $this->db->query($SQL);
+		return $query->result_array();
+	}
 }

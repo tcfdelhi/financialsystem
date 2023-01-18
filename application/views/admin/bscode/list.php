@@ -12,50 +12,59 @@
                 </h2>
 
 
-                <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i>Import Excel</button>
+                <?php echo form_open(base_url('admin/bscode/list'), 'class="inline-form-view form-horizontal filter_record"');  ?>
+                <div class="col-md-12">
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick submit_form" name="client_id">
+                                        <?php foreach ($clients as $group) : ?>
+                                            <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row clearfix col-md-6">
+                        <div class="col-lg-6 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                            <label for="password"><?= languagedata($this->session->userdata('session_language'), "Select Financial Year"); ?><span class="red"> *</span></label>
+                        </div>
+                        <div class="col-lg-6 col-md-10 col-sm-8 col-xs-7">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick submit_form" name="year">
+                                        <?php foreach ($years as $group) : ?>
+                                            <option value="<?= $group['year']; ?>" <?= ($year == $group['year'] ? "selected" : "") ?>><?= $group['year'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="<?= base_url('admin/bscode/export_excel/'.$year.'/'.$client_id); ?>" class="export_excel_button btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a>
+                </div>
+                <?php echo form_close(); ?>
+
+
+                <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
 
                 <a href="<?= base_url('admin/bscode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Code"); ?></a>
+
+
+             
+
             </div>
             <!-- Dropdown for filters -->
-            <?php echo form_open(base_url('admin/bscode/list'), 'class="form-horizontal filter_record"');  ?>
-            <div class="pull-right col-md-8 m-t-20">
-                <div class="row clearfix col-md-6">
-                    <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                        <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
-                    </div>
-                    <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <select class="form-control show-tick submit_form" name="client_id">
-                                    <?php foreach ($clients as $group) : ?>
-                                        <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-
-
-                <div class="row clearfix col-md-6">
-                    <div class="col-lg-6 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                        <label for="password"><?= languagedata($this->session->userdata('session_language'), "Select Financial Year"); ?><span class="red"> *</span></label>
-                    </div>
-                    <div class="col-lg-6 col-md-10 col-sm-8 col-xs-7">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <select class="form-control show-tick submit_form" name="year">
-                                    <?php foreach ($years as $group) : ?>
-                                        <option value="<?= $group['year']; ?>" <?= ($year==$group['year']?"selected":"") ?>><?= $group['year'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php echo form_close(); ?>
             <div class="body">
 
 
@@ -64,8 +73,8 @@
                         <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Financial System"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Client"); ?></th>
+                                <!-- <th><?= languagedata($this->session->userdata('session_language'), "Financial System"); ?></th> -->
+                                <!-- <th><?= languagedata($this->session->userdata('session_language'), "Client"); ?></th> -->
                                 <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Title (Accounting Name)"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Major items of BS"); ?></th>

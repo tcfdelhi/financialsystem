@@ -8,7 +8,7 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "Medium items of BS Listing"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "Cash Flow Categories"); ?>
                 </h2>
 
                 <a href="<?= base_url('admin/bscode/add_cash_flow/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Cash Flow Category items"); ?></a>

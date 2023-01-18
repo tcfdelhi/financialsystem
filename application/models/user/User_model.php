@@ -66,6 +66,31 @@ class User_model extends CI_Model
 		// $WHERE = "ci_bs_code.client_id=".$id;
 		return $this->datatable->LoadJson($query, $WHERE);
 	}
+
+	//-----------------------------------------------------
+	public function get_codes_export($year = 0)
+	{
+		$id = $this->session->userdata('user_id');
+		$client_id = $this->db->get_where('ci_users', array('id' => $id))->row()->client_id;
+		// Year And client condition
+		if($year != 0) $WHERE = "and ci_bs_code.year = $year ";
+		else $WHERE = "";
+
+
+		// $query = $this->db->get('ci_bs_code');
+		$SQL = "SELECT 
+		ci_bs_code.*,ci_major_item.name as major_name , ci_medium_item.name as medium_name,ci_cash_flow_category.name as cat, ci_users.firstname,ci_users.lastname
+		from ci_bs_code 
+		INNER JOIN ci_users on ci_bs_code.client_id = ci_users.client_id 
+		INNER JOIN ci_major_item on ci_bs_code.major_item = ci_major_item.id 
+		INNER JOIN ci_medium_item on ci_bs_code.medium_item = ci_medium_item.id 
+		INNER JOIN ci_cash_flow_category on ci_bs_code.cash_flow_category = ci_cash_flow_category.id where ci_bs_code.client_id = $client_id $WHERE";
+
+		// echo $SQL ;die; 
+		$query = $this->db->query($SQL);
+		return $query->result_array();
+	}
+
 	//-----------------------------------------------------
 	public function add_code($data)
 	{
@@ -146,5 +171,31 @@ class User_model extends CI_Model
 		else $WHERE = "";
 
 		return $this->datatable->LoadJson($query, $WHERE);
+	}
+
+	public function get_pl_codes_export($year = 0)
+	{
+
+		$id = $this->session->userdata('user_id');
+		$client_id = $this->db->get_where('ci_users', array('id' => $id))->row()->client_id;
+		// Year And client condition
+		if($year != 0) $WHERE = "and ci_pl_code.year = $year ";
+		else $WHERE = "";
+
+
+		$id = $this->session->userdata('user_id');
+		$SQL = "SELECT 
+		ci_pl_code.*,ci_pl_major_item.name as major_name , ci_pl_medium_item.name as medium_name,ci_pl_cash_flow_category.name as cat, ci_pl_breakdown_cat.name as break_cat_name
+		from ci_pl_code 
+		INNER JOIN ci_pl_major_item on ci_pl_code.major_item = ci_pl_major_item.id 
+		INNER JOIN ci_pl_medium_item on ci_pl_code.medium_item = ci_pl_medium_item.id 
+		INNER JOIN ci_pl_breakdown_cat on ci_pl_code.breakdown_cat = ci_pl_breakdown_cat.id 
+		INNER JOIN ci_pl_cash_flow_category on ci_pl_code.cash_flow_category = ci_pl_cash_flow_category.id where ci_pl_code.client_id = $client_id $WHERE";
+
+
+		// echo $SQL ;die; 
+		$query = $this->db->query($SQL);
+		return $query->result_array();
+
 	}
 }

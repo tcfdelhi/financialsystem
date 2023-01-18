@@ -59,8 +59,8 @@ class Bscode extends MY_Controller
 
 			$data[] = array(
 				++$i,
-				$row['year'],
-				$row['firstname'] . '  ' . $row['lastname'],
+				// $row['year'],
+				// $row['firstname'] . '  ' . $row['lastname'],
 				$row['code'],
 				$row['title'],
 				$row['major_name'],
@@ -92,7 +92,14 @@ class Bscode extends MY_Controller
 		$data['cash_flow_categories'] = $this->bs_model->get_cash_flow_categories();
 		$data['clients'] = $this->bs_model->get_clients();
 		$data['years'] = $this->bs_model->get_years();
-		// print_r($data['clients']); die;
+
+		if ($id == 0) {
+			$data['title'] = "Add New Code";
+			$data['button'] = "Add";
+		} else {
+			$data['title'] = "Update Code";
+			$data['button'] = "Update";
+		}
 
 
 		if ($id != 0) $data['code_data'] =  $this->db->get_where('ci_bs_code', array('id' => $id))->row_array();
@@ -158,6 +165,14 @@ class Bscode extends MY_Controller
 		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_major_item', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
+		if ($id == 0) {
+			$data['title'] = "Add New Major Item";
+			$data['button'] = "Add";
+		} else {
+			$data['title'] = "Update Item";
+			$data['button'] = "Update";
+		}
+
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
@@ -203,6 +218,14 @@ class Bscode extends MY_Controller
 		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_medium_item', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
+		if ($id == 0) {
+			$data['title'] = "Add New Medium Item";
+			$data['button'] = "Add";
+		} else {
+			$data['title'] = "Update Item";
+			$data['button'] = "Update";
+		}
+
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('name', 'Name', 'trim|required');
 			if ($this->form_validation->run() == FALSE) {
@@ -247,6 +270,14 @@ class Bscode extends MY_Controller
 	{
 		if ($id != 0) $data['cash_flow'] =  $this->db->get_where('ci_cash_flow_category', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
+
+		if ($id == 0) {
+			$data['title'] = "Add Cash Flow Category";
+			$data['button'] = "Add";
+		} else {
+			$data['title'] = "Update Category";
+			$data['button'] = "Update";
+		}
 
 		if ($this->input->post('submit')) {
 
@@ -416,6 +447,39 @@ class Bscode extends MY_Controller
 				redirect("admin/bscode", 'refresh');
 			}
 		}
+	}
+
+	public function export_excel($client_id = 0, $year = 0)
+	{
+		require_once APPPATH . "third_party/PHPExcel.php";
+
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel->setActiveSheetIndex(0);
+		$objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Accounting Code');
+		$objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Title(Accounting Name)');
+		$objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Major Item Of Bs');
+		$objPHPExcel->getActiveSheet()->SetCellValue('D1', 'Medium Item Of Bs');
+		$objPHPExcel->getActiveSheet()->SetCellValue('E1', 'Cash Flow Category');
+		$objPHPExcel->getActiveSheet()->SetCellValue('F1', 'Increase Or Decrease In Cash Flow');
+
+		$records = $this->bs_model->get_codes_export($year, $client_id);
+		// print_r($records); die;
+		$rowCount = 2;
+		foreach ($records as $list) {
+			$objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $list['code']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $list['title']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $list['major_name']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $list['medium_name']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $list['cat']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $list['cash_flow']);
+			$rowCount++;
+		}
+		$filename = "clients" . date("Y-m-d") . ".csv";
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="' . $filename . '"');
+		header('Cache-Control: max-age=0');
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+		$objWriter->save('php://output');
 	}
 
 	public function list_view()
