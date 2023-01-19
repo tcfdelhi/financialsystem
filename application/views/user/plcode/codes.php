@@ -44,8 +44,8 @@
 
                     <div class="row clearfix col-md-12">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                            <input type="submit" name="submit" value="View Pl Codes" class="btn btn-primary m-t-15 waves-effect">
-                            <input type="button" value="Add New Financial Year" class="btn btn-primary m-l-40 m-t-15 waves-effect add_new_year">
+                            <input type="submit" name="submit" value="<?= languagedata($this->session->userdata('session_language'), 'View Pl Codes'); ?>" class="btn btn-primary m-t-15 waves-effect">
+                            <input type="button" value="<?= languagedata($this->session->userdata('session_language'), 'Add New Financial Year'); ?>" class="btn btn-primary m-l-40 m-t-15 waves-effect add_new_year">
                         </div>
                     </div>
                     <?php echo form_close(); ?>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="row clearfix col-md-1">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                            <input type="submit" name="submit" value="Add" class="btn btn-primary waves-effect">
+                            <input type="submit" name="submit" value="<?= languagedata($this->session->userdata('session_language'), 'Add' ); ?>" class="btn btn-primary waves-effect">
                         </div>
                     </div>
                     <?php echo form_close(); ?>

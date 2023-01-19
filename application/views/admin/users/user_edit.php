@@ -194,7 +194,7 @@
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                            <input type="submit" name="submit" value="UPDATE" class="btn btn-primary m-t-15 waves-effect">
+                            <input type="submit" name="submit" value="<?= languagedata($this->session->userdata('session_language'), 'Update'); ?>" class="btn btn-primary m-t-15 waves-effect">
                         </div>
                     </div>
                     <?php echo form_close(); ?>

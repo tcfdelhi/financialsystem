@@ -43,7 +43,7 @@
                 </div>
             </div>
             <?php echo form_close(); ?>
-            
+
                 <div class="table-responsive">
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
@@ -52,8 +52,8 @@
                                 <th><?= languagedata($this->session->userdata('session_language'), "Financial Year"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Title (Accounting Name)"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Major items of BS"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Medium item of BS"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Major items of Pl"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Medium item of Pl"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Increase and Decrease in Cash Flow"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <input type="submit" class="btn btn-primary" value="Upload file" name="submit" style="margin-bottom: 10px;">
+                        <input type="submit" class="btn btn-primary" value="<?= languagedata($this->session->userdata('session_language'), 'Upload file'); ?>" name="submit" style="margin-bottom: 10px;">
                     </div>
                 </form>
                 <div class="col-md-12">

@@ -237,6 +237,15 @@ class Bscode extends UR_Controller
 
 		if ($id != 0) $data['code_data'] =  $this->db->get_where('ci_bs_code', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
+
+		if ($id == 0) {
+			$data['title'] = "Add New Code";
+			$data['button'] = "Add";
+		} else {
+			$data['title'] = "Update Code";
+			$data['button'] = "Update";
+		}
+		
 		if ($this->input->post('submit')) {
 
 			// $this->form_validation->set_rules('username', 'USername', 'trim|required');

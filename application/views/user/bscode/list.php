@@ -42,7 +42,7 @@
                 </div>
             </div>
             <?php echo form_close(); ?>
-            
+
                 <div class="table-responsive">
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <input type="submit" class="btn btn-primary" value="Upload file" name="submit" style="margin-bottom: 10px;">
+                        <input type="submit" class="btn btn-primary" value="<?= languagedata($this->session->userdata('session_language'), 'Upload file'); ?>" name="submit" style="margin-bottom: 10px;">
                     </div>
                 </form>
                 <div class="col-md-12">

@@ -249,6 +249,14 @@ class Plcode extends UR_Controller
 		$data['breakdown_cat'] = $this->user_model->get_pl_breakdown_cats();
 		$data['years'] = $this->db->get_where('ci_pl_year', array('client_id' => $login_id))->result_array();
 
+		if ($id == 0) {
+			$data['title'] = "Add New Pl Code";
+			$data['button'] = "Add";
+		} else {
+			$data['title'] = "Update Code";
+			$data['button'] = "Update";
+		}
+
 
 		if ($id != 0) $data['code_data'] =  $this->db->get_where('ci_pl_code', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;

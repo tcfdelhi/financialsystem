@@ -12,7 +12,7 @@ class Profile extends UR_Controller
 		$data['country'] = $this->user_model->get_countries();
 		$data['currency'] = $this->user_model->get_currencies();
 		$data['user'] = $this->user_model->get_user_detail();
-
+		$data['validation_check'] = 0;
 
 		if ($this->input->post('submit')) {
 
@@ -74,6 +74,10 @@ class Profile extends UR_Controller
 	//-------------------------------------------------------------------------
 	public function change_pwd()
 	{
+		$data['country'] = $this->user_model->get_countries();
+		$data['currency'] = $this->user_model->get_currencies();
+		$data['user'] = $this->user_model->get_user_detail();
+		$data['validation_check'] = 1;
 		$id = $this->session->userdata('user_id');
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');

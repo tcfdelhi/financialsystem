@@ -4,10 +4,20 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    User PROFILE
+                <?= languagedata($this->session->userdata('session_language'), "User Profile"); ?>
                 </h2>
             </div>
             <div class="body">
+            <?php 
+              if($validation_check == 0):
+              if (validation_errors() !== '') : ?>
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                        <?= validation_errors(); ?>
+                    </div>
+                <?php endif;
+                endif; ?>
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <?php echo form_open(base_url('user/profile'), 'class="form-horizontal"') ?>
@@ -15,7 +25,7 @@
 
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="name">Company Name<span class="red"> *</span></label>
+                                <label for="name"><?= languagedata($this->session->userdata('session_language'), "Company Name"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -30,7 +40,7 @@
 
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="abbreviation">Company Abbreviation<span class="red"> *</span></label>
+                                <label for="abbreviation"><?= languagedata($this->session->userdata('session_language'), "Company Abbreviation"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -43,7 +53,7 @@
 
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="term">Accounting Term<span class="red"> *</span></label>
+                                <label for="term"><?= languagedata($this->session->userdata('session_language'), "Accounting Term"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -56,7 +66,7 @@
 
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="year">Start Year<span class="red"> *</span></label>
+                                <label for="year"><?= languagedata($this->session->userdata('session_language'), "Start Year"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -69,7 +79,7 @@
 
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="email">Register Id(Email Address)<span class="red"> *</span></label>
+                                <label for="email"><?= languagedata($this->session->userdata('session_language'), "Register Id(Email Address)"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -82,7 +92,7 @@
                         
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 form-control-label">
-                                <label for="country">Choose Country<span class="red"> *</span></label>
+                                <label for="country"><?= languagedata($this->session->userdata('session_language'), "Choose Country"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -100,7 +110,7 @@
 
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="currency">Select Currency<span class="red"> *</span></label>
+                                <label for="currency"><?= languagedata($this->session->userdata('session_language'), "Select Currency"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -118,7 +128,7 @@
 
                         <div class="row clearfix col-md-6">
                             <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="unit">Select Unit<span class="red"> *</span></label>
+                                <label for="unit"><?= languagedata($this->session->userdata('session_language'), "Select Unit"); ?><span class="red"> *</span></label>
                             </div>
                             <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -136,7 +146,7 @@
                         </div>
                         <div class="row clearfix col-md-12">
                             <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                                <input type="submit" name="submit" value="UPDATE" class="btn btn-primary m-t-15 waves-effect">
+                                <input type="submit" name="submit" value="<?= languagedata($this->session->userdata('session_language'), 'Update'); ?>" class="btn btn-primary m-t-15 waves-effect">
                             </div>
                         </div>
                         <?php echo form_close(); ?>
@@ -153,21 +163,25 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    CHANGE PASSWORD
+                <?= languagedata($this->session->userdata('session_language'), "Change Password"); ?>
                 </h2>
             </div>
             <div class="body">
-                <?php if (validation_errors() !== '') : ?>
+            <?php 
+            if($validation_check == 1):
+            if (validation_errors() !== '') : ?>
                     <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                         <?= validation_errors(); ?>
                     </div>
-                <?php endif; ?>
+                <?php endif;
+                endif; ?>
+
                 <?php echo form_open(base_url('user/profile/change_pwd'), 'class="form-horizontal"');  ?>
                 <div class="row clearfix">
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                        <label for="password">Password</label>
+                        <label for="password"><?= languagedata($this->session->userdata('session_language'), "Password"); ?></label>
                     </div>
                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                         <div class="form-group">
@@ -179,7 +193,7 @@
                 </div>
                 <div class="row clearfix">
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                        <label for="confirm_pwd">Confirm Pwd</label>
+                        <label for="confirm_pwd"><?= languagedata($this->session->userdata('session_language'), "Confirm Pwd"); ?></label>
                     </div>
                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                         <div class="form-group">
@@ -191,7 +205,7 @@
                 </div>
                 <div class="row clearfix">
                     <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                        <input type="submit" name="submit" value="CHANGE PASSWORD" class="btn btn-primary m-t-15 waves-effect">
+                        <input type="submit" name="submit" value="<?= languagedata($this->session->userdata('session_language'), 'Change Password'); ?>" class="btn btn-primary m-t-15 waves-effect">
                     </div>
                 </div>
                 <?php echo form_close(); ?>
