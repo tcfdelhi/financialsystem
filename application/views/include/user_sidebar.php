@@ -8,7 +8,7 @@
 			<img src="<?= base_url() ?>public/images/user.png" width="48" height="48" alt="User" />
 		</div>
 		<div class="info-container">
-			<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= strtoupper($this->session->userdata('name')); ?></div>
+			<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= strtoupper($this->session->userdata('client_name'));?></div>
 			<div class="email"><?= $this->session->userdata('email'); ?></div>
 			<div class="btn-group user-helper-dropdown">
 				<!-- <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i> -->

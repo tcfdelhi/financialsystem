@@ -69,10 +69,15 @@ class Auth extends CI_Controller {
 						redirect(base_url('admin/dashboard'), 'refresh');
 					}
 					if ($result['is_admin'] == 0){
+						// Get client name here
+						$client_id = $this->db->get_where('ci_users', array('id' => $result['id']))->row()->client_id;
+						$client_name = $this->db->get_where('ci_clients', array('id' => $client_id))->row()->company_name;
+						
 						$user_data = array(
 							'user_id' => $result['id'],
 							'name' => $result['firstname'],
-							'is_user_login' => TRUE
+							'is_user_login' => TRUE,
+							'client_name' =>$client_name
 						);
 						$this->session->set_userdata($user_data);
 
