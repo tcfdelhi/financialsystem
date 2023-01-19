@@ -11,6 +11,17 @@
                     <?= languagedata($this->session->userdata('session_language'), "BS Code Lists"); ?>
                 </h2>
 
+                <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
+
+                <a href="<?= base_url('admin/bscode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Code"); ?></a>
+
+
+
+
+            </div>
+            <!-- Dropdown for filters -->
+
+            <div class="body">
 
                 <?php echo form_open(base_url('admin/bscode/list'), 'class="inline-form-view form-horizontal filter_record"');  ?>
                 <div class="col-md-12">
@@ -23,7 +34,7 @@
                                 <div class="form-line">
                                     <select class="form-control show-tick submit_form" name="client_id">
                                         <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                            <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['company_name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -49,25 +60,10 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <a href="<?= base_url('admin/bscode/export_excel/'.$year.'/'.$client_id); ?>" class="export_excel_button btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a>
+
+                    <a href="<?= base_url('admin/bscode/export_excel/' . $year . '/' . $client_id); ?>" class="export_excel_button btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a>
                 </div>
                 <?php echo form_close(); ?>
-
-
-                <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
-
-                <a href="<?= base_url('admin/bscode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Code"); ?></a>
-
-
-             
-
-            </div>
-            <!-- Dropdown for filters -->
-
-            <div class="body">
-
-
                 <div class="table-responsive">
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
@@ -113,7 +109,7 @@
                                 <div class="form-line">
                                     <select class="form-control show-tick" name="client_id" required>
                                         <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>"><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                            <option value="<?= $group['id']; ?>"><?= $group['company_name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>

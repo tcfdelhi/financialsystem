@@ -12,7 +12,7 @@
                 </h2>
 
 
-                <a style="margin-left:66%" href="<?= base_url('user/plcode/export_excel/'.$year.'/'.$client_id); ?>" class="export_excel_button btn bg-indigo waves-effect"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a>
+                <a style="margin-left:66%" href="<?= base_url('user/plcode/export_excel/' . $year . '/' . $client_id); ?>" class="export_excel_button btn bg-indigo waves-effect"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a>
 
 
                 <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
@@ -20,6 +20,9 @@
                 <a href="<?= base_url('user/plcode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Code"); ?></a>
             </div>
             <!-- Dropdown for filters -->
+            
+            <div class="body">
+
             <?php echo form_open(base_url('user/plcode/list'), 'class="form-horizontal filter_record"');  ?>
             <div class="pull-right col-md-8 m-t-20">
                 <div class="row clearfix col-md-6">
@@ -31,7 +34,7 @@
                             <div class="form-line">
                                 <select class="form-control show-tick submit_form" name="year">
                                     <?php foreach ($years as $group) : ?>
-                                        <option value="<?= $group['year']; ?>" <?= ($year==$group['year']?"selected":"") ?>><?= $group['year'] ?></option>
+                                        <option value="<?= $group['year']; ?>" <?= ($year == $group['year'] ? "selected" : "") ?>><?= $group['year'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -40,7 +43,7 @@
                 </div>
             </div>
             <?php echo form_close(); ?>
-            <div class="body">
+            
                 <div class="table-responsive">
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>

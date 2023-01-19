@@ -19,6 +19,9 @@
                 <a href="<?= base_url('user/bscode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Code"); ?></a>
             </div>
             <!-- Dropdown for filters -->
+            
+            <div class="body">
+
             <?php echo form_open(base_url('user/bscode/list'), 'class="form-horizontal filter_record"');  ?>
             <div class="pull-right col-md-8 m-t-20">
                 <div class="row clearfix col-md-6">
@@ -39,7 +42,7 @@
                 </div>
             </div>
             <?php echo form_close(); ?>
-            <div class="body">
+            
                 <div class="table-responsive">
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>

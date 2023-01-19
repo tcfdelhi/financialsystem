@@ -34,7 +34,7 @@
                                     <select class="form-control show-tick" name="client_id">
                                         <!-- <option value="">-- Please select --</option> -->
                                         <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>"><?= $group['firstname'] . '  ' . $group['lastname'] ?></option>
+                                            <option value="<?= $group['id']; ?>"><?= $group['company_name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
