@@ -169,7 +169,8 @@ class Clients extends MY_Controller {
 			$data['country'] = $this->user_model->get_countries();
 			$data['user'] = $this->user_model->get_user_by_id($id);
 			$data['currency'] = $this->settings_model->get_currencies();
-
+			$data['client'] = $this->user_model->get_client_by_user_id($id);
+			
 			if($this->input->post('submit')){
 				// $this->form_validation->set_rules('username', 'Username', 'trim|min_length[3]|required');
 				$this->form_validation->set_rules('country', 'Country', 'trim|required');
@@ -245,7 +246,7 @@ class Clients extends MY_Controller {
 			}
 			else{
 				$data['user'] = $this->user_model->get_user_by_id($id);
-				$data['client'] = $this->user_model->get_client_by_user_id($id);
+				
 				$data['user_groups'] = $this->user_model->get_user_groups();
 				$data['view'] = 'admin/users/user_edit';
 				$this->load->view('layout', $data);
