@@ -10,7 +10,7 @@
 				<h2 style="display: inline-block;">
 					<?= languagedata($this->session->userdata('session_language'), "Clients List"); ?>
 				</h2>
-				<a href="<?= base_url('admin/clients/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Client"); ?></a>
+				<a href="<?= base_url('admin/clients/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Add New Client"); ?></a>
 			</div>
 			<div class="body">
 				<div class="table-responsive">
@@ -21,12 +21,10 @@
 								<th><?= languagedata($this->session->userdata('session_language'), "Company Name"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Company Abbreviation"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Accounting Term"); ?></th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Country"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Start Year"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Currency"); ?></th>
 
 								<th><?= languagedata($this->session->userdata('session_language'), "Unit"); ?></th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Start Year"); ?></th>
-								<!-- <th>Email</th> -->
-								<th><?= languagedata($this->session->userdata('session_language'), "Created Date"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
 							</tr>
 						</thead>
@@ -132,12 +130,6 @@
 				"targets": 7,
 				"name": "ci_users.email",
 				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 8,
-				"name": "ci_users.created_at",
-				'searchable': false,
 				'orderable': true
 			}
 		]

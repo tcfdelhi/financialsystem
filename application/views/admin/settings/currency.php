@@ -8,9 +8,9 @@
 		<div class="card">
 			<div class="header">
 				<h2 style="display: inline-block;">
-					Currency List
+				<?= languagedata($this->session->userdata('session_language'), "Currency List"); ?>
 				</h2>
-				<a href="<?= base_url('admin/settings/add_currency'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> ADD NEW CURRENCY</a>
+				<a href="<?= base_url('admin/settings/add_currency'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Add New Currency"); ?></a>
 			</div>
 			<div class="body">
 				<div class="table-responsive">

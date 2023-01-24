@@ -8,7 +8,7 @@
 		<div class="card">
 			<div class="header">
 				<h2 style="display: inline-block;">
-				<?= languagedata($this->session->userdata('session_language'), "Clients List"); ?>
+					<?= languagedata($this->session->userdata('session_language'), "Clients List"); ?>
 				</h2>
 				<a href="<?= base_url('admin/clients/add'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Add New Client"); ?></a>
 			</div>
@@ -18,15 +18,13 @@
 						<thead>
 							<tr>
 								<th>#ID</th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Country"); ?></th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Currency"); ?></th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Unit"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Company Name"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Company Abbreviation"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Accounting Term"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Start Year"); ?></th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Email"); ?></th>
-								<th><?= languagedata($this->session->userdata('session_language'), "Created Date"); ?></th>
+								<th><?= languagedata($this->session->userdata('session_language'), "Currency"); ?></th>
+
+								<th><?= languagedata($this->session->userdata('session_language'), "Unit"); ?></th>
 								<th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
 							</tr>
 						</thead>
@@ -61,17 +59,17 @@
 <!-- Jquery DataTable Plugin Js -->
 
 <!-- Jquery DataTable Plugin Js -->
-<script src="<?= base_url()?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-  <script src="<?= base_url()?>public/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
-  <!-- Custom Js -->
-  <script src="<?= base_url()?>public/js/pages/tables/jquery-datatable.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+<!-- Custom Js -->
+<script src="<?= base_url() ?>public/js/pages/tables/jquery-datatable.js"></script>
 
 <script type="text/javascript">
 	//---------------------------------------------------
@@ -84,8 +82,8 @@
 		],
 		dom: 'Bfrtip',
 		buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
+			'copy', 'csv', 'excel', 'pdf', 'print'
+		],
 		"columnDefs": [{
 				"targets": 0,
 				"name": "ci_users.id",
@@ -133,24 +131,6 @@
 				"targets": 7,
 				"name": "start_year",
 				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 8,
-				"name": "ci_users.email",
-				'searchable': true,
-				'orderable': true
-			},
-			{
-				"targets": 9,
-				"name": "ci_users.created_at",
-				'searchable': false,
-				'orderable': true
-			},
-			{
-				"targets": 10,
-				"name": "ci_users.created_at",
-				'searchable': false,
 				'orderable': true
 			}
 		]

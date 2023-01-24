@@ -8,7 +8,7 @@
 		<div class="card">
 			<div class="header">
 				<h2 style="display: inline-block;">
-					languages List
+				<?= languagedata($this->session->userdata('session_language'), "languages List"); ?>
 				</h2>
 
 				<button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
@@ -84,7 +84,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Upload Excel file</h4>
+				<h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
 			</div>
 			<div class="modal-body">
 				<form action="<?php echo base_url('admin/settings/import_excel'); ?>" method="POST" enctype="multipart/form-data">
@@ -95,7 +95,7 @@
 						</div>
 					</div>
 					<div class="col-lg-12">
-						<input type="submit" value="Upload file" name="submit" class="btn btn-primary" style="margin-bottom: 10px;">
+						<input type="submit" value="<?= languagedata($this->session->userdata('session_language'), "Upload file"); ?>" name="submit" class="btn btn-primary" style="margin-bottom: 10px;">
 					</div>
 				</form>
 				<a href="<?= base_url('uploads/excel/import.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>

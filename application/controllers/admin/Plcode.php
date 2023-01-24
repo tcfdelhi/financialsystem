@@ -31,7 +31,8 @@ class Plcode extends MY_Controller
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
 			$client_id  = $this->input->post('client_id');
-		} else {
+		} else if($this->input->server('REQUEST_METHOD') === 'GET'){}
+		else {
 			redirect(base_url('admin/plcode'));
 		}
 
@@ -145,11 +146,16 @@ class Plcode extends MY_Controller
 				}
 
 				if ($result) {
+
+					// Pass Extra Var Here
+					$year = $this->input->post('year');
+					$client_id = $this->input->post('client_id');
+
 					// Add User Activity
 					$this->activity_model->add(1);
 
 					$this->session->set_flashdata('msg', 'Code has been added successfully!');
-					redirect(base_url('admin/plcode'));
+					redirect(base_url("admin/plcode/list/$year/$client_id"));
 				}
 			}
 		} else {
@@ -326,10 +332,18 @@ class Plcode extends MY_Controller
 
 	public function delete($id = 0)
 	{
+		// Get Data Here
+		$SQL = 'SELECT year,client_id FROM ci_pl_code where id ='.$id;
+		$query = $this->db->query($SQL);
+		$data = $query->row_array();
+		$year = $data['year'];
+		$client_id = $data['client_id'];
+
+
 		$this->db->delete('ci_pl_code', array('id' => $id));
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'BS Code has been deleted successfully!');
-		redirect(base_url('admin/plcode'));
+		redirect(base_url("admin/plcode/list/$year/$client_id"));
 	}
 	public function delete_major($id = 0)
 	{
@@ -455,7 +469,8 @@ class Plcode extends MY_Controller
 					// echo "<pre>";
 					// print_r($allDataInSheet);
 					// die;
-					redirect("admin/plcode", 'refresh');
+					redirect(base_url("admin/plcode/list/$year/$client_id"));
+					// redirect("admin/plcode", 'refresh');
 				} catch (Exception $e) {
 					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
 						. '": ' . $e->getMessage());

@@ -107,12 +107,13 @@ class Profile extends UR_Controller
 
 	public function set_session_language()
 	{
+		$this->load->library('user_agent');
 		$this->load->library('session');
 		if (($this->uri->segment(4) != '')) {
 			$sessionyear = $this->uri->segment(4);
 			if ($sessionyear) {
 				$this->session->set_userdata('session_language', $sessionyear);
-				redirect(base_url('/'));
+				redirect($this->agent->referrer());
 			}
 		}
 	}

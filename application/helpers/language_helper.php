@@ -9,6 +9,7 @@ function languagedata($val, $for_data)
         $val = 'japanese';
     }
     $CI = &get_instance();
+    $for_data = trim($for_data);
     $query = $CI->db->query("select $val as finalresult from ci_languages where english='$for_data'");
     foreach (@$query->result_array() as $resr) {
         @$val2 = $resr['finalresult'];
