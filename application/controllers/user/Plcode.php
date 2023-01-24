@@ -48,6 +48,7 @@ class Plcode extends UR_Controller
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST')
 			$year  = $this->input->post('year');
+		else if($this->input->server('REQUEST_METHOD') === 'GET'){}
 
 		else redirect(base_url('user/bscode'));
 
@@ -302,9 +303,10 @@ class Plcode extends UR_Controller
 				if ($result) {
 					// Add User Activity
 					$this->activity_model->add(1);
+					$year = $this->input->post('year');
 
 					$this->session->set_flashdata('msg', 'Code has been added successfully!');
-					redirect(base_url('user/plcode'));
+					redirect(base_url("user/plcode/list/$year"));
 				}
 			}
 		} else {
@@ -316,9 +318,16 @@ class Plcode extends UR_Controller
 
 	public function delete($id = 0)
 	{
-		$this->db->delete('ci_bs_code', array('id' => $id));
+
+		$SQL = 'SELECT year FROM ci_pl_code where id ='.$id;
+		$query = $this->db->query($SQL);
+		$data = $query->row_array();
+		$year = $data['year'];
+
+
+		$this->db->delete('ci_pl_code', array('id' => $id));
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'BS Code has been deleted successfully!');
-		redirect(base_url('user/bscode'));
+		redirect(base_url("user/plcode/list/$year"));
 	}
 }
