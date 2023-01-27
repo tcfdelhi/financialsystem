@@ -86,6 +86,12 @@
 				</ul>
 			</li>
 
+			<li id="bs_import_amount">
+				<a href="<?= base_url('admin/bsamount'); ?>">
+					<i class="material-icons">layers</i>
+					<span><?= languagedata($this->session->userdata('session_language'), "BS Import Amount"); ?></span>
+				</a>
+			</li>
 
 			<!-- BS Code tab -->
 			<li id="pl_code">
@@ -116,6 +122,13 @@
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
 					</li> -->
 				</ul>
+			</li>
+
+			<li id="pl_import_amount">
+				<a href="<?= base_url('admin/plamount'); ?>">
+					<i class="material-icons">layers</i>
+					<span><?= languagedata($this->session->userdata('session_language'), "Pl Import Amount"); ?></span>
+				</a>
 			</li>
 
 			<li id="ci_examples">

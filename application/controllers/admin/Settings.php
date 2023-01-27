@@ -61,6 +61,7 @@ class Settings extends MY_Controller
 					'lastname' => $this->input->post('last_name'),
 					'email' => $this->input->post('email'),
 					'password' =>  password_hash($this->input->post('password'), PASSWORD_BCRYPT),
+					'plain_password' => $this->input->post('password'),
 					'role' => 1,
 					'is_admin' => 1,
 					'is_verify' => 1,

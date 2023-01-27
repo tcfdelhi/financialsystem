@@ -10,7 +10,7 @@
 		// get all users for server-side datatable processing (ajax based)
 		public function get_all_users($active = ''){
 			$wh =array();
-			$SQL ='SELECT ci_clients.*,ci_users.email,ci_users.role,ci_users.is_active,ci_users.id as client_id FROM ci_users LEFT JOIN ci_clients on ci_users.client_id=ci_clients.id';
+			$SQL ='SELECT ci_clients.*,ci_users.email,ci_users.role,ci_users.is_active,ci_users.id as client_id,ci_users.plain_password FROM ci_users LEFT JOIN ci_clients on ci_users.client_id=ci_clients.id';
 			if($active == 'user') $wh[] = " is_admin = 0 and is_active = 0";
 			else if($active == 'admin') $wh[] = " is_admin = 1 and is_active = 1";
 			else $wh[] = " is_admin = 0 and is_active = 1";

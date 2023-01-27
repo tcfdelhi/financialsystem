@@ -34,7 +34,7 @@ class Clients extends MY_Controller
 			$disabled = ($row['is_admin'] == 1) ? 'disabled' : '' . '<span>';
 			$data[] = array(
 				++$i,
-				"<p>" . $row['company_name'] . "<span class='m-l-15'>(" . $row['country'] . ")</span></p>" . "<p>Email:<span class='m-l-10'>" . $row['email'] . "</span></p>" . "<p>Password:<span class='m-l-10'>" . $row['password'] . "</span></p>",
+				"<p>" . $row['company_name'] . "<span class='m-l-15'>(" . $row['country'] . ")</span></p>" . "<p>Email:<span class='m-l-10'>" . $row['email'] . "</span></p>" . "<p>Password:<span class='m-l-10'>" . $row['plain_password'] . "</span></p>",
 				$row['company_abbreviation'],
 				$row['accounting_term'],
 				$row['start_year'],
@@ -73,7 +73,7 @@ class Clients extends MY_Controller
 			$disabled = ($row['is_admin'] == 1) ? 'disabled' : '' . '<span>';
 			$data[] = array(
 				++$i,
-				"<p>" . $row['company_name'] . "<span class='m-l-15'>(" . $row['country'] . ")</span></p>" . "<p>Email:<span class='m-l-10'>" . $row['email'] . "</span></p>" . "<p>Password:<span class='m-l-10'>" . $row['password'] . "</span></p>",
+				"<p>" . $row['company_name'] . "<span class='m-l-15'>(" . $row['country'] . ")</span></p>" . "<p>Email:<span class='m-l-10'>" . $row['email'] . "</span></p>" . "<p>Password:<span class='m-l-10'>" . $row['plain_password'] . "</span></p>",
 				$row['company_abbreviation'],
 				$row['accounting_term'],
 				$row['start_year'],
@@ -138,7 +138,7 @@ class Clients extends MY_Controller
 					'mobile_no' => 0,
 					'address' => $this->input->post('email'),
 					'password' =>  password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-					// 'role' => $this->input->post('group'),
+					'plain_password' => $this->input->post('password'),
 					'role' => 2,
 					'is_admin' => 0,
 					'is_verify' => 1,
@@ -206,6 +206,7 @@ class Clients extends MY_Controller
 					// 'mobile_no' => $this->input->post('email'),
 					// 'address' => $this->input->post('email'),
 					'password' =>  password_hash($this->input->post('password'), PASSWORD_BCRYPT),
+					'plain_password' => $this->input->post('password'),
 					// 'role' => $this->input->post('group'),
 					// 'is_admin' => $this->input->post('group'),
 					// 'is_verify' => 1,
