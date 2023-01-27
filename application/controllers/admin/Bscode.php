@@ -11,6 +11,7 @@ class Bscode extends MY_Controller
 		$this->load->model('admin/user_model', 'user_model');
 		$this->load->model('admin/setting_model', 'settings_model');
 		$this->load->model('admin/bs_model', 'bs_model');
+		$this->load->model('admin/bs_amount_model', 'bs_amount_model');
 		$this->load->model('activity_model', 'activity_model');
 		$this->load->library('datatable'); // loaded my custom serverside datatable library		
 	}

@@ -46,6 +46,14 @@
 				</a>
 			</li>
 
+			<li id="bs_import_amount">
+				<a href="<?= base_url('user/bsamount'); ?>">
+					<i class="material-icons">layers</i>
+					<span><?= languagedata($this->session->userdata('session_language'), "BS Import Amount"); ?></span>
+				</a>
+			</li>
+
+
 			<li id="plcodes">
 				<a href="<?= base_url('user/plcode'); ?>">
 					<i class="material-icons">code</i>
@@ -53,6 +61,12 @@
 				</a>
 			</li>
 
+			<li id="pl_import_amount">
+				<a href="<?= base_url('user/plamount'); ?>">
+					<i class="material-icons">layers</i>
+					<span><?= languagedata($this->session->userdata('session_language'), "Pl Import Amount"); ?></span>
+				</a>
+			</li>
 
 			<li id="signout">
 				<a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i><span><?= languagedata($this->session->userdata('session_language'), "Sign Out"); ?></span></a>

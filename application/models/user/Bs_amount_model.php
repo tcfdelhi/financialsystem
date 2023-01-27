@@ -12,9 +12,12 @@ class Bs_amount_model extends CI_Model
 		// $query = $this->db->get('ci_bs_code');
 		$query = 'SELECT * from ci_bs_amount';
 		
+		$id = $this->session->userdata('user_id');
+		$client_id = $this->db->get_where('ci_users', array('id' => $id))->row()->client_id;
 
 		// Year And client condition
-		if($year != 0 and $client_id != 0) $WHERE = "year = $year and client_id = $client_id";
+		if(empty($year)) $WHERE = "client_id = $client_id";
+		elseif($year != 0 and $client_id != 0) $WHERE = "year = $year and client_id = $client_id";
 		else $WHERE = "";
 		return $this->datatable->LoadJson($query, $WHERE);
 	}
@@ -40,17 +43,8 @@ class Bs_amount_model extends CI_Model
 	public function get_years(){
 		$this->db->distinct();
 		$this->db->select('year');		
-		$query = $this->db->get('ci_bs_code');
+		$query = $this->db->get('ci_bs_amount');
 		return $query->result_array();
 	}
 
-	public function bs_amount_data($year,$client_id){
-
-		if($year !=0 and $client_id != 0 ) $sql ="where client_id = $client_id and year = $year";
-		else $sql = "";
-
-		$query = "SELECT * from ci_bs_amount $sql";
-		$query = $this->db->query($query);
-		return $query->row_array();
-	}
 }

@@ -1,5 +1,5 @@
 <?php
-class Bs_amount_model extends CI_Model
+class Pl_amount_model extends CI_Model
 {
 	public function __construct()
 	{
@@ -9,8 +9,8 @@ class Bs_amount_model extends CI_Model
 	//-----------------------------------------------------
 	public function get_codes($year = 0 , $client_id = 0)
 	{
-		// $query = $this->db->get('ci_bs_code');
-		$query = 'SELECT * from ci_bs_amount';
+		// $query = $this->db->get('ci_pl_code');
+		$query = 'SELECT * from ci_pl_amount';
 		
 
 		// Year And client condition
@@ -20,37 +20,28 @@ class Bs_amount_model extends CI_Model
 	}
 
 	//-----------------------------------------------------
-	public function get_bs_codes(){
-		$query = $this->db->get('ci_bs_code');
+	public function get_pl_codes(){
+		$query = $this->db->get('ci_pl_code');
 		return $query->result_array();
 	}
 
 	//-----------------------------------------------------
-	public function get_bs_name($id){
-		return $this->db->get_where('ci_bs_code', array('id' => $id))->row()->title;
+	public function get_pl_name($id){
+		return $this->db->get_where('ci_pl_code', array('id' => $id))->row()->title;
 	}
 
 	//-----------------------------------------------------
 	public function add_code($data)
 	{
-		$this->db->insert('ci_bs_amount', $data);
+		$this->db->insert('ci_pl_amount', $data);
 		return true;
 	}
 
 	public function get_years(){
 		$this->db->distinct();
 		$this->db->select('year');		
-		$query = $this->db->get('ci_bs_code');
+		$query = $this->db->get('ci_pl_amount');
 		return $query->result_array();
 	}
 
-	public function bs_amount_data($year,$client_id){
-
-		if($year !=0 and $client_id != 0 ) $sql ="where client_id = $client_id and year = $year";
-		else $sql = "";
-
-		$query = "SELECT * from ci_bs_amount $sql";
-		$query = $this->db->query($query);
-		return $query->row_array();
-	}
 }

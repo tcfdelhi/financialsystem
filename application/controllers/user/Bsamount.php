@@ -1,49 +1,39 @@
 <?php
-
-use Mpdf\Tag\Em;
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Bsamount extends MY_Controller
+class Bsamount extends UR_Controller
 {
 
 	public function __construct()
 	{
-
 		parent::__construct();
-		$this->load->model('admin/Pl_model', 'pl_model');
-		$this->load->model('admin/Bs_amount_model', 'bs_amount_model');
+		$this->load->model('user/user_model', 'user_model');
+		$this->load->model('user/Bs_amount_model', 'bs_amount_model');
 		$this->load->model('activity_model', 'activity_model');
 		$this->load->library('datatable'); // loaded my custom serverside datatable library		
 	}
-
 	//-----------------------------------------------------------------------
 	public function index()
 	{
 		$data['years'] = $this->bs_amount_model->get_years();
-		$data['clients'] = $this->pl_model->get_clients();
-		$data['view'] = 'admin/bsamount/codes';
+		$data['view'] = 'user/bsamount/codes';
 		$this->load->view('layout', $data);
 	}
 
 	//-----------------------------------------------------------------------
-	public function list($year = 0, $client_id = 0)
+	public function list($year = 0)
 	{
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
-			$client_id  = $this->input->post('client_id');
+
 		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
 		}
 
 
 		$data['years'] = $this->bs_amount_model->get_years();
 		$data['year'] = $year;
-		$data['client_id'] = $client_id;
-		$data['clients'] = $this->pl_model->get_clients();
-		$data['bs_codes'] = $this->bs_amount_model->get_bs_codes();
-		$data['bs_amount_data'] = $this->bs_amount_model->bs_amount_data($year, $client_id);
-		$data['view'] = 'admin/bsamount/list';
+		$data['view'] = 'user/bsamount/list';
 		$this->load->view('layout', $data);
 	}
 
@@ -52,9 +42,8 @@ class Bsamount extends MY_Controller
 	public function get_codes()
 	{
 		$year  = $this->input->get('year');
-		$client_id  = $this->input->get('client_id');
 
-		$records = $this->bs_amount_model->get_codes($year, $client_id);
+		$records = $this->bs_amount_model->get_codes($year);
 		$data = array();
 		$i = 0;
 
@@ -68,8 +57,8 @@ class Bsamount extends MY_Controller
 				$row['amount'],
 
 
-				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('admin/bsamount/add_code/' . $row['id']) . '"> <i class="material-icons">edit</i></a>
-				<a title="Delete" class="delete btn btn-sm btn-danger"  data-href="' . base_url('admin/bsamount/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
+				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('user/bsamount/add_code/' . $row['id']) . '"> <i class="material-icons">edit</i></a>
+				<a title="Delete" class="delete btn btn-sm btn-danger"  data-href="' . base_url('user/bsamount/delete/' . $row['id']) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="material-icons">delete</i></a>
 				',
 
 			);
@@ -82,15 +71,17 @@ class Bsamount extends MY_Controller
 	public function add_code($id = 0)
 	{
 
-		$data['clients'] = $this->pl_model->get_clients();
 		$data['years'] = $this->bs_amount_model->get_years();
 		$data['accounting_code'] = $this->bs_amount_model->get_bs_codes();
+		$user_id = $this->session->userdata('user_id');
+		$client_id = $this->db->get_where('ci_users', array('id' => $user_id))->row()->client_id;
+
 
 		// Generate Month Array
 		$data['month'] = [1 => "January", 2 => "February", 3 => "March", 4 => "April", 5 => "May", 6 => "June", 7 => "July", 8 => "August", 9 => "September", 10 => "October", 11 => "November", 12 => "December"];
 
 		if ($id == 0) {
-			$data['title'] = "Add New Pl Amount";
+			$data['title'] = "Add New BS Amount";
 			$data['button'] = "Add";
 		} else {
 			$data['title'] = "Update Code";
@@ -106,13 +97,12 @@ class Bsamount extends MY_Controller
 			// $this->form_validation->set_rules('username', 'USername', 'trim|required');
 			$this->form_validation->set_rules('code', 'Code', 'trim|required');
 			$this->form_validation->set_rules('title', 'Accounting Code', 'trim|required');
-			$this->form_validation->set_rules('client_id', 'Client', 'trim|required');
 			$this->form_validation->set_rules('year', 'Financial Year', 'trim|required');
 			$this->form_validation->set_rules('month', 'Month', 'trim|required');
 			$this->form_validation->set_rules('amount', 'Amount', 'trim|required');
 
 			if ($this->form_validation->run() == FALSE) {
-				$data['view'] = 'admin/bsamount/add_code';
+				$data['view'] = 'user/bsamount/add_code';
 				$this->load->view('layout', $data);
 			} else {
 				// Get PL Code name 
@@ -120,7 +110,7 @@ class Bsamount extends MY_Controller
 				// Prepare Amount data
 				$user_data = array(
 					'bs_code_id' => $this->input->post('code'),
-					'client_id' => $this->input->post('client_id'),
+					'client_id' => $client_id,
 					'code' => $code_name,
 					'title' => $this->input->post('title'),
 					'year' => $this->input->post('year'),
@@ -139,18 +129,16 @@ class Bsamount extends MY_Controller
 
 					// Pass Extra Var Here
 					$year = $this->input->post('year');
-					$client_id = $this->input->post('client_id');
-
 					// Add User Activity
 					$this->activity_model->add(1);
 
 					$this->session->set_flashdata('msg', 'Code has been added successfully!');
-					redirect(base_url("admin/bsamount/list/$year/$client_id"));
+					redirect(base_url("user/bsamount/list/$year"));
 				}
 			}
 		} else {
 
-			$data['view'] = 'admin/bsamount/add_code';
+			$data['view'] = 'user/bsamount/add_code';
 			$this->load->view('layout', $data);
 		}
 	}
@@ -163,10 +151,13 @@ class Bsamount extends MY_Controller
 		echo $pl_name;
 	}
 
+	//-----------------------------------------------------------------------
 	public function import_excel()
 	{
+		$user_id = $this->session->userdata('user_id');
+		$client_id = $this->db->get_where('ci_users', array('id' => $user_id))->row()->client_id;
+
 		if ($this->input->post('submit')) {
-			$client_id = $this->input->post('client_id');
 			// $year = $this->input->post('year');
 			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bsamount' . DIRECTORY_SEPARATOR;
 			require_once APPPATH . "third_party/PHPExcel.php";
@@ -224,62 +215,26 @@ class Bsamount extends MY_Controller
 									$result = $this->bs_amount_model->add_code($data);
 								}
 							}
-						} else {
+						}
+						else {
 							$this->session->set_flashdata('error', 'Bs Code Data Not Found');
 						}
 					}
 					if ($result) {
 						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
 					}
-					redirect(base_url("admin/bsamount/list/$year/$client_id"));
+					redirect(base_url("user/bsamount/list/$year"));
 				} catch (Exception $e) {
 					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
 						. '": ' . $e->getMessage());
 					unlink($path . $data['upload_data']['file_name']);
-					redirect("admin/bsamount", 'refresh');
+					redirect("user/bsamount", 'refresh');
 				}
 			} else {
 				$this->session->set_flashdata('error', $error['error']);
 				unlink($path . $data['upload_data']['file_name']);
-				redirect("admin/bsamount", 'refresh');
+				redirect("user/bsamount", 'refresh');
 			}
 		}
-	}
-
-	public function save_data()
-	{
-		$post_data = $this->input->post('form_data');
-		$data = [];
-		foreach ($post_data as $key => $value) {
-			if ($key == 0) continue;
-			$data[$value['name']] = $value['value'];
-		}
-
-
-		$user_data = array(
-			'client_id' => $this->input->post('client_id'),
-			'year' => $this->input->post('year'),
-			'data' => json_encode($data),
-		);
-		$data = $this->security->xss_clean($user_data);
-
-		$query = $this->db->get_where('ci_bs_amount', array(//making selection
-            'client_id' => $this->input->post('client_id'),
-			'year' => $this->input->post('year')
-        ));
-		$numRows = $query->num_rows();
-
-		if ($numRows === 0) $this->bs_amount_model->add_code($data);
-		else {
-			$this->db->where('year', $this->input->post('year'));
-			$this->db->where('client_id', $this->input->post('client_id'));
-			$this->db->update('ci_bs_amount', $data);
-			$result = true;
-		}
-
-
-
-
-		echo json_encode('ll');
 	}
 }
