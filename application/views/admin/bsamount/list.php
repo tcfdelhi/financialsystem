@@ -2,6 +2,14 @@
 <link href="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 <!-- Bootstrap Select Css -->
 <link href="<?= base_url() ?>public/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+<style>
+    .form-control{
+        width: 100% !important;
+    }
+    .input-sm{
+        width: auto !important;
+    }
+</style>
 <!-- Exportable Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -84,46 +92,85 @@
                                 <th><?= languagedata($this->session->userdata('session_language'), "October"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "November"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "December"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Actual<br>(Accumulated)"); ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
+                            // Get All Data Here
+                            $january = $february = $march = $april = $may = $june = $july =  $august = $september = $october = $november = $december;
                             $counter = 0;
-                            $amount_data = json_decode($bs_amount_data['data'],true);
-                            foreach ($bs_codes as $key => $value) :
+                            foreach ($bs_amount_data as $key => $value) :
+                                $amount_data = json_decode($value['data'], true);
                                 $bsId = $value['id'];
-                                $row = "<tr>";
+
+                                $january = (int)$january + (int)$amount_data['jan_' . $bsId];
+                                $february = (int)$february + (int)$amount_data['feb_' . $bsId];
+                                $march = (int)$march + (int)$amount_data['mar_' . $bsId];
+                                $april = (int)$april + (int)$amount_data['apr_' . $bsId];
+                                $may = (int)$may + (int)$amount_data['may_' . $bsId];
+                                $june = (int)$june + (int)$amount_data['jun_' . $bsId];
+                                $july = (int)$july + (int)$amount_data['jul_' . $bsId];
+                                $august = (int)$august + (int)$amount_data['aug_' . $bsId];
+                                $september = (int)$september + (int)$amount_data['sep_' . $bsId];
+                                $october = (int)$october + (int)$amount_data['oct_' . $bsId];
+                                $november = (int)$november + (int)$amount_data['nov_' . $bsId];
+                                $december = (int)$december + (int)$amount_data['dec_' . $bsId];
+                                // Get total amount here
+                                $total_amount = (int)$amount_data['jan_' . $bsId] + (int)$amount_data['feb_' . $bsId] + (int)$amount_data['mar_' . $bsId] + (int)$amount_data['apr_' . $bsId] + (int)$amount_data['may_' . $bsId] + (int)$amount_data['jun_' . $bsId] + (int)$amount_data['jul_' . $bsId] + (int)$amount_data['aug_' . $bsId] + (int)$amount_data['sep_' . $bsId] + (int)$amount_data['oct_' . $bsId] + (int)$amount_data['nov_' . $bsId] + (int)$amount_data['dec_' . $bsId];
+
+                                $row = "<tr id=$bsId>";
                                 $row .= "<td>" . ++$counter . "</td>";
                                 $row .= "<td>" . $value['code'] . "</td>";
                                 $row .= "<td>" . $value['title'] . "</td>";
-                                $row .= "<td><input type='text' class='form-control' name='jan_" . $value['id'] . "' value=".$amount_data['jan_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='jan_" . $value['id'] . "' value=" . $amount_data['jan_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='feb_" . $value['id'] . "' value=".$amount_data['feb_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='feb_" . $value['id'] . "' value=" . $amount_data['feb_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='mar_" . $value['id'] . "' value=".$amount_data['mar_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='mar_" . $value['id'] . "' value=" . $amount_data['mar_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='apr_" . $value['id'] . "' value=".$amount_data['apr_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='apr_" . $value['id'] . "' value=" . $amount_data['apr_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='may_" . $value['id'] . "' value=".$amount_data['may_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='may_" . $value['id'] . "' value=" . $amount_data['may_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='jun_" . $value['id'] . "' value=".$amount_data['jun_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='jun_" . $value['id'] . "' value=" . $amount_data['jun_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='jul_" . $value['id'] . "' value=".$amount_data['jul_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='jul_" . $value['id'] . "' value=" . $amount_data['jul_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='aug_" . $value['id'] . "' value=".$amount_data['aug_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='aug_" . $value['id'] . "' value=" . $amount_data['aug_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='sep_" . $value['id'] . "' value=".$amount_data['sep_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='sep_" . $value['id'] . "' value=" . $amount_data['sep_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='oct_" . $value['id'] . "' value=".$amount_data['oct_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='oct_" . $value['id'] . "' value=" . $amount_data['oct_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='nov_" . $value['id'] . "' value=".$amount_data['nov_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='nov_" . $value['id'] . "' value=" . $amount_data['nov_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='dec_" . $value['id'] . "' value=".$amount_data['dec_'.$bsId]."></td>";
+                                $row .= "<td><input type='text' class='form-control' name='dec_" . $value['id'] . "' value=" . $amount_data['dec_' . $bsId] . "></td>";
+
+                                // Show total amount row bise
+                                $row .= "<td><input readonly type='text' class='total_amount form-control' name='total_amount' value=" . $total_amount . "></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
                             endforeach;
                             ?>
+                            <tr>
+                                <td colspan="3"><?= languagedata($this->session->userdata('session_language'), "Actual (Accumulated)"); ?></td>
+                                <td style="display: none;"></td> <td style="display: none;"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $january; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $february; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $march; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $april; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $may; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $june; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $july; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $august; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $september; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $october; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $november; ?>"></td>
+                                <td><input type="text" readonly class="form-control" value="<?= $december; ?>"></td>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
                     <?php echo form_close(); ?>
@@ -198,6 +245,7 @@
 
 
 <script>
+    $("#na_datatable").DataTable();
     //Textare auto growth
     autosize($('textarea.auto-growth'));
 
@@ -212,9 +260,21 @@
         $(".filter_record").submit();
     });
 
+    $(document).on("focusout", "td input", function() {
 
-    $(".save_data").change(function() {
-        var form_data = $(".save_data").serializeArray();
+        // Update Value On Right and bottom
+        var total_amount = 0;
+        var data = {};
+        $(this).closest('tr').find("input").each(function(i) {
+            if($(this).attr("name") == "total_amount")  return false;
+            data[$(this).attr("name")] = $(this).val();
+
+            total_amount = parseInt(total_amount) + (parseInt($(this).val()) || 0);
+        });
+
+        $(this).closest('tr').find('.total_amount').val(total_amount);
+        var id = $(this).closest('tr').attr('id');
+
         var url = "<?= base_url('admin/bsamount/save_data') ?>";
         var year = $('#year').val();
         var client_id = $('#client_id').val();
@@ -222,18 +282,19 @@
             type: 'POST',
             url: url,
             data: {
-                'form_data': form_data,
-                'year': year,
-                'client_id': client_id,
+                'id': id,
+                'form_data': data,
+                // 'year': year,
+                // 'client_id': client_id,
                 'csrf_test_name': $('input[name="csrf_test_name"]:first').val()
             },
             success: function(resultData) {
-                flash('Default Flash Message');
-                alert('Data Saved Successfully.')
+                // alert('Data Saved Successfully.')
             },
             error: function(xhr, status, error) {
                 console.log(error);
             },
         });
+
     });
 </script>

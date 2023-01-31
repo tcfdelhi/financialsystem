@@ -29,11 +29,20 @@ class Bsamount extends MY_Controller
 	//-----------------------------------------------------------------------
 	public function list($year = 0, $client_id = 0)
 	{
-
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
 			$client_id  = $this->input->post('client_id');
-		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} 
+		else if ($year == 0 and $client_id == 0) {
+			redirect(base_url("admin/bsamount"));
+			
+		}
+
+		// Check if year and client exists in amount data or not
+		$num_rows =  $this->bs_amount_model->get_bs_amount_data($year, $client_id);
+		if ($num_rows === 0) {
+			// Insert Data into bs amoutn table
+			$this->bs_amount_model->insert_bs_amount_data($year, $client_id);
 		}
 
 
@@ -41,7 +50,6 @@ class Bsamount extends MY_Controller
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
 		$data['clients'] = $this->pl_model->get_clients();
-		$data['bs_codes'] = $this->bs_amount_model->get_bs_codes();
 		$data['bs_amount_data'] = $this->bs_amount_model->bs_amount_data($year, $client_id);
 		$data['view'] = 'admin/bsamount/list';
 		$this->load->view('layout', $data);
@@ -249,36 +257,14 @@ class Bsamount extends MY_Controller
 	public function save_data()
 	{
 		$post_data = $this->input->post('form_data');
-		$data = [];
-		foreach ($post_data as $key => $value) {
-			if ($key == 0) continue;
-			$data[$value['name']] = $value['value'];
-		}
-
-
+		
 		$user_data = array(
-			'client_id' => $this->input->post('client_id'),
-			'year' => $this->input->post('year'),
-			'data' => json_encode($data),
+			'data' => json_encode($post_data)
 		);
-		$data = $this->security->xss_clean($user_data);
+		$updateData = $this->security->xss_clean($user_data);
 
-		$query = $this->db->get_where('ci_bs_amount', array(//making selection
-            'client_id' => $this->input->post('client_id'),
-			'year' => $this->input->post('year')
-        ));
-		$numRows = $query->num_rows();
-
-		if ($numRows === 0) $this->bs_amount_model->add_code($data);
-		else {
-			$this->db->where('year', $this->input->post('year'));
-			$this->db->where('client_id', $this->input->post('client_id'));
-			$this->db->update('ci_bs_amount', $data);
-			$result = true;
-		}
-
-
-
+		$this->db->where('id', $this->input->post('id'));
+		$this->db->update('ci_bs_amount', $updateData);
 
 		echo json_encode('ll');
 	}

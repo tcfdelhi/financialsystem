@@ -27,6 +27,15 @@ class Bs_model extends CI_Model
 	//-----------------------------------------------------
 	public function add_code($data)
 	{
+		// Insert Data In Amount Table Also (Prepare bs amount data)
+		$bs_amount['client_id'] = $data['client_id'];
+		$bs_amount['year'] = $data['year'];
+		$bs_amount['code'] = $data['code'];
+		$bs_amount['title'] = $data['title'];
+		$bs_amount['data'] = ' ';
+		$this->db->insert('ci_bs_amount', $bs_amount);
+		// End Here
+
 		$this->db->insert('ci_bs_code', $data);
 		return true;
 	}

@@ -94,6 +94,15 @@ class User_model extends CI_Model
 	//-----------------------------------------------------
 	public function add_code($data)
 	{
+		// Insert Data In Amount Table Also (Prepare bs amount data)
+		$bs_amount['client_id'] = $data['client_id'];
+		$bs_amount['year'] = $data['year'];
+		$bs_amount['code'] = $data['code'];
+		$bs_amount['title'] = $data['title'];
+		$bs_amount['data'] = ' ';
+		$this->db->insert('ci_bs_amount', $bs_amount);
+		// End Here
+
 		$this->db->insert('ci_bs_code', $data);
 		return true;
 	}
@@ -150,6 +159,16 @@ class User_model extends CI_Model
 
 	public function add_pl_code($data)
 	{
+		// Insert Data In Amount Table Also (Prepare bs amount data)
+		$pl_amount['client_id'] = $data['client_id'];
+		$pl_amount['year'] = $data['year'];
+		$pl_amount['code'] = $data['code'];
+		$pl_amount['title'] = $data['title'];
+		$pl_amount['data'] = ' ';
+		$this->db->insert('ci_pl_amount', $pl_amount);
+		// End Here
+		
+
 		$this->db->insert('ci_pl_code', $data);
 		return true;
 	}

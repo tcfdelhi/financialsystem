@@ -21,29 +21,10 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('admin/plamount/list/'), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('user/plamount/list/'), 'class="form-horizontal"');  ?>
 
 
-                    <div class="row clearfix col-md-6">
-                        <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-8 col-xs-7">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select class="form-control show-tick" name="client_id">
-                                        <!-- <option value="">-- Please select --</option> -->
-                                        <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>"><?= $group['company_name'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
+            
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-4 col-md-2 col-sm-4 col-xs-5 form-control-label">
                             <label for="password"><?= languagedata($this->session->userdata('session_language'), "Select Financial Year"); ?><span class="red"> *</span></label>

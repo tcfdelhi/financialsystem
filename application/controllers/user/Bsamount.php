@@ -27,12 +27,22 @@ class Bsamount extends UR_Controller
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
 
-		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} 
+		else if ($year == 0) {
+			redirect(base_url("user/bsamount"));
+		}
+
+		// Check if year and client exists in amount data or not
+		$num_rows =  $this->bs_amount_model->get_bs_amount_data($year);
+		if ($num_rows === 0) {
+			// Insert Data into bs amoutn table
+			$this->bs_amount_model->insert_bs_amount_data($year);
 		}
 
 
 		$data['years'] = $this->bs_amount_model->get_years();
 		$data['year'] = $year;
+		$data['bs_amount_data'] = $this->bs_amount_model->bs_amount_data($year);
 		$data['view'] = 'user/bsamount/list';
 		$this->load->view('layout', $data);
 	}
@@ -236,5 +246,20 @@ class Bsamount extends UR_Controller
 				redirect("user/bsamount", 'refresh');
 			}
 		}
+	}
+
+	public function save_data()
+	{
+		$post_data = $this->input->post('form_data');
+		
+		$user_data = array(
+			'data' => json_encode($post_data)
+		);
+		$updateData = $this->security->xss_clean($user_data);
+
+		$this->db->where('id', $this->input->post('id'));
+		$this->db->update('ci_bs_amount', $updateData);
+
+		echo json_encode('ll');
 	}
 }

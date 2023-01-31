@@ -505,4 +505,9 @@ class Bscode extends MY_Controller
 		$data['view'] = 'admin/bscode/list_view';
 		$this->load->view('layout', $data);
 	}
+
+	public function reports(){
+		$data['view'] = 'admin/bscode/reports';
+		$this->load->view('layout', $data);
+	}
 }
