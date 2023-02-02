@@ -77,11 +77,11 @@
 					<li id="cash_flow">
 						<a href="<?= base_url('admin/bscode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
 					</li>
-					
+
 					<li id="bs_reports">
 						<a href="<?= base_url('admin/bscode/reports'); ?>"><?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 					</li>
-					
+
 
 					<li id="list_view">
 						<a href="<?= base_url('admin/bscode/list_view'); ?>"><?= languagedata($this->session->userdata('session_language'), "List View BS Codes"); ?></a>
@@ -121,6 +121,11 @@
 					<li id="pl_cash_flow_category">
 						<a href="<?= base_url('admin/plcode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
 					</li>
+
+					<li id="pl_reports">
+						<a href="<?= base_url('admin/plcode/reports'); ?>"><?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
+					</li>
+
 					<li id="pl_list_view">
 						<a href="<?= base_url('admin/plcode/list_view'); ?>"><?= languagedata($this->session->userdata('session_language'), "List View PL Codes"); ?></a>
 					</li>

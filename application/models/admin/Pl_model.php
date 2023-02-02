@@ -133,4 +133,17 @@ class Pl_model extends CI_Model
 		$query = $this->db->query($SQL);
 		return $query->result_array();
 	}
+
+	public function get_reports($bs_code, $client_id, $year)
+	{
+
+		// Year And client condition
+		if ($year != 0 and $client_id != 0 and $bs_code != 0) $WHERE = "where year = $year and client_id = $client_id  and code = '$bs_code' ";
+		else $WHERE = "";
+
+		$SQL = "SELECT * from ci_pl_amount $WHERE";
+	
+		$query = $this->db->query($SQL);
+		return $query->row_array();
+	}
 }

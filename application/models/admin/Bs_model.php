@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\sql_injection_subst;
+
 class Bs_model extends CI_Model
 {
 	public function __construct()
@@ -7,7 +10,7 @@ class Bs_model extends CI_Model
 	}
 
 	//-----------------------------------------------------
-	public function get_codes($year = 0 , $client_id = 0)
+	public function get_codes($year = 0, $client_id = 0)
 	{
 		// $query = $this->db->get('ci_bs_code');
 		$query = 'SELECT 
@@ -19,7 +22,7 @@ class Bs_model extends CI_Model
 		INNER JOIN ci_cash_flow_category on ci_bs_code.cash_flow_category = ci_cash_flow_category.id';
 
 		// Year And client condition
-		if($year != 0 and $client_id != 0) $WHERE = "ci_bs_code.year = $year and ci_bs_code.client_id = $client_id";
+		if ($year != 0 and $client_id != 0) $WHERE = "ci_bs_code.year = $year and ci_bs_code.client_id = $client_id";
 		else $WHERE = "";
 		return $this->datatable->LoadJson($query, $WHERE);
 	}
@@ -81,10 +84,11 @@ class Bs_model extends CI_Model
 		$query = $this->db->query($SQL);
 		return $query->result_array();
 	}
-	public function get_years(){
+	public function get_years()
+	{
 
 		$this->db->distinct();
-		$this->db->select('year');		
+		$this->db->select('year');
 		$query = $this->db->get('ci_year');
 		return $query->result_array();
 	}
@@ -98,11 +102,11 @@ class Bs_model extends CI_Model
 	}
 
 	//-----------------------------------------------------
-	public function get_codes_export( $client_id = 0, $year = 0)
+	public function get_codes_export($client_id = 0, $year = 0)
 	{
 
 		// Year And client condition
-		if($year != 0 and $client_id != 0) $WHERE = "where ci_bs_code.year = $year and ci_bs_code.client_id = $client_id";
+		if ($year != 0 and $client_id != 0) $WHERE = "where ci_bs_code.year = $year and ci_bs_code.client_id = $client_id";
 		else $WHERE = "";
 
 
@@ -118,5 +122,18 @@ class Bs_model extends CI_Model
 		// echo $SQL ;die; 
 		$query = $this->db->query($SQL);
 		return $query->result_array();
+	}
+
+	public function get_reports($bs_code, $client_id, $year)
+	{
+
+		// Year And client condition
+		if ($year != 0 and $client_id != 0 and $bs_code != 0) $WHERE = "where year = $year and client_id = $client_id  and code = '$bs_code' ";
+		else $WHERE = "";
+
+		$SQL = "SELECT * from ci_bs_amount $WHERE";
+	
+		$query = $this->db->query($SQL);
+		return $query->row_array();
 	}
 }

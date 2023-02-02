@@ -15,7 +15,7 @@
 
             <div class="body">
 
-                <?php echo form_open(base_url('admin/bscode/reports'), 'class="inline-form-reports  form-horizontal filter_record"');  ?>
+                <?php echo form_open(base_url('admin/plcode/reports'), 'class="inline-form-reports  form-horizontal filter_record"');  ?>
                 <div class="col-md-12">
 
                     <div class="row clearfix col-md-4">
@@ -25,9 +25,9 @@
                         <div class="col-lg-6 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <select class="form-control show-tick submit_form" name="bs_code">
+                                    <select class="form-control show-tick submit_form" name="pl_code">
                                         <?php foreach ($code_data as $group) : ?>
-                                            <option value="<?= $group['code']; ?>" <?= ($bs_code == $group['code'] ? "selected" : "") ?>><?= $group['code'] ?></option>
+                                            <option value="<?= $group['code']; ?>" <?= ($pl_code == $group['code'] ? "selected" : "") ?>><?= $group['code'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -102,8 +102,8 @@
         chart.render();
 
     }
-    $("#bs_code").addClass('active');
-    $("#bs_reports").addClass('active');
+    $("#pl_code").addClass('active');
+    $("#pl_reports").addClass('active');
 
     $(".submit_form").change(function() {
         $(".filter_record").submit();

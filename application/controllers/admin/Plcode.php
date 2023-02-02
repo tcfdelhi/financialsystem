@@ -583,4 +583,42 @@ class Plcode extends MY_Controller
 			$this->load->view('layout', $data);
 		}
 	}
+
+	public function reports()
+	{
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$data['pl_code'] = $this->input->post('pl_code');
+			$data['client_id'] = $this->input->post('client_id');
+			$data['year'] = $this->input->post('year');
+		}
+
+		$data_points = $this->pl_model->get_reports($data['pl_code'], $data['client_id'], $data['year']);
+		$data['years'] = $this->pl_model->get_years();
+		$data['clients'] = $this->pl_model->get_clients();
+		$data['code_data'] = $this->pl_model->get_codes_export();
+
+		// Get Report Here
+		$data_points = json_decode($data_points['data'], true);
+		$chart_data = [];
+		$counter = 0;
+		foreach ($data_points as $key => $value) {
+			if (substr($key, 0, 3) == 'jan') $key = 'January';
+			if (substr($key, 0, 3) == 'feb') $key = 'February';
+			if (substr($key, 0, 3) == 'mar') $key = 'March';
+			if (substr($key, 0, 3) == 'apr') $key = 'April';
+			if (substr($key, 0, 3) == 'may') $key = 'May';
+			if (substr($key, 0, 3) == 'jun') $key = 'June';
+			if (substr($key, 0, 3) == 'jul') $key = 'July';
+			if (substr($key, 0, 3) == 'aug') $key = 'August';
+			if (substr($key, 0, 3) == 'sep') $key = 'September';
+			if (substr($key, 0, 3) == 'oct') $key = 'October';
+			if (substr($key, 0, 3) == 'nov') $key = 'November';
+			if (substr($key, 0, 3) == 'dec') $key = 'December';
+			$chart_data[$counter]['y'] = $value;
+			$chart_data[$counter++]['label'] = $key;
+		}
+		$data['dataPoints'] = $chart_data;
+		$data['view'] = 'admin/plcode/reports';
+		$this->load->view('layout', $data);
+	}
 }

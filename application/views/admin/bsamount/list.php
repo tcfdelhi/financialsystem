@@ -3,10 +3,11 @@
 <!-- Bootstrap Select Css -->
 <link href="<?= base_url() ?>public/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 <style>
-    .form-control{
+    .form-control {
         width: 100% !important;
     }
-    .input-sm{
+
+    .input-sm {
         width: auto !important;
     }
 </style>
@@ -156,7 +157,8 @@
                             ?>
                             <tr>
                                 <td colspan="3"><?= languagedata($this->session->userdata('session_language'), "Actual (Accumulated)"); ?></td>
-                                <td style="display: none;"></td> <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
                                 <td><input type="text" readonly class="form-control" value="<?= $january; ?>"></td>
                                 <td><input type="text" readonly class="form-control" value="<?= $february; ?>"></td>
                                 <td><input type="text" readonly class="form-control" value="<?= $march; ?>"></td>
@@ -237,6 +239,13 @@
 <!-- Jquery DataTable Plugin Js -->
 <script src="<?= base_url() ?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
 <script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
 <!-- Autosize Plugin Js -->
 <script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
@@ -245,7 +254,43 @@
 
 
 <script>
-    $("#na_datatable").DataTable();
+    $("#na_datatable").DataTable({
+        "bPaginate": false,
+        dom: 'Bfrtip',
+        // buttons: [
+        //     'copy', 'csv', 'excel', 'pdf', 'print'
+        // ],
+        buttons: [{
+            extend: 'excel',
+            exportOptions: {
+                format: {
+                    body: function(inner, rowidx, colidx, node) {
+                        if ($(node).children("input").length > 0) {
+                            return $(node).children("input").first().val();
+                        } else {
+                            return inner;
+                        }
+                    }
+                }
+            }
+        },
+        {
+            extend: 'pdf',
+            exportOptions: {
+                format: {
+                    body: function(inner, rowidx, colidx, node) {
+                        if ($(node).children("input").length > 0) {
+                            return $(node).children("input").first().val();
+                        } else {
+                            return inner;
+                        }
+                    }
+                }
+            }
+        }
+    ]
+
+    });
     //Textare auto growth
     autosize($('textarea.auto-growth'));
 
@@ -266,7 +311,7 @@
         var total_amount = 0;
         var data = {};
         $(this).closest('tr').find("input").each(function(i) {
-            if($(this).attr("name") == "total_amount")  return false;
+            if ($(this).attr("name") == "total_amount") return false;
             data[$(this).attr("name")] = $(this).val();
 
             total_amount = parseInt(total_amount) + (parseInt($(this).val()) || 0);
