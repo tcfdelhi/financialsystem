@@ -22,9 +22,12 @@
 
 
 
-                <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
+                <!-- <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button> -->
 
-                <a href="<?= base_url('admin/bsamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Amount"); ?></a>
+                <!-- <a href="<?= base_url('admin/bsamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New BS Amount"); ?></a> -->
+
+                <a href="<?= base_url('admin/bscode/reports'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
+
             </div>
             <!-- Dropdown for filters -->
 
@@ -124,32 +127,33 @@
                                 $row .= "<td>" . ++$counter . "</td>";
                                 $row .= "<td>" . $value['code'] . "</td>";
                                 $row .= "<td>" . $value['title'] . "</td>";
-                                $row .= "<td><input type='text' class='form-control' name='jan_" . $value['id'] . "' value=" . $amount_data['jan_' . $bsId] . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='feb_" . $value['id'] . "' value=" . $amount_data['feb_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='jan_" . $value['id'] . "' value=" . (!empty($amount_data['jan_' . $bsId]) ? $amount_data['jan_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='mar_" . $value['id'] . "' value=" . $amount_data['mar_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='feb_" . $value['id'] . "' value=" . (!empty($amount_data['feb_' . $bsId]) ? $amount_data['feb_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='apr_" . $value['id'] . "' value=" . $amount_data['apr_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='mar_" . $value['id'] . "' value=" . (!empty($amount_data['mar_' . $bsId]) ? $amount_data['mar_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='may_" . $value['id'] . "' value=" . $amount_data['may_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='apr_" . $value['id'] . "' value=" . (!empty($amount_data['apr_' . $bsId]) ? $amount_data['apr_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='jun_" . $value['id'] . "' value=" . $amount_data['jun_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='may_" . $value['id'] . "' value=" . (!empty($amount_data['may_' . $bsId]) ? $amount_data['may_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='jul_" . $value['id'] . "' value=" . $amount_data['jul_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='jun_" . $value['id'] . "' value=" . (!empty($amount_data['jun_' . $bsId]) ? $amount_data['jun_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='aug_" . $value['id'] . "' value=" . $amount_data['aug_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='jul_" . $value['id'] . "' value=" . (!empty($amount_data['jul_' . $bsId]) ? $amount_data['jul_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='sep_" . $value['id'] . "' value=" . $amount_data['sep_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='aug_" . $value['id'] . "' value=" . (!empty($amount_data['aug_' . $bsId]) ? $amount_data['aug_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='oct_" . $value['id'] . "' value=" . $amount_data['oct_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='sep_" . $value['id'] . "' value=" . (!empty($amount_data['sep_' . $bsId]) ? $amount_data['sep_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='nov_" . $value['id'] . "' value=" . $amount_data['nov_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='oct_" . $value['id'] . "' value=" . (!empty($amount_data['oct_' . $bsId]) ? $amount_data['oct_' . $bsId] : 0) . "></td>";
 
-                                $row .= "<td><input type='text' class='form-control' name='dec_" . $value['id'] . "' value=" . $amount_data['dec_' . $bsId] . "></td>";
+                                $row .= "<td><input type='number' class='form-control' name='nov_" . $value['id'] . "' value=" . (!empty($amount_data['nov_' . $bsId]) ? $amount_data['nov_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='dec_" . $value['id'] . "' value=" . (!empty($amount_data['dec_' . $bsId]) ? $amount_data['dec_' . $bsId] : 0) . "></td>";
 
                                 // Show total amount row bise
-                                $row .= "<td><input readonly type='text' class='total_amount form-control' name='total_amount' value=" . $total_amount . "></td>";
+                                $row .= "<td><input readonly type='number' class='total_amount form-control' name='total_amount' value=" . $total_amount . "></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
@@ -159,18 +163,18 @@
                                 <td colspan="3"><?= languagedata($this->session->userdata('session_language'), "Actual (Accumulated)"); ?></td>
                                 <td style="display: none;"></td>
                                 <td style="display: none;"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $january; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $february; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $march; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $april; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $may; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $june; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $july; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $august; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $september; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $october; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $november; ?>"></td>
-                                <td><input type="text" readonly class="form-control" value="<?= $december; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $january; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $february; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $march; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $april; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $may; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $june; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $july; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $august; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $september; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $october; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $november; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $december; ?>"></td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -261,34 +265,36 @@
         //     'copy', 'csv', 'excel', 'pdf', 'print'
         // ],
         buttons: [{
-            extend: 'excel',
-            exportOptions: {
-                format: {
-                    body: function(inner, rowidx, colidx, node) {
-                        if ($(node).children("input").length > 0) {
-                            return $(node).children("input").first().val();
-                        } else {
-                            return inner;
+                extend: 'excel',
+                title: 'BS Report Monthly',
+                exportOptions: {
+                    format: {
+                        body: function(inner, rowidx, colidx, node) {
+                            if ($(node).children("input").length > 0) {
+                                return $(node).children("input").first().val();
+                            } else {
+                                return inner;
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'BS Report Monthly',
+                exportOptions: {
+                    format: {
+                        body: function(inner, rowidx, colidx, node) {
+                            if ($(node).children("input").length > 0) {
+                                return $(node).children("input").first().val();
+                            } else {
+                                return inner;
+                            }
                         }
                     }
                 }
             }
-        },
-        {
-            extend: 'pdf',
-            exportOptions: {
-                format: {
-                    body: function(inner, rowidx, colidx, node) {
-                        if ($(node).children("input").length > 0) {
-                            return $(node).children("input").first().val();
-                        } else {
-                            return inner;
-                        }
-                    }
-                }
-            }
-        }
-    ]
+        ]
 
     });
     //Textare auto growth

@@ -68,6 +68,7 @@ class Pl_model extends CI_Model
 
 	public function get_breakdown_categories()
 	{
+		$this->db->order_by("list_order", "ASC");
 		$query = $this->db->get('ci_pl_breakdown_cat');
 		return $query->result_array();
 	}

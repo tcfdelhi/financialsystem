@@ -10,16 +10,6 @@
     .input-sm {
         width: auto !important;
     }
-
-    .categories {
-        background-color: #f0b9d4 !important;
-    }
-    section.content{
-        margin: 71px 0 0 0px !important;
-    }
-    #leftsidebar{
-        display: none  !important;
-    }
 </style>
 <!-- Exportable Table -->
 <div class="row clearfix">
@@ -36,9 +26,7 @@
 
                 <!-- <a href="<?= base_url('admin/plamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Amount"); ?></a> -->
 
-                <a href="<?= base_url('admin/plcode/reports'); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
-
-                <a href="<?= base_url('admin/plamount'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
+                <a href="<?= base_url('admin/plcode/reports'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 
             </div>
             <!-- Dropdown for filters -->
@@ -54,7 +42,7 @@
                         <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <select id="client_id" class="form-control show-tick submit_form" name="client_id">
+                                    <select class="form-control show-tick submit_form" name="client_id">
                                         <?php foreach ($clients as $group) : ?>
                                             <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['company_name'] ?></option>
                                         <?php endforeach; ?>
@@ -73,7 +61,7 @@
                         <div class="col-lg-6 col-md-10 col-sm-8 col-xs-7">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <select id="year" class="form-control show-tick submit_form" name="year">
+                                    <select class="form-control show-tick submit_form" name="year">
                                         <?php foreach ($years as $group) : ?>
                                             <option value="<?= $group['year']; ?>" <?= ($year == $group['year'] ? "selected" : "") ?>><?= $group['year'] ?></option>
                                         <?php endforeach; ?>
@@ -92,10 +80,9 @@
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
                             <tr>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Accounting Title"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Before Previous "); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Previous "); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Current "); ?></th>
+                                <th>#ID</th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Title (Accounting Name)"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "January"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "February"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "March"); ?></th>
@@ -113,69 +100,81 @@
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($breakdown_cat as $key => $value) {
-                                $row = "<tr class='categories' colspan='10' >";
+                            $counter = 0;
+                            foreach ($pl_amount_data as $key => $value) :
+                                $amount_data = json_decode($value['data'], true);
+                                $bsId = $value['id'];
 
-                                $row .= "<td>" . $value['name'] . "</td>";
+
+                                $january = (int)$january + (int)$amount_data['jan_' . $bsId];
+                                $february = (int)$february + (int)$amount_data['feb_' . $bsId];
+                                $march = (int)$march + (int)$amount_data['mar_' . $bsId];
+                                $april = (int)$april + (int)$amount_data['apr_' . $bsId];
+                                $may = (int)$may + (int)$amount_data['may_' . $bsId];
+                                $june = (int)$june + (int)$amount_data['jun_' . $bsId];
+                                $july = (int)$july + (int)$amount_data['jul_' . $bsId];
+                                $august = (int)$august + (int)$amount_data['aug_' . $bsId];
+                                $september = (int)$september + (int)$amount_data['sep_' . $bsId];
+                                $october = (int)$october + (int)$amount_data['oct_' . $bsId];
+                                $november = (int)$november + (int)$amount_data['nov_' . $bsId];
+                                $december = (int)$december + (int)$amount_data['dec_' . $bsId];
+                                // Get total amount here
+                                $total_amount = (int)$amount_data['jan_' . $bsId] + (int)$amount_data['feb_' . $bsId] + (int)$amount_data['mar_' . $bsId] + (int)$amount_data['apr_' . $bsId] + (int)$amount_data['may_' . $bsId] + (int)$amount_data['jun_' . $bsId] + (int)$amount_data['jul_' . $bsId] + (int)$amount_data['aug_' . $bsId] + (int)$amount_data['sep_' . $bsId] + (int)$amount_data['oct_' . $bsId] + (int)$amount_data['nov_' . $bsId] + (int)$amount_data['dec_' . $bsId];
+
+                                $row = "<tr id=$bsId>";
+                                $row .= "<td>" . ++$counter . "</td>";
+                                $row .= "<td>" . $value['code'] . "</td>";
+                                $row .= "<td>" . $value['title'] . "</td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='jan_" . $value['id'] . "' value=" . (!empty($amount_data['jan_' . $bsId]) ? $amount_data['jan_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='feb_" . $value['id'] . "' value=" . (!empty($amount_data['feb_' . $bsId]) ? $amount_data['feb_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='mar_" . $value['id'] . "' value=" . (!empty($amount_data['mar_' . $bsId]) ? $amount_data['mar_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='apr_" . $value['id'] . "' value=" . (!empty($amount_data['apr_' . $bsId]) ? $amount_data['apr_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='may_" . $value['id'] . "' value=" . (!empty($amount_data['may_' . $bsId]) ? $amount_data['may_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='jun_" . $value['id'] . "' value=" . (!empty($amount_data['jun_' . $bsId]) ? $amount_data['jun_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='jul_" . $value['id'] . "' value=" . (!empty($amount_data['jul_' . $bsId]) ? $amount_data['jul_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='aug_" . $value['id'] . "' value=" . (!empty($amount_data['aug_' . $bsId]) ? $amount_data['aug_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='sep_" . $value['id'] . "' value=" . (!empty($amount_data['sep_' . $bsId]) ? $amount_data['sep_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='oct_" . $value['id'] . "' value=" . (!empty($amount_data['oct_' . $bsId]) ? $amount_data['oct_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='nov_" . $value['id'] . "' value=" . (!empty($amount_data['nov_' . $bsId]) ? $amount_data['nov_' . $bsId] : 0) . "></td>";
+
+                                $row .= "<td><input type='number' class='form-control' name='dec_" . $value['id'] . "' value=" . (!empty($amount_data['dec_' . $bsId]) ? $amount_data['dec_' . $bsId] : 0) . "></td>";
+
+                                // Show total amount row bise
+                                $row .= "<td><input readonly type='number' class='total_amount form-control' name='total_amount' value=" . $total_amount . "></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
-
-                                // Generate Extra 5 rows for accouting codes
-                                // $counter = 0;
-                                for ($i = 0; $i < 12; $i++) {
-                                    $row = "<tr>";
-
-                                    $options = '';
-                                    foreach ($pl_codes as $key1 => $value1) {
-                                        $options .= "<option value='" . $value1['code'] . "'>" . $value1['title'] . "</option>";
-                                    }
-
-                                    if ($i == 10)
-                                        $row .= "<td>Total " . $value['name'] . "</td>";
-                                    elseif ($i == 11)  $row .= "<td>Total " . $value['name'] . "(Last Year)</td>";
-
-                                    else  $row .= "<td><select class='form-control get_amount_data'>" . $options . "</select></td>";
-
-                                    $row .= "<td><input type='text' class='form-control'></td>";
-
-                                    $row .= "<td><input type='text' class='form-control'></td>";
-
-                                    $row .= "<td><input type='text' class='form-control'></td>";
-
-
-                                    $row .= "<td><input type='number' class='jan form-control' name='jan' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='feb form-control' name='feb' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='mar form-control' name='mar' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='apr form-control' name='apr' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='may form-control' name='may' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='jun form-control' name='jun' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='jul form-control' name='jul' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='aug form-control' name='aug' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='sep form-control' name='sep' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='oct form-control' name='oct' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='nov form-control' name='nov' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='dec form-control' name='dec' value=''></td>";
-
-                                    // // Show total amount row bise
-                                    $row .= "<td></td>";
-
-                                    $row .= "</tr>";
-                                    echo $row;
-                                }
-                            }
+                            endforeach;
                             ?>
+                            <tr>
+                                <td colspan="3"><?= languagedata($this->session->userdata('session_language'), "Actual (Accumulated)"); ?></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $january; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $february; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $march; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $april; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $may; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $june; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $july; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $august; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $september; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $october; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $november; ?>"></td>
+                                <td><input type="number" readonly class="form-control" value="<?= $december; ?>"></td>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
                     <?php echo form_close(); ?>
@@ -277,41 +276,41 @@
 <!-- Custom Js -->
 <script src="<?= base_url() ?>public/js/pages/tables/jquery-datatable.js"></script>
 <script>
-    // $("#na_datatable").DataTable({
-    //     "bPaginate": false,
-    //     dom: 'Bfrtip',
-    //     buttons: [{
-    //             extend: 'excel',
-    //             title: 'PL Report Monthly',
-    //             exportOptions: {
-    //                 format: {
-    //                     body: function(inner, rowidx, colidx, node) {
-    //                         if ($(node).children("input").length > 0) {
-    //                             return $(node).children("input").first().val();
-    //                         } else {
-    //                             return inner;
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         },
-    //         {
-    //             extend: 'pdf',
-    //             title: 'PL Report Monthly',
-    //             exportOptions: {
-    //                 format: {
-    //                     body: function(inner, rowidx, colidx, node) {
-    //                         if ($(node).children("input").length > 0) {
-    //                             return $(node).children("input").first().val();
-    //                         } else {
-    //                             return inner;
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     ]
-    // });
+    $("#na_datatable").DataTable({
+        "bPaginate": false,
+        dom: 'Bfrtip',
+        buttons: [{
+                extend: 'excel',
+                title: 'PL Report Monthly',
+                exportOptions: {
+                    format: {
+                        body: function(inner, rowidx, colidx, node) {
+                            if ($(node).children("input").length > 0) {
+                                return $(node).children("input").first().val();
+                            } else {
+                                return inner;
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'PL Report Monthly',
+                exportOptions: {
+                    format: {
+                        body: function(inner, rowidx, colidx, node) {
+                            if ($(node).children("input").length > 0) {
+                                return $(node).children("input").first().val();
+                            } else {
+                                return inner;
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    });
 
     //Textare auto growth
     autosize($('textarea.auto-growth'));
@@ -327,39 +326,6 @@
         $(".filter_record").submit();
     });
 
-
-    $(document).on("change", ".get_amount_data", function() {
-        var element = $(this);
-        var code = $(this).val();
-        if (code != '') {
-            var url = "<?= base_url('admin/plamount/get_data') ?>";
-            var year = $('#year').val();
-            var client_id = $('#client_id').val();
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    'code': code,
-                    'year': year,
-                    'client_id': client_id,
-                    'csrf_test_name': $('input[name="csrf_test_name"]:first').val()
-                },
-                success: function(resultData) {
-                    var myObject = JSON.parse(resultData);
-                    var res = JSON.parse(myObject.data);
-                    console.log(res)
-                    $.each(res, function(key, value) {
-
-                        element.closest("tr").find("." + key.substr(0, 3)).val(value);
-                    });
-
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                },
-            });
-        }
-    });
 
     $(document).on("focusout", "td input", function() {
 
@@ -389,6 +355,8 @@
             data: {
                 'id': id,
                 'form_data': data,
+                // 'year': year,
+                // 'client_id': client_id,
                 'csrf_test_name': $('input[name="csrf_test_name"]:first').val()
             },
             success: function(resultData) {

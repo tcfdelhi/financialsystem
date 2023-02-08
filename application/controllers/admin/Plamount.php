@@ -45,7 +45,10 @@ class Plamount extends MY_Controller
 			$this->pl_amount_model->insert_pl_amount_data($year, $client_id);
 		}
 
-
+		// Get Breakdown Catgeory Here
+		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
+		$data['pl_codes'] =  $this->pl_model->get_codes_export();
+		// print_r($data['pl_codes']); die;
 		$data['years'] = $this->pl_amount_model->get_years();
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
@@ -265,5 +268,16 @@ class Plamount extends MY_Controller
 		$this->db->update('ci_pl_amount', $updateData);
 
 		echo json_encode('ll');
+	}
+
+	public function get_data()
+	{
+		$code = $this->input->post('code');
+		$year = $this->input->post('year');
+		$client_id = $this->input->post('client_id');
+		
+		$query = $this->db->get_where('ci_pl_amount', array('code' => $code,'year'=>$year,'client_id'=>$client_id));
+		$res = $query->row_array();
+		echo json_encode($res);
 	}
 }

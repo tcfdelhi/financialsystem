@@ -82,6 +82,9 @@
 						<a href="<?= base_url('admin/bscode/reports'); ?>"><?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 					</li>
 
+					<li id="bs_chart">
+						<a href="<?= base_url('admin/bscode/charts'); ?>"><?= languagedata($this->session->userdata('session_language'), "BS Chart"); ?></a>
+					</li>
 
 					<li id="list_view">
 						<a href="<?= base_url('admin/bscode/list_view'); ?>"><?= languagedata($this->session->userdata('session_language'), "List View BS Codes"); ?></a>

@@ -542,4 +542,11 @@ class Bscode extends MY_Controller
 		$data['view'] = 'admin/bscode/reports';
 		$this->load->view('layout', $data);
 	}
+
+	public function charts(){
+
+		$data['years'] = $this->bs_model->get_years();
+		$data['view'] = 'admin/bscode/chart';
+		$this->load->view('layout', $data);
+	}
 }

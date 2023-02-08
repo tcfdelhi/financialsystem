@@ -89,7 +89,7 @@ class Bs_model extends CI_Model
 
 		$this->db->distinct();
 		$this->db->select('year');
-		$query = $this->db->get('ci_year');
+		$query = $this->db->get('ci_bs_code');
 		return $query->result_array();
 	}
 
