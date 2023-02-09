@@ -33,20 +33,22 @@ class Plamount extends MY_Controller
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
 			$client_id  = $this->input->post('client_id');
-		} 
-		else if ($year == 0 and $client_id == 0) {
+		} else if ($year == 0 and $client_id == 0) {
 			redirect(base_url("admin/plamount"));
-		}
-
-		// Check if year and client exists in amount data or not
-		$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $client_id);
-		if ($num_rows === 0) {
-			// Insert Data into bs amoutn table
-			$this->pl_amount_model->insert_pl_amount_data($year, $client_id);
 		}
 
 		// Get Breakdown Catgeory Here
 		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
+
+		// echo"<pre>";print_r($data['breakdown_cat']); die;
+		foreach ($data['breakdown_cat'] as $key => $value) {
+			$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $client_id, $value['id']);
+			if ($num_rows === 0) {
+				$this->pl_amount_model->insert_pl_amount_data($year, $client_id, $value['id']);
+			}
+		}
+
+
 		$data['pl_codes'] =  $this->pl_model->get_codes_export();
 		// print_r($data['pl_codes']); die;
 		$data['years'] = $this->pl_amount_model->get_years();
@@ -258,9 +260,13 @@ class Plamount extends MY_Controller
 	public function save_data()
 	{
 		$post_data = $this->input->post('form_data');
-		
+		$code = $this->input->post('code');
+		$title = $this->input->post('title');
+
 		$user_data = array(
-			'data' => json_encode($post_data)
+			'data' => json_encode($post_data),
+			'code' => $code,
+			'title' => $title
 		);
 		$updateData = $this->security->xss_clean($user_data);
 
@@ -275,8 +281,8 @@ class Plamount extends MY_Controller
 		$code = $this->input->post('code');
 		$year = $this->input->post('year');
 		$client_id = $this->input->post('client_id');
-		
-		$query = $this->db->get_where('ci_pl_amount', array('code' => $code,'year'=>$year,'client_id'=>$client_id));
+
+		$query = $this->db->get_where('ci_pl_amount', array('code' => $code, 'year' => $year, 'client_id' => $client_id));
 		$res = $query->row_array();
 		echo json_encode($res);
 	}

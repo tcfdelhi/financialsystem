@@ -14,11 +14,13 @@
     .categories {
         background-color: #f0b9d4 !important;
     }
-    section.content{
+
+    section.content {
         margin: 71px 0 0 0px !important;
     }
-    #leftsidebar{
-        display: none  !important;
+
+    #leftsidebar {
+        display: none !important;
     }
 </style>
 <!-- Exportable Table -->
@@ -121,55 +123,64 @@
                                 $row .= "</tr>";
                                 echo $row;
 
-                                // Generate Extra 5 rows for accouting codes
+                                // Generate Extra 10 rows for accouting codes
                                 // $counter = 0;
-                                for ($i = 0; $i < 12; $i++) {
-                                    $row = "<tr>";
+                                $category = $value['id'];
+                                $sql = "SELECT * FROM ci_pl_amount where category='$category' and year='$year' and client_id='$client_id' ";
+                                $query = $this->db->query($sql);
+                                foreach ($query->result_array() as $row) {
+
+
+                                    $data = !empty($row['data']) ? json_decode($row['data'], true) : 0;
+
+                                    $total_amount = (int) $data['jan']  + (int)$data['feb'] + (int)$data['mar'] + (int)$data['apr'] + (int)$data['may'] + (int)$data['jun'] + (int)$data['jul'] + (int)$data['aug'] + (int)$data['sep'] + (int)$data['oct'] + (int)$data['nov'] + (int)$data['dec'];
+                                    // echo "<pre>"; print_r($row['code']); die;
+                                    $id = $row['id'];
+                                    $row = "<tr data-row_id=$id>";
 
                                     $options = '';
+                                    // $code = $row['code'];
+
                                     foreach ($pl_codes as $key1 => $value1) {
-                                        $options .= "<option value='" . $value1['code'] . "'>" . $value1['title'] . "</option>";
+                                        $options .= "<option value='" . $value1['id'] . "' 
+                                        " . ($code == $value1['id'] ? "selected" : "") .
+                                            ">" . $value1['title'] . "</option>";
                                     }
 
-                                    if ($i == 10)
-                                        $row .= "<td>Total " . $value['name'] . "</td>";
-                                    elseif ($i == 11)  $row .= "<td>Total " . $value['name'] . "(Last Year)</td>";
+                                    $row .= "<td><select class='form-control get_amount_data'>" . $options . "</select></td>";
 
-                                    else  $row .= "<td><select class='form-control get_amount_data'>" . $options . "</select></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control'></td>";
 
-                                    $row .= "<td><input type='text' class='form-control'></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control'></td>";
 
-                                    $row .= "<td><input type='text' class='form-control'></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control'></td>";
 
-                                    $row .= "<td><input type='text' class='form-control'></td>";
+                                    $row .= "<td><input type='number' class='jan form-control' name='jan' value=" . $data['jan'] . "></td>";
 
+                                    $row .= "<td><input type='number' class='feb form-control' name='feb' value=" . $data['feb'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='jan form-control' name='jan' value=''></td>";
+                                    $row .= "<td><input type='number' class='mar form-control' name='mar' value=" . $data['mar'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='feb form-control' name='feb' value=''></td>";
+                                    $row .= "<td><input type='number' class='apr form-control' name='apr' value=" . $data['apr'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='mar form-control' name='mar' value=''></td>";
+                                    $row .= "<td><input type='number' class='may form-control' name='may' value=" . $data['may'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='apr form-control' name='apr' value=''></td>";
+                                    $row .= "<td><input type='number' class='jun form-control' name='jun' value=" . $data['jun'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='may form-control' name='may' value=''></td>";
+                                    $row .= "<td><input type='number' class='jul form-control' name='jul' value=" . $data['jul'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='jun form-control' name='jun' value=''></td>";
+                                    $row .= "<td><input type='number' class='aug form-control' name='aug' value=" . $data['aug'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='jul form-control' name='jul' value=''></td>";
+                                    $row .= "<td><input type='number' class='sep form-control' name='sep' value=" . $data['sep'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='aug form-control' name='aug' value=''></td>";
+                                    $row .= "<td><input type='number' class='oct form-control' name='oct' value=" . $data['oct'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='sep form-control' name='sep' value=''></td>";
+                                    $row .= "<td><input type='number' class='nov form-control' name='nov' value=" . $data['nov'] . "></td>";
 
-                                    $row .= "<td><input type='number' class='oct form-control' name='oct' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='nov form-control' name='nov' value=''></td>";
-
-                                    $row .= "<td><input type='number' class='dec form-control' name='dec' value=''></td>";
+                                    $row .= "<td><input type='number' class='dec form-control' name='dec' value=" . $data['dec'] . "></td>";
 
                                     // // Show total amount row bise
-                                    $row .= "<td></td>";
+                                    $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=$total_amount></td>";
 
                                     $row .= "</tr>";
                                     echo $row;
@@ -363,22 +374,25 @@
 
     $(document).on("focusout", "td input", function() {
 
-        //         var td = $(this).closest('tbody').prev('thead').find('> tr > td:eq(' + $(this).parent('td').index() + ')');
-
-        // console.log(td);
         // Update Value On Right and bottom
         var total_amount = 0;
         var data = {};
-        $(this).closest('tr').find("input").each(function(i) {
+        $(this).closest('tr').find("input[type='number']").each(function(i) {
             if ($(this).attr("name") == "total_amount") return false;
             data[$(this).attr("name")] = $(this).val();
 
             total_amount = parseInt(total_amount) + (parseInt($(this).val()) || 0);
 
         });
-        // console.log(data);
+
         $(this).closest('tr').find('.total_amount').val(total_amount);
-        var id = $(this).closest('tr').attr('id');
+        var id = $(this).closest('tr').data('row_id');
+
+        // get code title and name here
+        var selected_code = $(this).closest('tr').find('.get_amount_data :selected').val();
+        var selected_title = $(this).closest('tr').find('.get_amount_data :selected').text();
+
+
 
         var url = "<?= base_url('admin/plamount/save_data') ?>";
         var year = $('#year').val();
@@ -389,6 +403,8 @@
             data: {
                 'id': id,
                 'form_data': data,
+                'code': selected_code,
+                'title': selected_title,
                 'csrf_test_name': $('input[name="csrf_test_name"]:first').val()
             },
             success: function(resultData) {
