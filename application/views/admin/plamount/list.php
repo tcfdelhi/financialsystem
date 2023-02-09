@@ -116,6 +116,9 @@
                         <tbody>
                             <?php
                             foreach ($breakdown_cat as $key => $value) {
+
+                                $january = $february = $march = $april = $may = $june = $july = $august = $september = $october = $november = $december = 0;
+
                                 $row = "<tr class='categories' colspan='10' >";
 
                                 $row .= "<td>" . $value['name'] . "</td>";
@@ -131,7 +134,21 @@
                                 foreach ($query->result_array() as $row) {
 
 
+
                                     $data = !empty($row['data']) ? json_decode($row['data'], true) : 0;
+
+                                    $january = (int)$january + (int)$data['jan'];
+                                    $february = (int)$february + (int)$data['feb'];
+                                    $march = (int)$march + (int)$data['mar'];
+                                    $april = (int)$april + (int)$data['apr'];
+                                    $may = (int)$may + (int)$data['may'];
+                                    $june = (int)$june + (int)$data['jun'];
+                                    $july = (int)$july + (int)$data['jul'];
+                                    $august = (int)$august + (int)$data['aug'];
+                                    $september = (int)$september + (int)$data['sep'];
+                                    $october = (int)$october + (int)$data['oct'];
+                                    $november = (int)$november + (int)$data['nov'];
+                                    $december = (int)$december + (int)$data['dec'];
 
                                     $total_amount = (int) $data['jan']  + (int)$data['feb'] + (int)$data['mar'] + (int)$data['apr'] + (int)$data['may'] + (int)$data['jun'] + (int)$data['jul'] + (int)$data['aug'] + (int)$data['sep'] + (int)$data['oct'] + (int)$data['nov'] + (int)$data['dec'];
                                     // echo "<pre>"; print_r($row['code']); die;
@@ -180,11 +197,91 @@
                                     $row .= "<td><input type='number' class='dec form-control' name='dec' value=" . $data['dec'] . "></td>";
 
                                     // // Show total amount row bise
-                                    $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=$total_amount></td>";
+                                    $row .= "<td><input readonly class='total_amount form-control' type='text' value=$total_amount></td>";
 
                                     $row .= "</tr>";
                                     echo $row;
                                 }
+                                // Two extra rows for total
+
+                                $row = "<tr>";
+
+                                $row .= "<td>Total  " . $value['name'] . "</td>";
+
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
+
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
+
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
+
+                                $row .= "<td><input type='number' readonly class='jan form-control' name='jan' value=" . $january . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='feb form-control' name='feb' value=" . $february . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='mar form-control' name='mar' value=" . $march . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='apr form-control' name='apr' value=" . $april . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='may form-control' name='may' value=" . $may . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='jun form-control' name='jun' value=" . $june . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='jul form-control' name='jul' value=" . $july . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='aug form-control' name='aug' value=" . $august . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='sep form-control' name='sep' value=" . $september . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='oct form-control' name='oct' value=" . $october . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='nov form-control' name='nov' value=" . $november . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='dec form-control' name='dec' value=" . $december . "></td>";
+
+                                // // Show total amount row bise
+                                $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=$total_amount></td>";
+
+                                $row .= "</tr>";
+                                echo $row;
+                                $row = "<tr>";
+
+                                $row .= "<td>Total " . $value['name'] . " (Last Year)</td>";
+
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
+
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
+
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
+
+                                $row .= "<td><input type='number' readonly class='jan form-control' name='jan' value=" . $data['jan'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='feb form-control' name='feb' value=" . $data['feb'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='mar form-control' name='mar' value=" . $data['mar'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='apr form-control' name='apr' value=" . $data['apr'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='may form-control' name='may' value=" . $data['may'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='jun form-control' name='jun' value=" . $data['jun'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='jul form-control' name='jul' value=" . $data['jul'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='aug form-control' name='aug' value=" . $data['aug'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='sep form-control' name='sep' value=" . $data['sep'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='oct form-control' name='oct' value=" . $data['oct'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='nov form-control' name='nov' value=" . $data['nov'] . "></td>";
+
+                                $row .= "<td><input type='number' readonly class='dec form-control' name='dec' value=" . $data['dec'] . "></td>";
+
+                                // // Show total amount row bise
+                                $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=$total_amount></td>";
+
+                                $row .= "</tr>";
+                                echo $row;
                             }
                             ?>
                         </tbody>
