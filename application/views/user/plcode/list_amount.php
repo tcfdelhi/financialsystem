@@ -38,35 +38,17 @@
 
                 <!-- <a href="<?= base_url('admin/plamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Amount"); ?></a> -->
 
-                <a href="<?= base_url('admin/plcode/reports'); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
+                <!-- <a href="<?= base_url('user/plcode/'); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a> -->
 
-                <a href="<?= base_url('admin/plamount'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
+                <a href="<?= base_url('user/plcode'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
 
             </div>
             <!-- Dropdown for filters -->
 
             <div class="body">
 
-                <?php echo form_open(base_url('admin/plamount/list'), 'class="inline-form-view form-horizontal filter_record"');  ?>
+                <?php echo form_open(base_url('user/plcode/amount'), 'class="inline-form-view form-horizontal filter_record"');  ?>
                 <div class="col-md-12">
-                    <div class="row clearfix col-md-6">
-                        <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
-                        </div>
-                        <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select id="client_id" class="form-control show-tick submit_form" name="client_id">
-                                        <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['company_name'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-6 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -477,22 +459,22 @@
         var code = $(this).val();
         var id = $(this).closest('tr').data('row_id');
         if (code != '') {
-            var url = "<?= base_url('admin/plamount/get_data') ?>";
+            var url = "<?= base_url('user/plamount/get_data') ?>";
             var year = $('#year').val();
-            var client_id = $('#client_id').val();
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: {
                     'code': code,
                     'year': year,
-                    'client_id': client_id,
                     'csrf_test_name': $('input[name="csrf_test_name"]:first').val()
                 },
                 success: function(resultData) {
 
+                    console.log(resultData)
+                    // if (resultData != '') {
                     // Save Data also
-                    $.post("<?= base_url('admin/plamount/save_data') ?>", {
+                    $.post("<?= base_url('user/plamount/save_data') ?>", {
                         row_id: 'onChange',
                         id: id,
                         form_data: resultData,
@@ -508,6 +490,9 @@
 
                         element.closest("tr").find("." + key.substr(0, 3)).val(value);
                     });
+                    // }
+
+
 
                 },
                 error: function(xhr, status, error) {
@@ -539,7 +524,7 @@
 
 
 
-        var url = "<?= base_url('admin/plamount/save_data') ?>";
+        var url = "<?= base_url('user/plamount/save_data') ?>";
         var year = $('#year').val();
         var client_id = $('#client_id').val();
         $.ajax({

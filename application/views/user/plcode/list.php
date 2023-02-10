@@ -196,6 +196,7 @@
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
     $("#plcodes").addClass('active');
+    $("#pl_code").addClass('active');
     $(".submit_form").change(function() {
         // alert('h');
         $(".filter_record").submit();

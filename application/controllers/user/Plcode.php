@@ -8,6 +8,7 @@ class Plcode extends UR_Controller
 	{
 		parent::__construct();
 		$this->load->model('user/user_model', 'user_model');
+		$this->load->model('user/pl_amount_model', 'pl_amount_model');
 		$this->load->model('activity_model', 'activity_model');
 		$this->load->library('datatable'); // loaded my custom serverside datatable library		
 	}
@@ -48,9 +49,8 @@ class Plcode extends UR_Controller
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST')
 			$year  = $this->input->post('year');
-		else if($this->input->server('REQUEST_METHOD') === 'GET'){}
-
-		else redirect(base_url('user/bscode'));
+		else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else redirect(base_url('user/bscode'));
 
 		$id = $this->session->userdata('user_id');
 		$data['years'] = $this->db->get_where('ci_pl_year', array('client_id' => $id))->result_array();
@@ -319,7 +319,7 @@ class Plcode extends UR_Controller
 	public function delete($id = 0)
 	{
 
-		$SQL = 'SELECT year FROM ci_pl_code where id ='.$id;
+		$SQL = 'SELECT year FROM ci_pl_code where id =' . $id;
 		$query = $this->db->query($SQL);
 		$data = $query->row_array();
 		$year = $data['year'];
@@ -329,5 +329,59 @@ class Plcode extends UR_Controller
 		$this->activity_model->add(3);
 		$this->session->set_flashdata('msg', 'BS Code has been deleted successfully!');
 		redirect(base_url("user/plcode/list/$year"));
+	}
+
+	public function import($year = 0)
+	{
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else {
+			redirect(base_url('user/plcode'));
+		}
+
+		// // Get Imported data here
+		$data['imported_data'] = $this->pl_amount_model->get_imported_data($year);
+
+		// echo "<pre>";print_r($data['imported_data']); die;
+
+
+		$data['years'] = $this->pl_amount_model->get_years();
+		$data['year'] = $year;
+
+
+		$data['view'] = 'user/plcode/import';
+		$this->load->view('layout', $data);
+	}
+
+	public function amount($year = 0)
+	{
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else {
+			redirect(base_url('user/plcode'));
+		}
+
+		// Get Breakdown Catgeory Here
+		$data['breakdown_cat'] =  $this->pl_amount_model->get_breakdown_categories();
+		foreach ($data['breakdown_cat'] as $key => $value) {
+			$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $value['id']);
+			if ($num_rows === 0) {
+				$this->pl_amount_model->insert_pl_amount_data($year, $value['id']);
+			}
+		}
+
+		$data['pl_codes'] =  $this->user_model->get_pl_codes_export();
+		$data['pl_amount_data'] = $this->pl_amount_model->pl_amount_data($year);
+
+		$user_id = $this->session->userdata('user_id');
+		$data['client_id'] = $this->db->get_where('ci_users', array('id' => $user_id))->row()->client_id;
+
+		$data['years'] = $this->pl_amount_model->get_years();
+		$data['year'] = $year;
+		$data['view'] = 'user/plcode/list_amount';
+		$this->load->view('layout', $data);
 	}
 }

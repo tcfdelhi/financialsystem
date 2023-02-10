@@ -8,7 +8,7 @@
 			<img src="<?= base_url() ?>public/images/user.png" width="48" height="48" alt="User" />
 		</div>
 		<div class="info-container">
-			<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= strtoupper($this->session->userdata('client_name'));?></div>
+			<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= strtoupper($this->session->userdata('client_name')); ?></div>
 			<div class="email"><?= $this->session->userdata('email'); ?></div>
 			<div class="btn-group user-helper-dropdown">
 				<!-- <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i> -->
@@ -54,19 +54,39 @@
 			</li>
 
 
-			<li id="plcodes">
-				<a href="<?= base_url('user/plcode'); ?>">
+			<li id="pl_code">
+				<a href="javascript:void(0);" class="menu-toggle">
 					<i class="material-icons">code</i>
 					<span><?= languagedata($this->session->userdata('session_language'), "PL Codes"); ?></span>
 				</a>
-			</li>
+				<ul class="ml-menu">
+					<li id="plcodes">
+						<a href="<?= base_url('user/plcode'); ?>">
+							<span><?= languagedata($this->session->userdata('session_language'), "PL Codes"); ?></span>
+						</a>
+					</li>
 
-			<li id="pl_import_amount">
+					<li id="pl_amount">
+						<a href="<?= base_url('user/plcode/import'); ?>">
+							<span><?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?></span>
+						</a>
+					</li>
+
+
+					<li id="pl_amount_view">
+						<a href="<?= base_url('user/plcode/amount/'.date("Y")); ?>">
+							<span><?= languagedata($this->session->userdata('session_language'), "View PL Amount"); ?></span>
+						</a>
+					</li>
+
+				</ul>
+			</li>
+			<!-- <li id="pl_import_amount">
 				<a href="<?= base_url('user/plamount'); ?>">
 					<i class="material-icons">layers</i>
 					<span><?= languagedata($this->session->userdata('session_language'), "Pl Import Amount"); ?></span>
 				</a>
-			</li>
+			</li> -->
 
 			<li id="signout">
 				<a href="<?= base_url('auth/logout'); ?>"><i class="material-icons">input</i><span><?= languagedata($this->session->userdata('session_language'), "Sign Out"); ?></span></a>

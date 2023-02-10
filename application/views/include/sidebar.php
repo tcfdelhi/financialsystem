@@ -125,6 +125,11 @@
 						<a href="<?= base_url('admin/plcode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
 					</li>
 
+					
+					<li id="pl_import_amount">
+						<a href="<?= base_url('admin/plcode/import_amount'); ?>"><?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?></a>
+					</li>
+
 					<li id="pl_reports">
 						<a href="<?= base_url('admin/plcode/reports'); ?>"><?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 					</li>
@@ -141,7 +146,7 @@
 			<li id="pl_import_amount">
 				<a href="<?= base_url('admin/plamount'); ?>">
 					<i class="material-icons">layers</i>
-					<span><?= languagedata($this->session->userdata('session_language'), "Pl Import Amount"); ?></span>
+					<span><?= languagedata($this->session->userdata('session_language'), "Pl View Amount"); ?></span>
 				</a>
 			</li>
 

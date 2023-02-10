@@ -8,20 +8,15 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "PL Code Lists"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?>
                 </h2>
-
-                
 
                 <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
 
-                <a href="<?= base_url('admin/plcode/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Code"); ?></a>
             </div>
-            <!-- Dropdown for filters -->
-
             <div class="body">
 
-            <?php echo form_open(base_url('admin/plcode/list'), 'class="inline-form-view form-horizontal filter_record"');  ?>
+            <?php echo form_open(base_url('admin/plcode/import_amount'), 'class="inline-form-view form-horizontal filter_record"');  ?>
                 <div class="col-md-12">
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -58,27 +53,55 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <a href="<?= base_url('admin/plcode/export_excel/' . $year . '/' . $client_id); ?>" class="export_excel_button btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a> -->
                 </div>
                 <?php echo form_close(); ?>
+
+
                 <div class="table-responsive">
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
                             <tr>
-                                <th>#ID</th>
-                                <!-- <th><?= languagedata($this->session->userdata('session_language'), "Financial Year"); ?></th> -->
-                                <!-- <th><?= languagedata($this->session->userdata('session_language'), "Client"); ?></th> -->
+                            <th>#ID</th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Title (Accounting Name)"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Major items of BS"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Medium item of BS"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Breakdown Category"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Increase and Decrease in Cash Flow"); ?></th>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Action"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "January"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "February"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "March"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "April"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "May"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "June"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "July"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "August"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "September"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "October"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "November"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "December"); ?></th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <?php $count = 0;
+                            foreach ($imported_data as $row) : 
+                            $monthData = json_decode($row['data'],true);
+                            ?>
+                                <tr>
+                                    <td><?= ++$count; ?></td>
+                                    <td><?= $row['code']?></td>
+                                    <td><?= $row['title']?></td>
+                                    <td><?= $monthData['jan']?></td>
+                                    <td><?= $monthData['feb']?></td>
+                                    <td><?= $monthData['mar']?></td>
+                                    <td><?= $monthData['apr']?></td>
+                                    <td><?= $monthData['may']?></td>
+                                    <td><?= $monthData['jun']?></td>
+                                    <td><?= $monthData['jul']?></td>
+                                    <td><?= $monthData['aug']?></td>
+                                    <td><?= $monthData['sep']?></td>
+                                    <td><?= $monthData['oct']?></td>
+                                    <td><?= $monthData['nov']?></td>
+                                    <td><?= $monthData['dec']?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -86,6 +109,7 @@
     </div>
 </div>
 <!-- #END# Exportable Table -->
+
 <!-- Import Excel Modal -->
 <div class="modal fade" id="importModal" role="dialog">
     <div class="modal-dialog">
@@ -97,7 +121,7 @@
                 <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('admin/plcode/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo base_url('admin/plamount/import_excel'); ?>" method="POST" enctype="multipart/form-data">
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
@@ -116,7 +140,7 @@
                         </div>
                     </div>
 
-                    <div class="row clearfix col-md-6">
+                    <!-- <div class="row clearfix col-md-6">
                         <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
                             <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Year"); ?><span class="red"> *</span></label>
                         </div>
@@ -131,7 +155,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -157,70 +181,14 @@
     </div>
 </div>
 <!-- Modal -->
-<div id="confirm-delete" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></h4>
-            </div>
-            <div class="modal-body">
-                <p><?= languagedata($this->session->userdata('session_language'), "Are you sure you want to delete"); ?></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?= languagedata($this->session->userdata('session_language'), "Close"); ?></button>
-                <a class="btn btn-danger btn-ok"><?= languagedata($this->session->userdata('session_language'), "Delete"); ?></a>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Jquery DataTable Plugin Js -->
 <script src="<?= base_url() ?>public/plugins/jquery-datatable/jquery.dataTables.js"></script>
 <script src="<?= base_url() ?>public/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
 <script type="text/javascript">
     //---------------------------------------------------
-    var table = $('#na_datatable').DataTable({
-        "processing": true,
-        "serverSide": true,
-        // "ajax": "<?= base_url('admin/plcode/get_codes') ?>",
-        "ajax": {
-            "url": "<?= base_url('admin/plcode/get_codes') ?>",
-            "data": {
-                "year": "<?= $year ?>",
-                "client_id": "<?= $client_id ?>"
-            }
-        },
-        "order": [
-            [0, 'desc']
-        ],
-        "columnDefs": [{
-                "targets": 0,
-                "name": "id",
-                'searchable': false,
-                'orderable': false
-            },
-            {
-                "targets": 1,
-                "name": "username",
-                'searchable': true,
-                'orderable': false
-            },
-            {
-                "targets": 2,
-                "name": "email",
-                'searchable': true,
-                'orderable': false
-            },
-            {
-                "targets": 3,
-                "name": "id",
-                'searchable': true,
-                'orderable': false
-            }
-        ]
-    });
+    var table = $('#na_datatable').DataTable();
 </script>
 <!-- Autosize Plugin Js -->
 <script src="<?= base_url() ?>public/plugins/autosize/autosize.js"></script>
@@ -235,8 +203,9 @@
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
     $("#pl_code").addClass('active');
-    $("#pl_codes").addClass('active');
+    $("#pl_import_amount").addClass('active');
 
+    
     $(".submit_form").change(function() {
         // alert('h');
         $(".filter_record").submit();

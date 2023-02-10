@@ -26,9 +26,7 @@ class Plamount extends UR_Controller
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
-
-		} 
-		else if ($year == 0) {
+		} else if ($year == 0) {
 			redirect(base_url("user/plamount"));
 		}
 
@@ -169,7 +167,7 @@ class Plamount extends UR_Controller
 
 		if ($this->input->post('submit')) {
 			// $year = $this->input->post('year');
-			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bsamount' . DIRECTORY_SEPARATOR;
+			$path = 'uploads' . DIRECTORY_SEPARATOR . 'plamount' . DIRECTORY_SEPARATOR;
 			require_once APPPATH . "third_party/PHPExcel.php";
 
 			$config['upload_path'] = $path;
@@ -203,63 +201,103 @@ class Plamount extends UR_Controller
 
 						$code = $value['A'];
 						$title = $value['B'];
-						$bs_code_id = $this->db->get_where('ci_bs_code', array('code' => $code, 'title' => $title))->row()->id;
-						// print_r($bs_code_id); die;
-						if (!empty($bs_code_id)) {
+						
+						foreach ($value as $key1 => $value1) {
 
-							foreach ($value as $key1 => $value1) {
+							if ($key1 == "A" || $key1 == "B") continue;
 
-								if ($key1 == "A" || $key1 == "B") continue;
+							if (!empty($value1)) {
+								$year = $allDataInSheet[1][$key1];
+								// Prepare json data
 
-								if (!empty($value1)) {
-									$year = $allDataInSheet[1][$key1];
-									// Prepare Data For Bs Codes
-									$data = [];
-									$data['bs_code_id'] = $bs_code_id;
-									$data['client_id'] = $client_id;
-									$data['code'] = $code;
-									$data['title'] = $title;
-									$data['year'] = $year;
-									$data['month'] = $allDataInSheet[2][$key1];
-									$data['amount'] = $value1;
-									$result = $this->pl_amount_model->add_code($data);
-								}
+								if ($allDataInSheet[2][$key1] == '01') $month = 'jan';
+								if ($allDataInSheet[2][$key1] == '02') $month = 'feb';
+								if ($allDataInSheet[2][$key1] == '03') $month = 'mar';
+								if ($allDataInSheet[2][$key1] == '04') $month = 'apr';
+								if ($allDataInSheet[2][$key1] == '05') $month = 'may';
+								if ($allDataInSheet[2][$key1] == '06') $month = 'jun';
+								if ($allDataInSheet[2][$key1] == '07') $month = 'jul';
+								if ($allDataInSheet[2][$key1] == '08') $month = 'aug';
+								if ($allDataInSheet[2][$key1] == '09') $month = 'sep';
+								if ($allDataInSheet[2][$key1] == '10') $month = 'oct';
+								if ($allDataInSheet[2][$key1] == '11') $month = 'nov';
+								if ($allDataInSheet[2][$key1] == '12') $month = 'dec';
+								$arr[$month] = $value1;
+								// $data['month'] = $allDataInSheet[2][$key1];
+								// $data['amount'] = $value1;
+
+								// }
 							}
 						}
-						else {
-							$this->session->set_flashdata('error', 'Bs Code Data Not Found');
-						}
+						$imported_data['client_id'] = $client_id;
+						$imported_data['year'] = $year;
+						$imported_data['code'] = $code;
+						$imported_data['title'] = $title;
+						$imported_data['data'] = json_encode($arr);
+
+						$result = $this->pl_amount_model->add_code($imported_data);
 					}
 					if ($result) {
 						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
 					}
-					redirect(base_url("user/plamount/list/$year"));
+					redirect(base_url("user/plcode/import/$year"));
 				} catch (Exception $e) {
 					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
 						. '": ' . $e->getMessage());
 					unlink($path . $data['upload_data']['file_name']);
-					redirect("user/plamount", 'refresh');
+					redirect("user/plcode", 'refresh');
 				}
 			} else {
 				$this->session->set_flashdata('error', $error['error']);
 				unlink($path . $data['upload_data']['file_name']);
-				redirect("user/plamount", 'refresh');
+				redirect("user/plcode", 'refresh');
 			}
 		}
 	}
 
 	public function save_data()
 	{
-		$post_data = $this->input->post('form_data');
-		
-		$user_data = array(
-			'data' => json_encode($post_data)
-		);
+
+		if (!empty($this->input->post('row_id'))) {
+			$post_data = $this->input->post('form_data');
+			$post_data = json_decode($post_data, true);
+
+			$user_data = array(
+				'data' => $post_data['data'],
+				'code' => $post_data['code'],
+				'title' => $post_data['title']
+			);
+		} else {
+
+			$post_data = $this->input->post('form_data');
+			$code = $this->input->post('code');
+			$title = $this->input->post('title');
+
+			$user_data = array(
+				'data' => json_encode($post_data),
+				'code' => $code,
+				'title' => $title
+			);
+		}
 		$updateData = $this->security->xss_clean($user_data);
 
 		$this->db->where('id', $this->input->post('id'));
 		$this->db->update('ci_pl_amount', $updateData);
 
 		echo json_encode('ll');
+	}
+
+	public function get_data()
+	{
+		$user_id = $this->session->userdata('user_id');
+		$client_id = $this->db->get_where('ci_users', array('id' => $user_id))->row()->client_id;
+
+		$code = $this->input->post('code');
+		$year = $this->input->post('year');
+
+		$query = $this->db->get_where('ci_pl_amount_data', array('code' => $code, 'year' => $year, 'client_id' => $client_id));
+		$res = $query->row_array();
+		if(empty($res)) echo 0;
+		else echo json_encode($res);
 	}
 }

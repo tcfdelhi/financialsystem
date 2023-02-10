@@ -85,5 +85,7 @@
 
 
     $(".new_year").hide();
+    
     $("#plcodes").addClass('active');
+    $("#pl_code").addClass('active');
 </script>

@@ -21,7 +21,10 @@
                         <?php endif; ?>
                     </div>
 
-                    <?php echo form_open(base_url('admin/plcode/list/'), 'class="form-horizontal"');  ?>
+                    <?php
+                    
+                    $attributes = array('method' => 'POST', 'class' => 'form-horizontal');
+                    echo form_open(base_url('admin/plcode/list/'),$attributes);  ?>
 
 
                     <div class="row clearfix col-md-6">

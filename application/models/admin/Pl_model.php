@@ -7,7 +7,7 @@ class Pl_model extends CI_Model
 	}
 
 	//-----------------------------------------------------
-	public function get_codes($year = 0 , $client_id = 0)
+	public function get_codes($year = 0, $client_id = 0)
 	{
 		// $query = $this->db->get('ci_pl_code');
 		$query = 'SELECT 
@@ -18,10 +18,10 @@ class Pl_model extends CI_Model
 		INNER JOIN ci_pl_medium_item on ci_pl_code.medium_item = ci_pl_medium_item.id 
 		INNER JOIN ci_pl_breakdown_cat on ci_pl_code.breakdown_cat = ci_pl_breakdown_cat.id 
 		INNER JOIN ci_pl_cash_flow_category on ci_pl_code.cash_flow_category = ci_pl_cash_flow_category.id';
-		
+
 
 		// Year And client condition
-		if($year != 0 and $client_id != 0) $WHERE = "ci_pl_code.year = $year and ci_pl_code.client_id = $client_id";
+		if ($year != 0 and $client_id != 0) $WHERE = "ci_pl_code.year = $year and ci_pl_code.client_id = $client_id";
 		else $WHERE = "";
 		return $this->datatable->LoadJson($query, $WHERE);
 	}
@@ -96,10 +96,11 @@ class Pl_model extends CI_Model
 		$query = $this->db->query($SQL);
 		return $query->result_array();
 	}
-	public function get_years(){
+	public function get_years()
+	{
 
 		$this->db->distinct();
-		$this->db->select('year');		
+		$this->db->select('year');
 		$query = $this->db->get('ci_pl_year');
 		return $query->result_array();
 	}
@@ -113,11 +114,11 @@ class Pl_model extends CI_Model
 	}
 
 	//-----------------------------------------------------
-	public function get_codes_export( $client_id = 0, $year = 0)
+	public function get_codes_export($client_id = 0, $year = 0)
 	{
 
 		// Year And client condition
-		if($year != 0 and $client_id != 0) $WHERE = "where ci_pl_code.year = $year and ci_pl_code.client_id = $client_id";
+		if ($year != 0 and $client_id != 0) $WHERE = "where ci_pl_code.year = $year and ci_pl_code.client_id = $client_id";
 		else $WHERE = "";
 
 		$SQL = "SELECT 
@@ -143,8 +144,22 @@ class Pl_model extends CI_Model
 		else $WHERE = "";
 
 		$SQL = "SELECT * from ci_pl_amount $WHERE";
-	
+
 		$query = $this->db->query($SQL);
 		return $query->row_array();
+	}
+
+	public function get_imported_data($year, $client_id)
+	{
+
+		// Year And client condition
+		if ($year != 0 and $client_id != 0) $WHERE = "where year = $year and client_id = $client_id";
+		else $WHERE = "";
+
+
+		$SQL = "SELECT * from ci_pl_amount_data $WHERE";
+
+		$query = $this->db->query($SQL);
+		return $query->result_array();
 	}
 }

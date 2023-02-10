@@ -35,7 +35,7 @@ class Pl_amount_model extends CI_Model
 	//-----------------------------------------------------
 	public function add_code($data)
 	{
-		$this->db->insert('ci_pl_amount', $data);
+		$this->db->insert('ci_pl_amount_data', $data);
 		return true;
 	}
 
@@ -43,7 +43,7 @@ class Pl_amount_model extends CI_Model
 	{
 		$this->db->distinct();
 		$this->db->select('year');
-		$query = $this->db->get('ci_pl_code');
+		$query = $this->db->get('ci_pl_year');
 		return $query->result_array();
 	}
 
@@ -60,6 +60,7 @@ class Pl_amount_model extends CI_Model
 
 	public function get_pl_amount_data($year, $client_id, $category)
 	{
+		// die($year);
 		$query = $this->db->query("SELECT * FROM ci_pl_amount where year = '$year' and client_id  = '$client_id' and category='$category' ");
 		// echo "SELECT * FROM ci_pl_amount where 'year' = '$year' and 'client_id'  = '$client_id' and category='$category' "; die;
 		return $query->num_rows();
@@ -86,7 +87,8 @@ class Pl_amount_model extends CI_Model
 			$data['code'] = '';
 			$data['title'] = '';
 			$data['data'] = " ";
-			$this->add_code($data);
+			$this->db->insert('ci_pl_amount', $data);
+			// $this->add_code($data);
 		}
 	}
 }

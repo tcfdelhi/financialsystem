@@ -31,8 +31,8 @@ class Plcode extends MY_Controller
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
 			$client_id  = $this->input->post('client_id');
-		} else if($this->input->server('REQUEST_METHOD') === 'GET'){}
-		else {
+		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else {
 			redirect(base_url('admin/plcode'));
 		}
 
@@ -95,13 +95,12 @@ class Plcode extends MY_Controller
 		$data['breakdown_categories'] = $this->pl_model->get_breakdown_categories();
 		$data['clients'] = $this->pl_model->get_clients();
 		$data['years'] = $this->pl_model->get_years();
-		
-		
-		if($id == 0 ) {
+
+
+		if ($id == 0) {
 			$data['title'] = "Add New Pl Code";
 			$data['button'] = "Add";
-		} 
-		else {
+		} else {
 			$data['title'] = "Update Code";
 			$data['button'] = "Update";
 		}
@@ -177,11 +176,10 @@ class Plcode extends MY_Controller
 		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_pl_major_item', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
-		if($id == 0 ) {
+		if ($id == 0) {
 			$data['title'] = "Add New Pl Major Item";
 			$data['button'] = "Add";
-		} 
-		else {
+		} else {
 			$data['title'] = "Update Item";
 			$data['button'] = "Update";
 		}
@@ -231,11 +229,10 @@ class Plcode extends MY_Controller
 		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_pl_medium_item', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
-		if($id == 0 ) {
+		if ($id == 0) {
 			$data['title'] = "Add New Pl Medium Item";
 			$data['button'] = "Add";
-		} 
-		else {
+		} else {
 			$data['title'] = "Update Item";
 			$data['button'] = "Update";
 		}
@@ -285,11 +282,10 @@ class Plcode extends MY_Controller
 		if ($id != 0) $data['cash_flow'] =  $this->db->get_where('ci_pl_cash_flow_category', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
-		if($id == 0 ) {
+		if ($id == 0) {
 			$data['title'] = "Add New Cashflow Category";
 			$data['button'] = "Add";
-		} 
-		else {
+		} else {
 			$data['title'] = "Update Category";
 			$data['button'] = "Update";
 		}
@@ -333,7 +329,7 @@ class Plcode extends MY_Controller
 	public function delete($id = 0)
 	{
 		// Get Data Here
-		$SQL = 'SELECT year,client_id FROM ci_pl_code where id ='.$id;
+		$SQL = 'SELECT year,client_id FROM ci_pl_code where id =' . $id;
 		$query = $this->db->query($SQL);
 		$data = $query->row_array();
 		$year = $data['year'];
@@ -530,24 +526,24 @@ class Plcode extends MY_Controller
 		$this->load->view('layout', $data);
 	}
 
-	public function breakdown_cat(){
-		
+	public function breakdown_cat()
+	{
+
 		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
 
 		$data['view'] = 'admin/plcode/breakdown_category';
 		$this->load->view('layout', $data);
 	}
-	
+
 	public function add_breakdown($id = 0)
 	{
 		if ($id != 0) $data['currency'] =  $this->db->get_where('ci_pl_breakdown_cat', array('id' => $id))->row_array();
 		if ($id != 0) $data['id'] =  $id;
 
-		if($id == 0 ) {
+		if ($id == 0) {
 			$data['title'] = "Add New Breakdown Category";
 			$data['button'] = "Add";
-		} 
-		else {
+		} else {
 			$data['title'] = "Update Category";
 			$data['button'] = "Update";
 		}
@@ -619,6 +615,32 @@ class Plcode extends MY_Controller
 		}
 		$data['dataPoints'] = $chart_data;
 		$data['view'] = 'admin/plcode/reports';
+		$this->load->view('layout', $data);
+	}
+
+	public function import_amount($year = 0, $client_id = 0)
+	{
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+			$client_id  = $this->input->post('client_id');
+		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else {
+			redirect(base_url('admin/plcode'));
+		}
+
+		// Get Imported data here
+		$data['imported_data'] = $this->pl_model->get_imported_data($year, $client_id);
+
+		// echo "<pre>";print_r($data['imported_data']); die;
+
+
+		$data['years'] = $this->pl_model->get_years();
+		$data['year'] = $year;
+		$data['client_id'] = $client_id;
+		$data['clients'] = $this->pl_model->get_clients();
+
+		$data['view'] = 'admin/plcode/import_amount';
 		$this->load->view('layout', $data);
 	}
 }

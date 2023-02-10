@@ -40,14 +40,15 @@ class Plamount extends MY_Controller
 		// Get Breakdown Catgeory Here
 		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
 
-		// echo"<pre>";print_r($data['breakdown_cat']); die;
+		// die('jj');
+		// // echo"<pre>";print_r($data['breakdown_cat']); die;
 		foreach ($data['breakdown_cat'] as $key => $value) {
 			$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $client_id, $value['id']);
+			// echo $num_rows; die;
 			if ($num_rows === 0) {
 				$this->pl_amount_model->insert_pl_amount_data($year, $client_id, $value['id']);
 			}
 		}
-
 
 		$data['pl_codes'] =  $this->pl_model->get_codes_export();
 		// print_r($data['pl_codes']); die;
@@ -215,59 +216,90 @@ class Plamount extends MY_Controller
 
 						$code = $value['A'];
 						$title = $value['B'];
-						$pl_code_id = $this->db->get_where('ci_pl_code', array('code' => $code, 'title' => $title))->row()->id;
+						// $pl_code_id = $this->db->get_where('ci_pl_code', array('code' => $code, 'title' => $title))->row()->id;
 						// print_r($pl_code_id); die;
-						if (!empty($pl_code_id)) {
+						// if (!empty($pl_code_id)) {
 
-							foreach ($value as $key1 => $value1) {
+						$arr = [];
+						foreach ($value as $key1 => $value1) {
 
-								if ($key1 == "A" || $key1 == "B") continue;
+							if ($key1 == "A" || $key1 == "B") continue;
 
-								if (!empty($value1)) {
-									$year = $allDataInSheet[1][$key1];
-									// Prepare Data For Bs Codes
-									$data = [];
-									$data['pl_code_id'] = $pl_code_id;
-									$data['client_id'] = $client_id;
-									$data['code'] = $code;
-									$data['title'] = $title;
-									$data['year'] = $year;
-									$data['month'] = $allDataInSheet[2][$key1];
-									$data['amount'] = $value1;
-									$result = $this->pl_amount_model->add_code($data);
-								}
+							if (!empty($value1)) {
+								$year = $allDataInSheet[1][$key1];
+								// Prepare json data
+
+								if ($allDataInSheet[2][$key1] == '01') $month = 'jan';
+								if ($allDataInSheet[2][$key1] == '02') $month = 'feb';
+								if ($allDataInSheet[2][$key1] == '03') $month = 'mar';
+								if ($allDataInSheet[2][$key1] == '04') $month = 'apr';
+								if ($allDataInSheet[2][$key1] == '05') $month = 'may';
+								if ($allDataInSheet[2][$key1] == '06') $month = 'jun';
+								if ($allDataInSheet[2][$key1] == '07') $month = 'jul';
+								if ($allDataInSheet[2][$key1] == '08') $month = 'aug';
+								if ($allDataInSheet[2][$key1] == '09') $month = 'sep';
+								if ($allDataInSheet[2][$key1] == '10') $month = 'oct';
+								if ($allDataInSheet[2][$key1] == '11') $month = 'nov';
+								if ($allDataInSheet[2][$key1] == '12') $month = 'dec';
+								$arr[$month] = $value1;
+								// $data['month'] = $allDataInSheet[2][$key1];
+								// $data['amount'] = $value1;
+
+								// }
 							}
 						}
+
+						$imported_data['client_id'] = $client_id;
+						$imported_data['year'] = $year;
+						$imported_data['code'] = $code;
+						$imported_data['title'] = $title;
+						$imported_data['data'] = json_encode($arr);
+						
+						$result = $this->pl_amount_model->add_code($imported_data);
 					}
 					if ($result) {
 						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
 					}
-					redirect(base_url("admin/plamount/list/$year/$client_id"));
+					redirect(base_url("admin/plcode/import_amount/$year/$client_id"));
 				} catch (Exception $e) {
 					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
 						. '": ' . $e->getMessage());
 					unlink($path . $data['upload_data']['file_name']);
-					redirect("admin/plamount", 'refresh');
+					redirect("admin/plcode/import_amount", 'refresh');
 				}
 			} else {
 				$this->session->set_flashdata('error', $error['error']);
 				unlink($path . $data['upload_data']['file_name']);
-				redirect("admin/plamount", 'refresh');
+				redirect("admin/plcode/import_amount", 'refresh');
 			}
 		}
 	}
 
 	public function save_data()
 	{
-		$post_data = $this->input->post('form_data');
-		$code = $this->input->post('code');
-		$title = $this->input->post('title');
 
-		$user_data = array(
-			'data' => json_encode($post_data),
-			'code' => $code,
-			'title' => $title
-		);
+		if (!empty($this->input->post('row_id'))) {
+			$post_data = $this->input->post('form_data');
+			$post_data = json_decode($post_data, true);
+
+			$user_data = array(
+				'data' => $post_data['data'],
+				'code' => $post_data['code'],
+				'title' => $post_data['title']
+			);
+
+		} else {
+
+			$post_data = $this->input->post('form_data');
+			$code = $this->input->post('code');
+			$title = $this->input->post('title');
+
+			$user_data = array(
+				'data' => json_encode($post_data),
+				'code' => $code,
+				'title' => $title
+			);
+		}
 		$updateData = $this->security->xss_clean($user_data);
 
 		$this->db->where('id', $this->input->post('id'));
@@ -282,7 +314,7 @@ class Plamount extends MY_Controller
 		$year = $this->input->post('year');
 		$client_id = $this->input->post('client_id');
 
-		$query = $this->db->get_where('ci_pl_amount', array('code' => $code, 'year' => $year, 'client_id' => $client_id));
+		$query = $this->db->get_where('ci_pl_amount_data', array('code' => $code, 'year' => $year, 'client_id' => $client_id));
 		$res = $query->row_array();
 		echo json_encode($res);
 	}
