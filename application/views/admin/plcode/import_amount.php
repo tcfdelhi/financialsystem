@@ -11,7 +11,9 @@
                     <?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?>
                 </h2>
 
-                <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
+                <button type="button" class="m-l-15 btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
+
+                <a href="<?= base_url("admin/plamount/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "View Amount"); ?></a>
 
             </div>
             <div class="body">
@@ -139,24 +141,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="row clearfix col-md-6">
-                        <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Year"); ?><span class="red"> *</span></label>
-                        </div>
-                        <div class="col-lg-12 col-md-4 col-sm-8 col-xs-7">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select class="form-control show-tick" name="year" required>
-                                        <?php foreach ($years as $group) : ?>
-                                            <option value="<?= $group['year']; ?>"><?= $group['year'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
 
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <div class="col-lg-12">

@@ -22,6 +22,31 @@
     #leftsidebar {
         display: none !important;
     }
+
+    .table-bordered tbody tr td,
+    .table-bordered tbody tr th {
+        padding: 1px;
+        border: 1px solid #eee;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 1px 1px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+        box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
 </style>
 <!-- Exportable Table -->
 <div class="row clearfix">
@@ -40,7 +65,7 @@
 
                 <a href="<?= base_url('admin/plcode/reports'); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 
-                <a href="<?= base_url('admin/plamount'); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
+                <a href="<?= base_url("admin/plcode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
 
 
                 <a target="_blank" href="<?= base_url("admin/plamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
@@ -285,7 +310,7 @@
                                     $row .= "<td><input type='text' class='loop_month dec form-control' name='dec' value=" . $data['dec'] . "></td>";
 
                                     // // Show total amount row bise
-                                    $row .= "<td><input readonly class='total_amount form-control' type='text' value=".number_format($total_amount)."></td>";
+                                    $row .= "<td><input readonly class='total_amount form-control' type='text' value=" . number_format($total_amount) . "></td>";
 
                                     $row .= "</tr>";
                                     echo $row;
@@ -327,7 +352,7 @@
                                 $row .= "<td><input type='number' readonly class='dec form-control' name='dec' value=" . $december . "></td>";
 
                                 // // Show total amount row bise
-                                $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=".number_format($total_amount)."></td>";
+                                $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=" . number_format($total_amount) . "></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
