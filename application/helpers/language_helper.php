@@ -6,7 +6,8 @@ function languagedata($val, $for_data)
     if ($val != '') {
         $val = $val;
     } else {
-        $val = 'japanese';
+        $val = 'english';
+        // $val = 'japanese';
     }
     $CI = &get_instance();
     $for_data = trim($for_data);

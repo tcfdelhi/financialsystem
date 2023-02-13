@@ -580,15 +580,23 @@ class Plcode extends MY_Controller
 		}
 	}
 
-	public function reports()
+	public function reports($year = 0, $client_id = 0)
 	{
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$data['pl_code'] = $this->input->post('pl_code');
 			$data['client_id'] = $this->input->post('client_id');
 			$data['year'] = $this->input->post('year');
 		}
+		else {
+			$data['pl_code'] = 1;
+			$data['client_id'] = $client_id;
+			$data['year'] = $year;
+		}
 
 		$data_points = $this->pl_model->get_reports($data['pl_code'], $data['client_id'], $data['year']);
+
+		// print_r($data_points); die;
+
 		$data['years'] = $this->pl_model->get_years();
 		$data['clients'] = $this->pl_model->get_clients();
 		$data['code_data'] = $this->pl_model->get_codes_export();
@@ -613,6 +621,7 @@ class Plcode extends MY_Controller
 			$chart_data[$counter]['y'] = $value;
 			$chart_data[$counter++]['label'] = $key;
 		}
+		
 		$data['dataPoints'] = $chart_data;
 		$data['view'] = 'admin/plcode/reports';
 		$this->load->view('layout', $data);

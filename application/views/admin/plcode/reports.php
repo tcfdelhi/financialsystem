@@ -8,8 +8,11 @@
         <div class="card">
             <div class="header">
                 <h2 style="display: inline-block;">
-                    <?= languagedata($this->session->userdata('session_language'), "BS Code Reports"); ?>
+                    <?= languagedata($this->session->userdata('session_language'), "PL Code Reports"); ?>
                 </h2>
+
+                <a href="<?= base_url("admin/plamount/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To Amount"); ?></a>
+
             </div>
             <!-- Dropdown for filters -->
 
