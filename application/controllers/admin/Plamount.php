@@ -56,7 +56,8 @@ class Plamount extends MY_Controller
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
 		$data['clients'] = $this->pl_model->get_clients();
-		$data['pl_amount_data'] = $this->pl_amount_model->pl_amount_data($year, $client_id);
+		//$data['pl_amount_data'] = $this->pl_amount_model->pl_amount_data($year, $client_id);
+		// echo "<pre>";print_r($data['pl_amount_data']); die;
 		$data['view'] = 'admin/plamount/list';
 		$this->load->view('layout', $data);
 	}
@@ -254,7 +255,7 @@ class Plamount extends MY_Controller
 						$imported_data['code'] = $code;
 						$imported_data['title'] = $title;
 						$imported_data['data'] = json_encode($arr);
-						
+
 						$result = $this->pl_amount_model->add_code($imported_data);
 					}
 					if ($result) {
@@ -287,7 +288,6 @@ class Plamount extends MY_Controller
 				'code' => $post_data['code'],
 				'title' => $post_data['title']
 			);
-
 		} else {
 
 			$post_data = $this->input->post('form_data');
@@ -317,5 +317,26 @@ class Plamount extends MY_Controller
 		$query = $this->db->get_where('ci_pl_amount_data', array('code' => $code, 'year' => $year, 'client_id' => $client_id));
 		$res = $query->row_array();
 		echo json_encode($res);
+	}
+	public function report($client_id, $year)
+	{
+	
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+			$client_id  = $this->input->post('client_id');
+		} else if ($year == 0 and $client_id == 0) {
+			redirect(base_url("admin/plamount"));
+		}
+
+		// Get Breakdown Catgeory Here
+		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
+
+		$data['pl_codes'] =  $this->pl_model->get_codes_export();
+	
+		$data['year'] = $year;
+		$data['client_id'] = $client_id;
+		
+		$data['view'] = 'admin/plamount/report';
+		$this->load->view('layout', $data);
 	}
 }

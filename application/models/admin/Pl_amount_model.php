@@ -50,10 +50,10 @@ class Pl_amount_model extends CI_Model
 	public function pl_amount_data($year, $client_id)
 	{
 
-		if ($year != 0 and $client_id != 0) $sql = "where client_id = $client_id and year = $year";
+		if ($year != 0 and $client_id != 0) $sql = "where data <> '' and client_id = $client_id and year = $year";
 		else $sql = "";
 
-		$query = "SELECT * from ci_pl_amount $sql";
+		$query = "SELECT ci_pl_amount.*,ci_pl_breakdown_cat.id as cat_id ,ci_pl_breakdown_cat.name as cat_name from ci_pl_amount left JOIN ci_pl_breakdown_cat ON ci_pl_amount.category = ci_pl_breakdown_cat.id  $sql";
 		$query = $this->db->query($query);
 		return $query->result_array();
 	}

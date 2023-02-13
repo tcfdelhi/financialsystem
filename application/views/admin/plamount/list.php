@@ -40,7 +40,10 @@
 
                 <a href="<?= base_url('admin/plcode/reports'); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 
-                <a href="<?= base_url('admin/plamount'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
+                <a href="<?= base_url('admin/plamount'); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
+
+
+                <a target="_blank" href="<?= base_url("admin/plamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
 
             </div>
             <!-- Dropdown for filters -->
@@ -131,10 +134,59 @@
                                 $category = $value['id'];
                                 $sql = "SELECT * FROM ci_pl_amount where category='$category' and year='$year' and client_id='$client_id' ";
                                 $query = $this->db->query($sql);
-                                foreach ($query->result_array() as $result) {
+                                $counter = 1;
+                                foreach ($query->result_array() as $key => $result) {
 
 
+                                    $prevoius_year = $year - 1;
+                                    // Get prevoius year data here
+                                    $sql = "SELECT * FROM ci_pl_amount where category='$category' and year='$prevoius_year' and client_id='$client_id' LIMIT $counter OFFSET $key ";
+                                    $prevoius_year = $this->db->query($sql);
+                                    $prevoius_year = $prevoius_year->row_array($sql);
+                                    if (!empty($prevoius_year['data'])) {
+                                        $prev = json_decode($prevoius_year['data'], true);
+                                        $prevoius_year_amount =
+                                            (int)str_replace(",", "", $prev['jan'])  +
+                                            (int)str_replace(",", "", $prev['feb']) +
+                                            (int)str_replace(",", "", $prev['mar']) +
+                                            (int)str_replace(",", "", $prev['apr']) +
+                                            (int)str_replace(",", "", $prev['may']) +
+                                            (int)str_replace(",", "", $prev['jun']) +
+                                            (int)str_replace(",", "", $prev['jul']) +
+                                            (int)str_replace(",", "", $prev['aug']) +
+                                            (int)str_replace(",", "", $prev['sep']) +
+                                            (int)str_replace(",", "", $prev['oct']) +
+                                            (int)str_replace(",", "", $prev['nov']) +
+                                            (int)str_replace(",", "", $prev['dec']);
+                                    }
 
+                                    // echo "<pre>";
+                                    // print_r($prevoius_year);
+                                    // die;
+
+                                    $before_previous_year = $year - 2;
+                                    // Get before prevoius year data here
+                                    $sql = "SELECT * FROM ci_pl_amount where category='$category' and year='$before_previous_year' and client_id='$client_id' LIMIT $counter OFFSET $key ";
+                                    $before_prevoius_year = $this->db->query($sql);
+                                    $before_prevoius_year = $before_prevoius_year->row_array($sql);
+                                    if (!empty($before_prevoius_year['data'])) {
+                                        $prev = json_decode($before_prevoius_year['data'], true);
+                                        $before_prevoius_year_amount =
+                                            (int)str_replace(",", "", $prev['jan'])  +
+                                            (int)str_replace(",", "", $prev['feb']) +
+                                            (int)str_replace(",", "", $prev['mar']) +
+                                            (int)str_replace(",", "", $prev['apr']) +
+                                            (int)str_replace(",", "", $prev['may']) +
+                                            (int)str_replace(",", "", $prev['jun']) +
+                                            (int)str_replace(",", "", $prev['jul']) +
+                                            (int)str_replace(",", "", $prev['aug']) +
+                                            (int)str_replace(",", "", $prev['sep']) +
+                                            (int)str_replace(",", "", $prev['oct']) +
+                                            (int)str_replace(",", "", $prev['nov']) +
+                                            (int)str_replace(",", "", $prev['dec']);
+                                    }
+
+                                    $counter++;
                                     $data = !empty($result['data']) ? json_decode($result['data'], true) : 0;
 
                                     $jan = str_replace(",", "", $data['jan']);
@@ -191,7 +243,7 @@
                                     $id = $result['id'];
                                     $row = "<tr data-row_id=$id>";
 
-                                    $options = '';
+                                    $options = '<option value="">Select PL Code</option>';
                                     $code = $result['code'];
 
                                     foreach ($pl_codes as $key1 => $value1) {
@@ -202,11 +254,11 @@
 
                                     $row .= "<td><select class='form-control get_amount_data'>" . $options . "</select></td>";
 
-                                    $row .= "<td><input readonly type='text' class='form-control'></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control' value=$before_prevoius_year_amount></td>";
 
-                                    $row .= "<td><input readonly type='text' class='form-control'></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control' value=$prevoius_year_amount></td>";
 
-                                    $row .= "<td><input readonly type='text' class='form-control'></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control' value=$total_amount></td>";
 
                                     $row .= "<td><input type='text' class='loop_month jan form-control' name='jan' value=" . $data['jan'] . "></td>";
 
@@ -233,7 +285,7 @@
                                     $row .= "<td><input type='text' class='loop_month dec form-control' name='dec' value=" . $data['dec'] . "></td>";
 
                                     // // Show total amount row bise
-                                    $row .= "<td><input readonly class='total_amount form-control' type='text' value=$total_amount></td>";
+                                    $row .= "<td><input readonly class='total_amount form-control' type='text' value=".number_format($total_amount)."></td>";
 
                                     $row .= "</tr>";
                                     echo $row;
@@ -275,7 +327,7 @@
                                 $row .= "<td><input type='number' readonly class='dec form-control' name='dec' value=" . $december . "></td>";
 
                                 // // Show total amount row bise
-                                $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=$total_amount></td>";
+                                $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=".number_format($total_amount)."></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
@@ -317,7 +369,7 @@
                                 $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=$total_amount></td>";
 
                                 $row .= "</tr>";
-                                echo $row;
+                                // echo $row;
                             }
                             ?>
                         </tbody>
