@@ -13,7 +13,7 @@
 
                 
 
-                <button type="button" class="m-l-15 btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
+                <button type="button" class="m-l-15 btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import PL Codes"); ?></button>
 
                 <a href="<?= base_url('admin/plcode/add_code'); ?>" class="m-l-15 btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata
                 ($this->session->userdata('session_language'), "Add New PL Code"); ?></a>

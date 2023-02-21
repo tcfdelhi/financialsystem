@@ -75,7 +75,7 @@
 
 					<li id="pl_amount_view">
 						<a href="<?= base_url('user/plcode/amount/'.date("Y")); ?>">
-							<span><?= languagedata($this->session->userdata('session_language'), "View PL Amount"); ?></span>
+							<span><?= languagedata($this->session->userdata('session_language'), "View Breakdown Sheet Amount"); ?></span>
 						</a>
 					</li>
 

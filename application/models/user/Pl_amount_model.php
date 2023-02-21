@@ -92,7 +92,7 @@ class Pl_amount_model extends CI_Model
 		if ($year != 0 and $this->client_id != 0) $WHERE = "where year = '$year' and client_id = '$this->client_id' ";
 		else $WHERE = "";
 
-		$SQL = "SELECT * from ci_pl_amount_data $WHERE";
+		$SQL = "SELECT * from ci_pl_amount_data_new $WHERE";
 
 		// echo $SQL; die;
 		$query = $this->db->query($SQL);
@@ -104,6 +104,22 @@ class Pl_amount_model extends CI_Model
 		$this->db->order_by("list_order", "ASC");
 		$query = $this->db->get('ci_pl_breakdown_cat');
 		return $query->result_array();
+	}
+
+	public function add_new_amount_data($data)
+	{
+		// print_r($data); die;
+		foreach ($data as $key => $value) {
+
+			$insertedData['client_id'] = $value['client_id'];
+			$insertedData['category'] = $value['category'];
+			$insertedData['pl_code'] = $value['pl_code'];
+			$insertedData['year'] = $key;
+			$insertedData['code'] =  $value['code'];
+			$insertedData['title'] = $value['title'];
+			$insertedData['data'] = $value['data'];
+			$this->db->insert('ci_pl_amount_data_new', $insertedData);
+		}
 	}
 	
 }

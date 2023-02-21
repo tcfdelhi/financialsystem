@@ -543,10 +543,37 @@ class Bscode extends MY_Controller
 		$this->load->view('layout', $data);
 	}
 
-	public function charts(){
+	public function charts()
+	{
 
 		$data['years'] = $this->bs_model->get_years();
 		$data['view'] = 'admin/bscode/chart';
+		$this->load->view('layout', $data);
+	}
+
+	public function import_amount($year = 0, $client_id = 0)
+	{
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+			$client_id  = $this->input->post('client_id');
+		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else {
+			redirect(base_url('admin/plcode'));
+		}
+
+		// Get Imported data here
+		$data['imported_data'] = $this->bs_model->get_new_imported_data($year, $client_id);
+
+		// echo "<pre>";print_r($data['imported_data']); die;
+
+
+		$data['years'] = $this->bs_model->get_years();
+		$data['year'] = $year;
+		$data['client_id'] = $client_id;
+		$data['clients'] = $this->bs_model->get_clients();
+
+		$data['view'] = 'admin/bscode/import_amount';
 		$this->load->view('layout', $data);
 	}
 }

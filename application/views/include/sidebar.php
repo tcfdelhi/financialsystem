@@ -78,6 +78,14 @@
 						<a href="<?= base_url('admin/bscode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
 					</li>
 
+					<li id="bs_import_amount">
+						<a href="<?= base_url('admin/bscode/import_amount'); ?>"><?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?></a>
+					</li>
+
+					<li id="bs_amount_sheet">
+						<a href="<?= base_url('admin/bsamount/list/'.date("Y")); ?>"><?= languagedata($this->session->userdata('session_language'), "Amount Sheet"); ?></a>
+					</li>
+
 					<li id="bs_reports">
 						<a href="<?= base_url('admin/bscode/reports'); ?>"><?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 					</li>
@@ -95,12 +103,12 @@
 				</ul>
 			</li>
 
-			<li id="bs_import_amount">
+			<!-- <li id="bs_import_amount">
 				<a href="<?= base_url('admin/bsamount'); ?>">
 					<i class="material-icons">layers</i>
 					<span><?= languagedata($this->session->userdata('session_language'), "BS Import Amount"); ?></span>
 				</a>
-			</li>
+			</li> -->
 
 			<!-- BS Code tab -->
 			<li id="pl_code">
@@ -125,9 +133,15 @@
 						<a href="<?= base_url('admin/plcode/cash_flow'); ?>"><?= languagedata($this->session->userdata('session_language'), "Cash Flow category"); ?></a>
 					</li>
 
-					
+
 					<li id="pl_import_amount">
 						<a href="<?= base_url('admin/plcode/import_amount'); ?>"><?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?></a>
+					</li>
+
+					<li id="pl_breakdown_sheet">
+						<a href="<?= base_url('admin/plamount'); ?>">
+							<?= languagedata($this->session->userdata('session_language'), "Breakdown Sheet"); ?>
+						</a>
 					</li>
 
 					<li id="pl_reports">
@@ -143,12 +157,12 @@
 				</ul>
 			</li>
 
-			<li id="pl_import_amount">
+			<!-- <li id="pl_import_amount">
 				<a href="<?= base_url('admin/plamount'); ?>">
 					<i class="material-icons">layers</i>
 					<span><?= languagedata($this->session->userdata('session_language'), "Pl View Amount"); ?></span>
 				</a>
-			</li>
+			</li> -->
 
 			<li id="ci_examples">
 				<a href="javascript:void(0);" class="menu-toggle">

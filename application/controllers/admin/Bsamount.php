@@ -38,12 +38,14 @@ class Bsamount extends MY_Controller
 			
 		}
 
-		// Check if year and client exists in amount data or not
-		$num_rows =  $this->bs_amount_model->get_bs_amount_data($year, $client_id);
-		if ($num_rows === 0) {
-			// Insert Data into bs amoutn table
-			$this->bs_amount_model->insert_bs_amount_data($year, $client_id);
-		}
+		// // Check if year and client exists in amount data or not
+		// $num_rows =  $this->bs_amount_model->get_bs_amount_data($year, $client_id);
+		// if ($num_rows === 0) {
+		// 	// Insert Data into bs amoutn table
+		// 	$this->bs_amount_model->insert_bs_amount_data($year, $client_id);
+		// }
+
+		$data['breakdown_cat'] =  $this->bs_amount_model->get_breakdown_categories();
 
 
 		$data['years'] = $this->bs_amount_model->get_years();
@@ -268,4 +270,6 @@ class Bsamount extends MY_Controller
 
 		echo json_encode('ll');
 	}
+
+	
 }

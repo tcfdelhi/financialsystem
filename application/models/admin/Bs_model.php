@@ -89,7 +89,7 @@ class Bs_model extends CI_Model
 
 		$this->db->distinct();
 		$this->db->select('year');
-		$query = $this->db->get('ci_bs_code');
+		$query = $this->db->get('ci_year');
 		return $query->result_array();
 	}
 
@@ -135,5 +135,19 @@ class Bs_model extends CI_Model
 	
 		$query = $this->db->query($SQL);
 		return $query->row_array();
+	}
+
+	public function get_new_imported_data($year, $client_id)
+	{
+
+		// Year And client condition
+		if ($year != 0 and $client_id != 0) $WHERE = "where year = $year and client_id = $client_id";
+		else $WHERE = "";
+
+
+		$SQL = "SELECT * from ci_bs_amount_data_new $WHERE";
+
+		$query = $this->db->query($SQL);
+		return $query->result_array();
 	}
 }

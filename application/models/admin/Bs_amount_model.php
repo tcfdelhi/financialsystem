@@ -43,7 +43,7 @@ class Bs_amount_model extends CI_Model
 	{
 		$this->db->distinct();
 		$this->db->select('year');
-		$query = $this->db->get('ci_bs_code');
+		$query = $this->db->get('ci_year');
 		return $query->result_array();
 	}
 
@@ -77,5 +77,13 @@ class Bs_amount_model extends CI_Model
 			$data['data'] = " ";
 			$this->add_code($data);
 		}
+	}
+
+	
+	public function get_breakdown_categories()
+	{
+		$this->db->order_by("list_order", "ASC");
+		$query = $this->db->get('ci_pl_breakdown_cat');
+		return $query->result_array();
 	}
 }

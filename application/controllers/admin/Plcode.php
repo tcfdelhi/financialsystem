@@ -639,7 +639,7 @@ class Plcode extends MY_Controller
 		}
 
 		// Get Imported data here
-		$data['imported_data'] = $this->pl_model->get_imported_data($year, $client_id);
+		$data['imported_data'] = $this->pl_model->get_new_imported_data($year, $client_id);
 
 		// echo "<pre>";print_r($data['imported_data']); die;
 

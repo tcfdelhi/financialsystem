@@ -364,20 +364,19 @@ class Plcode extends UR_Controller
 			redirect(base_url('user/plcode'));
 		}
 
-		// Get Breakdown Catgeory Here
-		$data['breakdown_cat'] =  $this->pl_amount_model->get_breakdown_categories();
-		foreach ($data['breakdown_cat'] as $key => $value) {
-			$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $value['id']);
-			if ($num_rows === 0) {
-				$this->pl_amount_model->insert_pl_amount_data($year, $value['id']);
-			}
-		}
-
-		$data['pl_codes'] =  $this->user_model->get_pl_codes_export();
-		$data['pl_amount_data'] = $this->pl_amount_model->pl_amount_data($year);
+		// // Get Breakdown Catgeory Here
+		// $data['breakdown_cat'] =  $this->pl_amount_model->get_breakdown_categories();
+		// foreach ($data['breakdown_cat'] as $key => $value) {
+		// 	$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $value['id']);
+		// 	if ($num_rows === 0) {
+		// 		$this->pl_amount_model->insert_pl_amount_data($year, $value['id']);
+		// 	}
+		// }
 
 		$user_id = $this->session->userdata('user_id');
 		$data['client_id'] = $this->db->get_where('ci_users', array('id' => $user_id))->row()->client_id;
+
+		$data['breakdown_cat'] =  $this->pl_amount_model->get_breakdown_categories();
 
 		$data['years'] = $this->pl_amount_model->get_years();
 		$data['year'] = $year;

@@ -164,4 +164,18 @@ class Pl_model extends CI_Model
 		$query = $this->db->query($SQL);
 		return $query->result_array();
 	}
+
+	public function get_new_imported_data($year, $client_id)
+	{
+
+		// Year And client condition
+		if ($year != 0 and $client_id != 0) $WHERE = "where year = $year and client_id = $client_id";
+		else $WHERE = "";
+
+
+		$SQL = "SELECT * from ci_pl_amount_data_new $WHERE";
+
+		$query = $this->db->query($SQL);
+		return $query->result_array();
+	}
 }

@@ -91,4 +91,20 @@ class Pl_amount_model extends CI_Model
 			// $this->add_code($data);
 		}
 	}
+
+	public function add_new_amount_data($data)
+	{
+		// print_r($data); die;
+		foreach ($data as $key => $value) {
+
+			$insertedData['client_id'] = $value['client_id'];
+			$insertedData['category'] = $value['category'];
+			$insertedData['pl_code'] = $value['pl_code'];
+			$insertedData['year'] = $key;
+			$insertedData['code'] =  $value['code'];
+			$insertedData['title'] = $value['title'];
+			$insertedData['data'] = $value['data'];
+			$this->db->insert('ci_pl_amount_data_new', $insertedData);
+		}
+	}
 }

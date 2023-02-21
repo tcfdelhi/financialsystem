@@ -42,13 +42,13 @@ class Plamount extends MY_Controller
 
 		// die('jj');
 		// // echo"<pre>";print_r($data['breakdown_cat']); die;
-		foreach ($data['breakdown_cat'] as $key => $value) {
-			$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $client_id, $value['id']);
-			// echo $num_rows; die;
-			if ($num_rows === 0) {
-				$this->pl_amount_model->insert_pl_amount_data($year, $client_id, $value['id']);
-			}
-		}
+		// foreach ($data['breakdown_cat'] as $key => $value) {
+		// 	$num_rows =  $this->pl_amount_model->get_pl_amount_data($year, $client_id, $value['id']);
+		// 	// echo $num_rows; die;
+		// 	if ($num_rows === 0) {
+		// 		$this->pl_amount_model->insert_pl_amount_data($year, $client_id, $value['id']);
+		// 	}
+		// }
 
 		$data['pl_codes'] =  $this->pl_model->get_codes_export();
 		// print_r($data['pl_codes']); die;
@@ -291,19 +291,15 @@ class Plamount extends MY_Controller
 		} else {
 
 			$post_data = $this->input->post('form_data');
-			$code = $this->input->post('code');
-			$title = $this->input->post('title');
 
 			$user_data = array(
-				'data' => json_encode($post_data),
-				'code' => $code,
-				'title' => $title
+				'data' => json_encode($post_data)
 			);
 		}
 		$updateData = $this->security->xss_clean($user_data);
 
 		$this->db->where('id', $this->input->post('id'));
-		$this->db->update('ci_pl_amount', $updateData);
+		$this->db->update('ci_pl_amount_data_new', $updateData);
 
 		echo json_encode('ll');
 	}
@@ -320,7 +316,7 @@ class Plamount extends MY_Controller
 	}
 	public function report($client_id, $year)
 	{
-	
+
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$year  = $this->input->post('year');
 			$client_id  = $this->input->post('client_id');
@@ -332,11 +328,111 @@ class Plamount extends MY_Controller
 		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
 
 		$data['pl_codes'] =  $this->pl_model->get_codes_export();
-	
+
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
-		
+
 		$data['view'] = 'admin/plamount/report';
 		$this->load->view('layout', $data);
+	}
+
+	public function import_excel_new()
+	{
+
+		if ($this->input->post('submit')) {
+			$client_id = $this->input->post('client_id');
+			// $year = $this->input->post('year');
+			$path = 'uploads' . DIRECTORY_SEPARATOR . 'plamount' . DIRECTORY_SEPARATOR;
+			require_once APPPATH . "third_party/PHPExcel.php";
+
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'xlsx|xls|csv';
+			$config['remove_spaces'] = TRUE;
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if (!$this->upload->do_upload('uploadFile')) {
+				$error = array('error' => $this->upload->display_errors());
+			} else {
+				$data = array('upload_data' => $this->upload->data());
+			}
+			if (empty($error)) {
+				if (!empty($data['upload_data']['file_name'])) {
+					$import_xls_file = $data['upload_data']['file_name'];
+				} else {
+					$import_xls_file = 0;
+				}
+				$inputFileName = $path . $import_xls_file;
+				try {
+					$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+					$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+					$objPHPExcel = $objReader->load($inputFileName);
+					$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+
+
+					foreach ($allDataInSheet as $key => $value) {
+
+						if ($key == 1) continue;
+
+						if (empty($value['A']) and empty($value['C']) and empty($value['D']) and !empty($value['B'])) {
+							$catName = $value['B'];
+							// Get Breakdown Category ID here
+							$categoryId = $this->db->get_where('ci_pl_breakdown_cat', array('name' => $catName))->row()->id;
+
+							if (empty($categoryId)) {
+								$cat['name'] = $catName;
+								$this->db->insert('ci_pl_breakdown_cat', $cat);
+								$categoryId = $this->db->insert_id();
+							}
+							continue;
+						}
+
+						// Bypass Amount Total column
+						if(empty($value['A'])) continue;
+						$code = $value['A'];
+						$title = $value['B'];
+						// $pl_code_id = $this->db->get_where('ci_pl_code', array('code' => $code, 'title' => $title))->row()->id;
+						// print_r($pl_code_id); die;
+						// if (!empty($pl_code_id)) {
+
+						if (!empty($value)) :
+							$arr = [];
+							foreach ($value as $key1 => $value1) {
+
+								if ($key1 == "A" || $key1 == "B") continue;
+
+								
+								$year = substr($allDataInSheet[1][$key1], 6, 4);
+								$month = substr($allDataInSheet[1][$key1], 0, 3);
+								
+
+								$arr[$month] = !empty($value1) ? $value1 : 0;
+								$imported_data[$year]['client_id'] = $client_id;
+								$imported_data[$year]['category'] = $categoryId;
+								$imported_data[$year]['pl_code'] = 1;
+								$imported_data[$year]['code'] = $code;
+								$imported_data[$year]['title'] = $title;
+								$imported_data[$year]['data'] = json_encode($arr);
+								
+							}
+						endif;
+
+						$result = $this->pl_amount_model->add_new_amount_data($imported_data);
+					}
+					if ($result) {
+						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
+					}
+					redirect(base_url("admin/plcode/import_amount/$year/$client_id"));
+				} catch (Exception $e) {
+					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
+						. '": ' . $e->getMessage());
+					unlink($path . $data['upload_data']['file_name']);
+					redirect("admin/plcode/import_amount", 'refresh');
+				}
+			} else {
+				$this->session->set_flashdata('error', $error['error']);
+				unlink($path . $data['upload_data']['file_name']);
+				redirect("admin/plcode/import_amount", 'refresh');
+			}
+		}
 	}
 }

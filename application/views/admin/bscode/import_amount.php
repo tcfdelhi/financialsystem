@@ -18,7 +18,7 @@
             </div>
             <div class="body">
 
-            <?php echo form_open(base_url('admin/plcode/import_amount'), 'class="inline-form-view form-horizontal filter_record"');  ?>
+            <?php echo form_open(base_url('admin/bscode/import_amount'), 'class="inline-form-view form-horizontal filter_record"');  ?>
                 <div class="col-md-12">
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -186,8 +186,8 @@
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-    $("#pl_code").addClass('active');
-    $("#pl_import_amount").addClass('active');
+    $("#bs_code").addClass('active');
+    $("#bs_import_amount").addClass('active');
 
     
     $(".submit_form").change(function() {

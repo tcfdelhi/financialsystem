@@ -122,9 +122,10 @@
                     <table id="na_datatable" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
                             <tr>
-                                <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Accounting Title"); ?></th>
-                                
+                                <th><?= languagedata($this->session->userdata('session_language'), "Before Previous "); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Previous "); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Current "); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "January"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "February"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "March"); ?></th>
@@ -137,6 +138,7 @@
                                 <th><?= languagedata($this->session->userdata('session_language'), "October"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "November"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "December"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Actual<br>(Accumulated)"); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,20 +149,7 @@
 
                                 $row = "<tr class='categories' colspan='10' >";
 
-                                $row .= "<td></td>";
                                 $row .= "<td>" . $value['name'] . "</td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";
-                                $row .= "<td></td>";                                  
-                                $row .= "<td></td>"; 
 
                                 $row .= "</tr>";
                                 echo $row;
@@ -168,48 +157,98 @@
                                 // Generate Extra 10 rows for accouting codes
                                 // $counter = 0;
                                 $category = $value['id'];
-                                $sql = "SELECT * FROM ci_pl_amount_data_new where category='$category' and year='$year' and client_id='$client_id' ";
+                                $sql = "SELECT * FROM ci_pl_amount where category='$category' and year='$year' and client_id='$client_id' ";
                                 $query = $this->db->query($sql);
                                 $counter = 1;
                                 foreach ($query->result_array() as $key => $result) {
 
+
+                                    $prevoius_year = $year - 1;
+                                    // Get prevoius year data here
+                                    $sql = "SELECT * FROM ci_pl_amount where category='$category' and year='$prevoius_year' and client_id='$client_id' LIMIT $counter OFFSET $key ";
+                                    $prevoius_year = $this->db->query($sql);
+                                    $prevoius_year = $prevoius_year->row_array($sql);
+                                    if (!empty($prevoius_year['data'])) {
+                                        $prev = json_decode($prevoius_year['data'], true);
+                                        $prevoius_year_amount =
+                                            (int)str_replace(",", "", $prev['jan'])  +
+                                            (int)str_replace(",", "", $prev['feb']) +
+                                            (int)str_replace(",", "", $prev['mar']) +
+                                            (int)str_replace(",", "", $prev['apr']) +
+                                            (int)str_replace(",", "", $prev['may']) +
+                                            (int)str_replace(",", "", $prev['jun']) +
+                                            (int)str_replace(",", "", $prev['jul']) +
+                                            (int)str_replace(",", "", $prev['aug']) +
+                                            (int)str_replace(",", "", $prev['sep']) +
+                                            (int)str_replace(",", "", $prev['oct']) +
+                                            (int)str_replace(",", "", $prev['nov']) +
+                                            (int)str_replace(",", "", $prev['dec']);
+                                    }
+
+                                    // echo "<pre>";
+                                    // print_r($prevoius_year);
+                                    // die;
+
+                                    $before_previous_year = $year - 2;
+                                    // Get before prevoius year data here
+                                    $sql = "SELECT * FROM ci_pl_amount where category='$category' and year='$before_previous_year' and client_id='$client_id' LIMIT $counter OFFSET $key ";
+                                    $before_prevoius_year = $this->db->query($sql);
+                                    $before_prevoius_year = $before_prevoius_year->row_array($sql);
+                                    if (!empty($before_prevoius_year['data'])) {
+                                        $prev = json_decode($before_prevoius_year['data'], true);
+                                        $before_prevoius_year_amount =
+                                            (int)str_replace(",", "", $prev['jan'])  +
+                                            (int)str_replace(",", "", $prev['feb']) +
+                                            (int)str_replace(",", "", $prev['mar']) +
+                                            (int)str_replace(",", "", $prev['apr']) +
+                                            (int)str_replace(",", "", $prev['may']) +
+                                            (int)str_replace(",", "", $prev['jun']) +
+                                            (int)str_replace(",", "", $prev['jul']) +
+                                            (int)str_replace(",", "", $prev['aug']) +
+                                            (int)str_replace(",", "", $prev['sep']) +
+                                            (int)str_replace(",", "", $prev['oct']) +
+                                            (int)str_replace(",", "", $prev['nov']) +
+                                            (int)str_replace(",", "", $prev['dec']);
+                                    }
+
+                                    $counter++;
                                     $data = !empty($result['data']) ? json_decode($result['data'], true) : 0;
 
-                                    $jan = str_replace(",", "", $data['Jan']);
+                                    $jan = str_replace(",", "", $data['jan']);
                                     $january = str_replace(",", "", (int)$january) + (int)$jan;
 
-                                    $feb = str_replace(",", "", $data['Feb']);
+                                    $feb = str_replace(",", "", $data['feb']);
                                     $february = str_replace(",", "", (int)$february) + (int)$feb;
 
-                                    $mar = str_replace(",", "", $data['Mar']);
+                                    $mar = str_replace(",", "", $data['mar']);
                                     $march = str_replace(",", "", (int)$march) + (int)$mar;
 
-                                    $apr = str_replace(",", "", $data['Apr']);
+                                    $apr = str_replace(",", "", $data['apr']);
                                     $april = str_replace(",", "", (int)$april) + (int)$apr;
 
-                                    $may1 = str_replace(",", "", $data['May']);
+                                    $may1 = str_replace(",", "", $data['may']);
                                     $may = str_replace(",", "", (int)$may) + (int)$may1;
 
-                                    $jun = str_replace(",", "", $data['Jun']);
+                                    $jun = str_replace(",", "", $data['jun']);
                                     $june = str_replace(",", "", (int)$june) + (int)$jun;
 
 
-                                    $jul = str_replace(",", "", $data['Jul']);
+                                    $jul = str_replace(",", "", $data['jul']);
                                     $july = str_replace(",", "", (int)$july) + (int)$jul;
 
-                                    $aug = str_replace(",", "", $data['Aug']);
+                                    $aug = str_replace(",", "", $data['aug']);
                                     $august = str_replace(",", "", (int)$august) + (int)$aug;
 
-                                    $sep = str_replace(",", "", $data['Sep']);
+                                    $sep = str_replace(",", "", $data['sep']);
                                     $september = str_replace(",", "", (int)$september) + (int)$sep;
 
-                                    $oct = str_replace(",", "", $data['Oct']);
+                                    $oct = str_replace(",", "", $data['oct']);
                                     $october = str_replace(",", "", (int)$october) + (int)$oct;
 
-                                    $nov = str_replace(",", "", $data['Nov']);
+                                    $nov = str_replace(",", "", $data['nov']);
                                     $november = str_replace(",", "", (int)$november) + (int)$nov;
 
-                                    $dec = str_replace(",", "", $data['Dec']);
+                                    $dec = str_replace(",", "", $data['dec']);
                                     $december = str_replace(",", "", (int)$december) + (int)$dec;
 
                                     $total_amount =
@@ -229,34 +268,49 @@
                                     $id = $result['id'];
                                     $row = "<tr data-row_id=$id>";
 
-                                    $row .= "<td>".$result['code']."</td>";
-                                    $row .= "<td>".$result['title']."</td>";
+                                    $options = '<option value="">Select PL Code</option>';
+                                    $code = $result['code'];
 
-                                
-                                    $row .= "<td><input type='text' class='loop_month jan form-control' name='Jan' value=" . $data['Jan'] . "></td>";
+                                    foreach ($pl_codes as $key1 => $value1) {
+                                        $options .= "<option value='" . $value1['code'] . "' 
+                                        " . ($code == $value1['code'] ? "selected" : "") .
+                                            ">" . $value1['code'] . ' (' . $value1['title'] . ")</option>";
+                                    }
 
-                                    $row .= "<td><input type='text' class='loop_month feb form-control' name='Feb' value=" . $data['Feb'] . "></td>";
+                                    $row .= "<td><select class='form-control get_amount_data'>" . $options . "</select></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month mar form-control' name='Mar' value=" . $data['Mar'] . "></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control' value=$before_prevoius_year_amount></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month apr form-control' name='Apr' value=" . $data['Apr'] . "></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control' value=$prevoius_year_amount></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month may form-control' name='May' value=" . $data['May'] . "></td>";
+                                    $row .= "<td><input readonly type='text' class='form-control' value=$total_amount></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month jun form-control' name='Jun' value=" . $data['Jun'] . "></td>";
+                                    $row .= "<td><input type='text' class='loop_month jan form-control' name='jan' value=" . $data['jan'] . "></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month jul form-control' name='Jul' value=" . $data['Jul'] . "></td>";
+                                    $row .= "<td><input type='text' class='loop_month feb form-control' name='feb' value=" . $data['feb'] . "></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month aug form-control' name='Aug' value=" . $data['Aug'] . "></td>";
+                                    $row .= "<td><input type='text' class='loop_month mar form-control' name='mar' value=" . $data['mar'] . "></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month sep form-control' name='Sep' value=" . $data['Sep'] . "></td>";
+                                    $row .= "<td><input type='text' class='loop_month apr form-control' name='apr' value=" . $data['apr'] . "></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month oct form-control' name='Oct' value=" . $data['Oct'] . "></td>";
+                                    $row .= "<td><input type='text' class='loop_month may form-control' name='may' value=" . $data['may'] . "></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month nov form-control' name='Nov' value=" . $data['Nov'] . "></td>";
+                                    $row .= "<td><input type='text' class='loop_month jun form-control' name='jun' value=" . $data['jun'] . "></td>";
 
-                                    $row .= "<td><input type='text' class='loop_month dec form-control' name='Dec' value=" . $data['Dec'] . "></td>";
+                                    $row .= "<td><input type='text' class='loop_month jul form-control' name='jul' value=" . $data['jul'] . "></td>";
 
+                                    $row .= "<td><input type='text' class='loop_month aug form-control' name='aug' value=" . $data['aug'] . "></td>";
+
+                                    $row .= "<td><input type='text' class='loop_month sep form-control' name='sep' value=" . $data['sep'] . "></td>";
+
+                                    $row .= "<td><input type='text' class='loop_month oct form-control' name='oct' value=" . $data['oct'] . "></td>";
+
+                                    $row .= "<td><input type='text' class='loop_month nov form-control' name='nov' value=" . $data['nov'] . "></td>";
+
+                                    $row .= "<td><input type='text' class='loop_month dec form-control' name='dec' value=" . $data['dec'] . "></td>";
+
+                                    // // Show total amount row bise
+                                    $row .= "<td><input readonly class='total_amount form-control' type='text' value=" . number_format($total_amount) . "></td>";
 
                                     $row .= "</tr>";
                                     echo $row;
@@ -267,35 +321,38 @@
 
                                 $row .= "<td>Total  " . $value['name'] . "</td>";
 
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
 
-                                $row .= "<td></td>";
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
 
+                                $row .= "<td><input readonly type='text' class='form-control'></td>";
 
-                                $row .= "<td><input type='text' readonly class='jan form-control' name='jan' value=" . number_format($january) . "></td>";
+                                $row .= "<td><input type='number' readonly class='jan form-control' name='jan' value=" . $january . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='feb form-control' name='feb' value=" . number_format($february) . "></td>";
+                                $row .= "<td><input type='number' readonly class='feb form-control' name='feb' value=" . $february . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='mar form-control' name='mar' value=" . number_format($march) . "></td>";
+                                $row .= "<td><input type='number' readonly class='mar form-control' name='mar' value=" . $march . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='apr form-control' name='apr' value=" . number_format($april) . "></td>";
+                                $row .= "<td><input type='number' readonly class='apr form-control' name='apr' value=" . $april . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='may form-control' name='may' value=" . number_format($may) . "></td>";
+                                $row .= "<td><input type='number' readonly class='may form-control' name='may' value=" . $may . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='jun form-control' name='jun' value=" . number_format($june) . "></td>";
+                                $row .= "<td><input type='number' readonly class='jun form-control' name='jun' value=" . $june . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='jul form-control' name='jul' value=" . number_format($july) . "></td>";
+                                $row .= "<td><input type='number' readonly class='jul form-control' name='jul' value=" . $july . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='aug form-control' name='aug' value=" . number_format($august) . "></td>";
+                                $row .= "<td><input type='number' readonly class='aug form-control' name='aug' value=" . $august . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='sep form-control' name='sep' value=" . number_format($september) . "></td>";
+                                $row .= "<td><input type='number' readonly class='sep form-control' name='sep' value=" . $september . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='oct form-control' name='oct' value=" . number_format($october) . "></td>";
+                                $row .= "<td><input type='number' readonly class='oct form-control' name='oct' value=" . $october . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='nov form-control' name='nov' value=" . number_format($november) . "></td>";
+                                $row .= "<td><input type='number' readonly class='nov form-control' name='nov' value=" . $november . "></td>";
 
-                                $row .= "<td><input type='text' readonly class='dec form-control' name='dec' value=" . number_format($december) . "></td>";
+                                $row .= "<td><input type='number' readonly class='dec form-control' name='dec' value=" . $december . "></td>";
 
-                             
+                                // // Show total amount row bise
+                                $row .= "<td><input readonly class='form-control' type='text' class='total_amount' value=" . number_format($total_amount) . "></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
@@ -546,16 +603,16 @@
             if ($(this).attr("name") == "total_amount") return false;
             data[$(this).attr("name")] = $(this).val();
 
-            // total_amount = parseInt(total_amount) + (parseInt($(this).val()) || 0);
+            total_amount = parseInt(total_amount) + (parseInt($(this).val()) || 0);
 
         });
 
-        // $(this).closest('tr').find('.total_amount').val(total_amount);
+        $(this).closest('tr').find('.total_amount').val(total_amount);
         var id = $(this).closest('tr').data('row_id');
 
-        // // get code title and name here
-        // var selected_code = $(this).closest('tr').find('.get_amount_data :selected').val();
-        // var selected_title = $(this).closest('tr').find('.get_amount_data :selected').text();
+        // get code title and name here
+        var selected_code = $(this).closest('tr').find('.get_amount_data :selected').val();
+        var selected_title = $(this).closest('tr').find('.get_amount_data :selected').text();
 
 
 
@@ -568,6 +625,8 @@
             data: {
                 'id': id,
                 'form_data': data,
+                'code': selected_code,
+                'title': selected_title,
                 'csrf_test_name': $('input[name="csrf_test_name"]:first').val()
             },
             success: function(resultData) {

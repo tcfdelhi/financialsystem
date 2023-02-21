@@ -64,7 +64,7 @@
 
                     <div class="row clearfix col-md-12">
                         <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                            <input type="submit" name="submit" value="<?= languagedata($this->session->userdata('session_language'), "View Pl Amount"); ?>" class="btn btn-primary m-t-15 waves-effect">
+                            <input type="submit" name="submit" value="<?= languagedata($this->session->userdata('session_language'), "View Breakdown Sheet Amount"); ?>" class="btn btn-primary m-t-15 waves-effect">
                         </div>
                     </div>
                     <?php echo form_close(); ?>
@@ -74,5 +74,7 @@
     </div>
 </div>
 <script>
-    $("#pl_import_amount").addClass('active');
+    
+    $("#pl_code").addClass('active');
+    $("#pl_breakdown_sheet").addClass('active');
 </script>

@@ -70,18 +70,18 @@
                                     <td><?= ++$count; ?></td>
                                     <td><?= $row['code']?></td>
                                     <td><?= $row['title']?></td>
-                                    <td><?= $monthData['jan']?></td>
-                                    <td><?= $monthData['feb']?></td>
-                                    <td><?= $monthData['mar']?></td>
-                                    <td><?= $monthData['apr']?></td>
-                                    <td><?= $monthData['may']?></td>
-                                    <td><?= $monthData['jun']?></td>
-                                    <td><?= $monthData['jul']?></td>
-                                    <td><?= $monthData['aug']?></td>
-                                    <td><?= $monthData['sep']?></td>
-                                    <td><?= $monthData['oct']?></td>
-                                    <td><?= $monthData['nov']?></td>
-                                    <td><?= $monthData['dec']?></td>
+                                    <td><?= $monthData['Jan']?></td>
+                                    <td><?= $monthData['Feb']?></td>
+                                    <td><?= $monthData['Mar']?></td>
+                                    <td><?= $monthData['Apr']?></td>
+                                    <td><?= $monthData['May']?></td>
+                                    <td><?= $monthData['Jun']?></td>
+                                    <td><?= $monthData['Jul']?></td>
+                                    <td><?= $monthData['Aug']?></td>
+                                    <td><?= $monthData['Sep']?></td>
+                                    <td><?= $monthData['Oct']?></td>
+                                    <td><?= $monthData['Nov']?></td>
+                                    <td><?= $monthData['Dec']?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -104,25 +104,8 @@
                 <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('user/plamount/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo base_url('user/plamount/import_excel_new'); ?>" method="POST" enctype="multipart/form-data">
 
-
-                    <!-- <div class="row clearfix col-md-6">
-                        <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Year"); ?><span class="red"> *</span></label>
-                        </div>
-                        <div class="col-lg-12 col-md-4 col-sm-8 col-xs-7">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select class="form-control show-tick" name="year" required>
-                                        <?php foreach ($years as $group) : ?>
-                                            <option value="<?= $group['year']; ?>"><?= $group['year'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
 
 
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
