@@ -395,4 +395,24 @@ class Plamount extends UR_Controller
 			}
 		}
 	}
+
+	public function report($client_id, $year)
+	{
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+			$client_id  = $this->input->post('client_id');
+		} else if ($year == 0 and $client_id == 0) {
+			redirect(base_url("admin/bsamount"));
+		}
+
+		// Get Breakdown Catgeory Here
+		$data['breakdown_cat'] =  $this->pl_amount_model->get_breakdown_categories();
+
+		$data['year'] = $year;
+		$data['client_id'] = $client_id;
+
+		$data['view'] = 'user/plamount/report';
+		$this->load->view('layout', $data);
+	}
 }

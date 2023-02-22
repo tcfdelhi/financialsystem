@@ -40,18 +40,41 @@
 				</a>
 			</li>
 			<li id="bscodes">
-				<a href="<?= base_url('user/bscode'); ?>">
+				<!-- <a href="<?= base_url('user/bscode'); ?>"> -->
+				<a href="javascript:void(0);" class="menu-toggle">
 					<i class="material-icons">code</i>
 					<span><?= languagedata($this->session->userdata('session_language'), "BS Codes"); ?></span>
 				</a>
+
+				<ul class="ml-menu">
+					<li id="bscode_new">
+						<a href="<?= base_url('user/bscode'); ?>">
+							<span><?= languagedata($this->session->userdata('session_language'), "BS Codes"); ?></span>
+						</a>
+					</li>
+
+					<li id="bs_amount">
+						<a href="<?= base_url('user/bscode/import'); ?>">
+							<span><?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?></span>
+						</a>
+					</li>
+
+
+					<li id="bs_amount_view">
+						<a href="<?= base_url('user/bscode/amount/' . date("Y")); ?>">
+							<span><?= languagedata($this->session->userdata('session_language'), "View Cashflow Sheet Amount"); ?></span>
+						</a>
+					</li>
+
+				</ul>
 			</li>
 
-			<li id="bs_import_amount">
+			<!-- <li id="bs_import_amount">
 				<a href="<?= base_url('user/bsamount'); ?>">
 					<i class="material-icons">layers</i>
 					<span><?= languagedata($this->session->userdata('session_language'), "BS Import Amount"); ?></span>
 				</a>
-			</li>
+			</li> -->
 
 
 			<li id="pl_code">
@@ -74,7 +97,7 @@
 
 
 					<li id="pl_amount_view">
-						<a href="<?= base_url('user/plcode/amount/'.date("Y")); ?>">
+						<a href="<?= base_url('user/plcode/amount/' . date("Y")); ?>">
 							<span><?= languagedata($this->session->userdata('session_language'), "View Breakdown Sheet Amount"); ?></span>
 						</a>
 					</li>

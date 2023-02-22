@@ -11,33 +11,14 @@
                     <?= languagedata($this->session->userdata('session_language'), "Import Amount"); ?>
                 </h2>
 
-                <button type="button" class="m-l-15 btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
-
-                <a href="<?= base_url("admin/bsamount/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "View Amount"); ?></a>
+                <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button>
 
             </div>
             <div class="body">
 
-            <?php echo form_open(base_url('admin/bscode/import_amount'), 'class="inline-form-view form-horizontal filter_record"');  ?>
+            <?php echo form_open(base_url('user/bscode/import'), 'class="inline-form-view form-horizontal filter_record"');  ?>
                 <div class="col-md-12">
-                    <div class="row clearfix col-md-6">
-                        <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
-                        </div>
-                        <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select class="form-control show-tick submit_form" name="client_id">
-                                        <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($client_id == $group['id'] ? "selected" : "") ?>><?= $group['company_name'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-6 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -123,24 +104,9 @@
                 <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('admin/bsamount/import_excel_new'); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo base_url('user/bsamount/import_excel_new'); ?>" method="POST" enctype="multipart/form-data">
 
-                    <div class="row clearfix col-md-6">
-                        <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Client"); ?><span class="red"> *</span></label>
-                        </div>
-                        <div class="col-lg-12 col-md-4 col-sm-8 col-xs-7">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select class="form-control show-tick" name="client_id" required>
-                                        <?php foreach ($clients as $group) : ?>
-                                            <option value="<?= $group['id']; ?>"><?= $group['company_name'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <div class="col-lg-12">
@@ -186,8 +152,8 @@
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-    $("#bs_code").addClass('active');
-    $("#bs_import_amount").addClass('active');
+    $("#bscodes").addClass('active');
+    $("#bs_amount").addClass('active');
 
     
     $(".submit_form").change(function() {

@@ -250,16 +250,148 @@ class Bsamount extends UR_Controller
 
 	public function save_data()
 	{
-		$post_data = $this->input->post('form_data');
-		
-		$user_data = array(
-			'data' => json_encode($post_data)
-		);
+
+		if (!empty($this->input->post('row_id'))) {
+			$post_data = $this->input->post('form_data');
+			$post_data = json_decode($post_data, true);
+
+			$user_data = array(
+				'data' => $post_data['data'],
+				'code' => $post_data['code'],
+				'title' => $post_data['title']
+			);
+		} else {
+
+			$post_data = $this->input->post('form_data');
+
+			$user_data = array(
+				'data' => json_encode($post_data)
+			);
+		}
 		$updateData = $this->security->xss_clean($user_data);
 
 		$this->db->where('id', $this->input->post('id'));
-		$this->db->update('ci_bs_amount', $updateData);
+		$this->db->update('ci_bs_amount_data_new', $updateData);
 
 		echo json_encode('ll');
+	}
+
+	public function import_excel_new()
+	{
+		$user_id = $this->session->userdata('user_id');
+		$client_id = $this->db->get_where('ci_users', array('id' => $user_id))->row()->client_id;
+		if ($this->input->post('submit')) {
+
+			$path = 'uploads' . DIRECTORY_SEPARATOR . 'bsamount' . DIRECTORY_SEPARATOR;
+			require_once APPPATH . "third_party/PHPExcel.php";
+
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'xlsx|xls|csv';
+			$config['remove_spaces'] = TRUE;
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if (!$this->upload->do_upload('uploadFile')) {
+				$error = array('error' => $this->upload->display_errors());
+			} else {
+				$data = array('upload_data' => $this->upload->data());
+			}
+			if (empty($error)) {
+				if (!empty($data['upload_data']['file_name'])) {
+					$import_xls_file = $data['upload_data']['file_name'];
+				} else {
+					$import_xls_file = 0;
+				}
+				$inputFileName = $path . $import_xls_file;
+				try {
+					$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+					$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+					$objPHPExcel = $objReader->load($inputFileName);
+					$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+
+
+					foreach ($allDataInSheet as $key => $value) {
+
+						if ($key == 1) continue;
+
+						if (empty($value['A']) and empty($value['C']) and empty($value['D']) and !empty($value['B'])) {
+							$catName = $value['B'];
+							// Get Breakdown Category ID here
+							$categoryId = $this->db->get_where('ci_cash_flow_category', array('name' => $catName))->row()->id;
+
+							if (empty($categoryId)) {
+								$cat['name'] = $catName;
+								$this->db->insert('ci_cash_flow_category', $cat);
+								$categoryId = $this->db->insert_id();
+							}
+							continue;
+						}
+
+						// Bypass Amount Total column
+						if (empty($value['A'])) continue;
+						$code = $value['A'];
+						$title = $value['B'];
+						// $pl_code_id = $this->db->get_where('ci_pl_code', array('code' => $code, 'title' => $title))->row()->id;
+						// print_r($pl_code_id); die;
+						// if (!empty($pl_code_id)) {
+
+						if (!empty($value)) :
+							$arr = [];
+							foreach ($value as $key1 => $value1) {
+
+								if ($key1 == "A" || $key1 == "B") continue;
+
+
+								$year = substr($allDataInSheet[1][$key1], 6, 4);
+								$month = substr($allDataInSheet[1][$key1], 0, 3);
+
+
+								$arr[$month] = !empty($value1) ? $value1 : 0;
+								$imported_data[$year]['client_id'] = $client_id;
+								$imported_data[$year]['category'] = $categoryId;
+								$imported_data[$year]['pl_code'] = 1;
+								$imported_data[$year]['code'] = $code;
+								$imported_data[$year]['title'] = $title;
+								$imported_data[$year]['data'] = json_encode($arr);
+							}
+						endif;
+
+						$result = $this->bs_amount_model->add_new_amount_data($imported_data);
+					}
+					if ($result) {
+						$this->session->set_flashdata('msg', 'Files Has Been Imported Successfully!');
+					}
+					redirect(base_url("admin/bscode/import_amount/$year/$client_id"));
+				} catch (Exception $e) {
+					$this->session->set_flashdata('error', 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
+						. '": ' . $e->getMessage());
+					unlink($path . $data['upload_data']['file_name']);
+					redirect("admin/bscode/import_amount", 'refresh');
+				}
+			} else {
+				$this->session->set_flashdata('error', $error['error']);
+				unlink($path . $data['upload_data']['file_name']);
+				redirect("admin/bscode/import_amount", 'refresh');
+			}
+		}
+	}
+
+	public function report($client_id, $year)
+	{
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+			$client_id  = $this->input->post('client_id');
+		} else if ($year == 0 and $client_id == 0) {
+			redirect(base_url("admin/bsamount"));
+		}
+
+		// Get Breakdown Catgeory Here
+		$data['breakdown_cat'] =  $this->bs_amount_model->get_breakdown_categories();
+
+		$data['year'] = $year;
+		$data['client_id'] = $client_id;
+
+		$data['view'] = 'admin/bsamount/report';
+		$this->load->view('layout', $data);
 	}
 }

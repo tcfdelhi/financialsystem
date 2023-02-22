@@ -68,7 +68,7 @@
                 <a href="<?= base_url("admin/plcode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
 
 
-                <a target="_blank" href="<?= base_url("admin/plamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
+                <a target="_blank" href="<?= base_url("admin/bsamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
 
             </div>
             <!-- Dropdown for filters -->
@@ -168,7 +168,7 @@
                                 // Generate Extra 10 rows for accouting codes
                                 // $counter = 0;
                                 $category = $value['id'];
-                                $sql = "SELECT * FROM ci_pl_amount_data_new where category='$category' and year='$year' and client_id='$client_id' ";
+                                $sql = "SELECT * FROM ci_bs_amount_data_new where category='$category' and year='$year' and client_id='$client_id' ";
                                 $query = $this->db->query($sql);
                                 $counter = 1;
                                 foreach ($query->result_array() as $key => $result) {
@@ -559,7 +559,7 @@
 
 
 
-        var url = "<?= base_url('admin/plamount/save_data') ?>";
+        var url = "<?= base_url('admin/bsamount/save_data') ?>";
         var year = $('#year').val();
         var client_id = $('#client_id').val();
         $.ajax({

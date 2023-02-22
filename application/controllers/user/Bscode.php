@@ -9,6 +9,7 @@ class Bscode extends UR_Controller
 		parent::__construct();
 		$this->load->model('user/user_model', 'user_model');
 		$this->load->model('activity_model', 'activity_model');
+		$this->load->model('user/Bs_amount_model', 'bs_amount_model');
 		$this->load->library('datatable'); // loaded my custom serverside datatable library		
 	}
 
@@ -311,5 +312,58 @@ class Bscode extends UR_Controller
 		$this->session->set_flashdata('msg', 'BS Code has been deleted successfully!');
 		redirect(base_url("user/bscode/list/$year"));
 		// redirect(base_url('user/bscode'));
+	}
+
+	public function import($year = 0)
+	{
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else {
+			redirect(base_url('user/bscode'));
+		}
+
+		// // Get Imported data here
+		$data['imported_data'] = $this->bs_amount_model->get_imported_data($year);
+
+		// echo "<pre>";print_r($data['imported_data']); die;
+
+
+		$data['years'] = $this->bs_amount_model->get_years();
+		$data['year'] = $year;
+
+
+		$data['view'] = 'user/bscode/import';
+		$this->load->view('layout', $data);
+	}
+
+	public function amount($year = 0)
+	{
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$year  = $this->input->post('year');
+		} else if ($this->input->server('REQUEST_METHOD') === 'GET') {
+		} else {
+			redirect(base_url('user/plcode'));
+		}
+
+		// // Get Breakdown Catgeory Here
+		// $data['breakdown_cat'] =  $this->bs_amount_model->get_breakdown_categories();
+		// foreach ($data['breakdown_cat'] as $key => $value) {
+		// 	$num_rows =  $this->bs_amount_model->get_pl_amount_data($year, $value['id']);
+		// 	if ($num_rows === 0) {
+		// 		$this->bs_amount_model->insert_pl_amount_data($year, $value['id']);
+		// 	}
+		// }
+
+		$user_id = $this->session->userdata('user_id');
+		$data['client_id'] = $this->db->get_where('ci_users', array('id' => $user_id))->row()->client_id;
+
+		$data['breakdown_cat'] =  $this->bs_amount_model->get_breakdown_categories();
+
+		$data['years'] = $this->bs_amount_model->get_years();
+		$data['year'] = $year;
+		$data['view'] = 'user/bscode/list_amount';
+		$this->load->view('layout', $data);
 	}
 }

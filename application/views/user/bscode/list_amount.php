@@ -61,21 +61,21 @@
 
                 <!-- <button type="button" class="btn bg-indigo waves-effect pull-right" data-toggle="modal" data-target="#importModal" style="margin-left:10px"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Import Excel"); ?></button> -->
 
-                <!-- <a href="<?= base_url('user/plamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Amount"); ?></a> -->
+                <!-- <a href="<?= base_url('user/bsamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Amount"); ?></a> -->
 
-                <a href="<?= base_url("user/plcode/reports/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
+                <a href="<?= base_url("user/bscode/reports/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 
-                <a href="<?= base_url("user/plcode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
+                <a href="<?= base_url("user/bscode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
 
 
-                <a target="_blank" href="<?= base_url("user/plamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
+                <a target="_blank" href="<?= base_url("user/bsamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
 
             </div>
             <!-- Dropdown for filters -->
 
             <div class="body">
 
-                <?php echo form_open(base_url('user/plcode/amount'), 'class="inline-form-view form-horizontal filter_record"');  ?>
+                <?php echo form_open(base_url('user/bscode/amount'), 'class="inline-form-view form-horizontal filter_record"');  ?>
                 <div class="col-md-12">
                     
                     <div class="row clearfix col-md-6">
@@ -94,8 +94,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <a href="<?= base_url('user/plcode/export_excel/' . $year . '/' . $client_id); ?>" class="export_excel_button btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Export Data"); ?></a> -->
+      
+                    
                 </div>
                 <?php echo form_close(); ?>
                 <div class="table-responsive">
@@ -150,7 +150,7 @@
                                 // Generate Extra 10 rows for accouting codes
                                 // $counter = 0;
                                 $category = $value['id'];
-                                $sql = "SELECT * FROM ci_pl_amount_data_new where category='$category' and year='$year' and client_id='$client_id' ";
+                                $sql = "SELECT * FROM ci_bs_amount_data_new where category='$category' and year='$year' and client_id='$client_id' ";
                                 $query = $this->db->query($sql);
                                 $counter = 1;
                                 foreach ($query->result_array() as $key => $result) {
@@ -343,7 +343,7 @@
                 <h4 class="modal-title"><?= languagedata($this->session->userdata('session_language'), "Upload Excel file"); ?></h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('user/plamount/import_excel'); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo base_url('user/bsamount/import_excel'); ?>" method="POST" enctype="multipart/form-data">
 
                     <div class="row clearfix col-md-6">
                         <div class="col-lg-12 col-md-2 col-sm-4 col-xs-5">
@@ -373,7 +373,7 @@
                     </div>
                 </form>
                 <div class="col-md-12">
-                    <a href="<?= base_url('uploads/plcode/BS_Import_Acc_code_Form.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>
+                    <a href="<?= base_url('uploads/bscode/BS_Import_Acc_code_Form.xlsx') ?>"><?= languagedata($this->session->userdata('session_language'), "Download Sample File"); ?></a>
 
                 </div>
             </div>
@@ -479,7 +479,7 @@
         var code = $(this).val();
         var id = $(this).closest('tr').data('row_id');
         if (code != '') {
-            var url = "<?= base_url('user/plamount/get_data') ?>";
+            var url = "<?= base_url('user/bsamount/get_data') ?>";
             var year = $('#year').val();
             var client_id = $('#client_id').val();
             $.ajax({
@@ -494,7 +494,7 @@
                 success: function(resultData) {
 
                     // Save Data also
-                    $.post("<?= base_url('user/plamount/save_data') ?>", {
+                    $.post("<?= base_url('user/bsamount/save_data') ?>", {
                         row_id: 'onChange',
                         id: id,
                         form_data: resultData,
@@ -541,7 +541,7 @@
 
 
 
-        var url = "<?= base_url('user/plamount/save_data') ?>";
+        var url = "<?= base_url('user/bsamount/save_data') ?>";
         var year = $('#year').val();
         var client_id = $('#client_id').val();
         $.ajax({

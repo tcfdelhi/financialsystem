@@ -86,4 +86,5 @@
 
     $(".new_year").hide();
     $("#bscodes").addClass('active');
+    $("#bscode").addClass('active');
 </script>
