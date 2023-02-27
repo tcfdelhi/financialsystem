@@ -65,11 +65,18 @@
 
                 <a href="<?= base_url("admin/plcode/reports/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 
-                <a href="<?= base_url("admin/plcode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
 
-
+                
+                <a href="<?= base_url("admin/plcode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To BS Codes"); ?></a>
+                
+                
                 <a target="_blank" href="<?= base_url("admin/bsamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
+                
+                <a href="<?= base_url("admin/plcode/major_item"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Major Items"); ?></a>
 
+                <a href="<?= base_url("admin/bscode/medium_item"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Medium Items"); ?></a>
+
+                <a href="<?= base_url("admin/bscode/cash_flow"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Cash FLow Category"); ?></a>
             </div>
             <!-- Dropdown for filters -->
 

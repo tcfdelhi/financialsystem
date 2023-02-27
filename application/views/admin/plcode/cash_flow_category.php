@@ -12,6 +12,9 @@
                 </h2>
 
                 <a href="<?= base_url('admin/plcode/add_cash_flow/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Cash Flow Category"); ?></a>
+
+                <a href="<?= base_url('admin/plamount/list/'.date('Y')); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Proceed To Breakdown Sheet"); ?></a>
+
             </div>
             <div class="body">
                 <div class="table-responsive">

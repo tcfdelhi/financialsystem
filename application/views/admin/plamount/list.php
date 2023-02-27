@@ -70,6 +70,14 @@
 
                 <a target="_blank" href="<?= base_url("admin/plamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
 
+                <a href="<?= base_url("admin/plcode/major_item"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Major Items"); ?></a>
+
+                <a href="<?= base_url("admin/plcode/medium_item"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Medium Items"); ?></a>
+
+                <a href="<?= base_url("admin/plcode/cash_flow"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Cash FLow Category"); ?></a>
+
+                <a href="<?= base_url("admin/plcode/breakdown_cat"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Breakdown Category"); ?></a>
+
             </div>
             <!-- Dropdown for filters -->
 
@@ -124,7 +132,7 @@
                             <tr>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Accounting Code"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "Accounting Title"); ?></th>
-                                
+
                                 <th><?= languagedata($this->session->userdata('session_language'), "January"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "February"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "March"); ?></th>
@@ -159,8 +167,8 @@
                                 $row .= "<td></td>";
                                 $row .= "<td></td>";
                                 $row .= "<td></td>";
-                                $row .= "<td></td>";                                  
-                                $row .= "<td></td>"; 
+                                $row .= "<td></td>";
+                                $row .= "<td></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
@@ -229,10 +237,10 @@
                                     $id = $result['id'];
                                     $row = "<tr data-row_id=$id>";
 
-                                    $row .= "<td>".$result['code']."</td>";
-                                    $row .= "<td>".$result['title']."</td>";
+                                    $row .= "<td>" . $result['code'] . "</td>";
+                                    $row .= "<td>" . $result['title'] . "</td>";
 
-                                
+
                                     $row .= "<td><input type='text' class='loop_month jan form-control' name='Jan' value=" . $data['Jan'] . "></td>";
 
                                     $row .= "<td><input type='text' class='loop_month feb form-control' name='Feb' value=" . $data['Feb'] . "></td>";
@@ -295,7 +303,7 @@
 
                                 $row .= "<td><input type='text' readonly class='dec form-control' name='dec' value=" . number_format($december) . "></td>";
 
-                             
+
 
                                 $row .= "</tr>";
                                 echo $row;

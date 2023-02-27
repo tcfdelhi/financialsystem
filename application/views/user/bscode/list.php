@@ -195,6 +195,7 @@
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
     $("#bscodes").addClass('active');
+    $("#bscode_new").addClass('active');
     $(".submit_form").change(function() {
         // alert('h');
         $(".filter_record").submit();

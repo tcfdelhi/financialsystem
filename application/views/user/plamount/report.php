@@ -31,6 +31,7 @@
                 <h2 style="display: inline-block;">
                     <?= languagedata($this->session->userdata('session_language'), "PL Code Amount"); ?>
                 </h2>
+                <a href="<?= base_url("user/plcode/amount/$year"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To Breakdown Sheet"); ?></a>
 
             </div>
             <!-- Dropdown for filters -->

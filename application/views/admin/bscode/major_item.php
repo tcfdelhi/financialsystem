@@ -12,6 +12,8 @@
                 </h2>
 
                 <a href="<?= base_url('admin/bscode/add_major_item/'.$id); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), " Add New Major items"); ?></a>
+
+                <a href="<?= base_url('admin/bsamount/list/'.date('Y')); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i><?= languagedata($this->session->userdata('session_language'), "Proceed To Amount"); ?></a>
             </div>
             <div class="body">
                 <div class="table-responsive">
