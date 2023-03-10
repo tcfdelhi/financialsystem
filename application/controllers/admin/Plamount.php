@@ -51,7 +51,7 @@ class Plamount extends MY_Controller
 		// }
 
 		$data['pl_codes'] =  $this->pl_model->get_codes_export();
-		// print_r($data['pl_codes']); die;
+		// echo "<pre>"; print_r($data['breakdown_cat']); die;
 		$data['years'] = $this->pl_amount_model->get_years();
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
@@ -314,7 +314,7 @@ class Plamount extends MY_Controller
 		$res = $query->row_array();
 		echo json_encode($res);
 	}
-	public function report($client_id, $year)
+	public function report($client_id, $year, $categoryId)
 	{
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
@@ -326,11 +326,14 @@ class Plamount extends MY_Controller
 
 		// Get Breakdown Catgeory Here
 		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
+		// echo "<pre>"; print_r($data['breakdown_cat']); die;
+		$data['categoryName'] = $this->db->get_where('ci_pl_breakdown_cat', array('id' => $categoryId))->row()->name;
 
 		$data['pl_codes'] =  $this->pl_model->get_codes_export();
 
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
+		$data['categoryId'] = $categoryId;
 
 		$data['view'] = 'admin/plamount/report';
 		$this->load->view('layout', $data);
@@ -387,7 +390,7 @@ class Plamount extends MY_Controller
 						}
 
 						// Bypass Amount Total column
-						if(empty($value['A'])) continue;
+						if (empty($value['A'])) continue;
 						$code = $value['A'];
 						$title = $value['B'];
 						// $pl_code_id = $this->db->get_where('ci_pl_code', array('code' => $code, 'title' => $title))->row()->id;
@@ -400,10 +403,10 @@ class Plamount extends MY_Controller
 
 								if ($key1 == "A" || $key1 == "B") continue;
 
-								
+
 								$year = substr($allDataInSheet[1][$key1], 6, 4);
 								$month = substr($allDataInSheet[1][$key1], 0, 3);
-								
+
 
 								$arr[$month] = !empty($value1) ? $value1 : 0;
 								$imported_data[$year]['client_id'] = $client_id;
@@ -412,7 +415,6 @@ class Plamount extends MY_Controller
 								$imported_data[$year]['code'] = $code;
 								$imported_data[$year]['title'] = $title;
 								$imported_data[$year]['data'] = json_encode($arr);
-								
 							}
 						endif;
 

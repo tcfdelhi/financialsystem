@@ -396,7 +396,7 @@ class Bsamount extends MY_Controller
 		}
 	}
 
-	public function report($client_id, $year)
+	public function report($client_id, $year, $categoryId)
 	{
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
@@ -408,11 +408,13 @@ class Bsamount extends MY_Controller
 
 		// Get Breakdown Catgeory Here
 		$data['breakdown_cat'] =  $this->bs_amount_model->get_breakdown_categories();
+		$data['categoryName'] = $this->db->get_where('ci_cash_flow_category', array('id' => $categoryId))->row()->name;
 
 		$data['pl_codes'] =  $this->pl_model->get_codes_export();
 
 		$data['year'] = $year;
 		$data['client_id'] = $client_id;
+		$data['categoryId'] = $categoryId;
 
 		$data['view'] = 'admin/bsamount/report';
 		$this->load->view('layout', $data);

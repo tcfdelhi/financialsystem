@@ -64,7 +64,7 @@
                             <?php
                             foreach ($breakdown_cat as $key => $value) {
 
-                                $january = $february = $march = $april = $may1 = $june = $july = $august = $september = $october = $november = $december = $total_amount = $total_prev_year_amount = $total_before_prev_year_amount = $current_year_amount = 0;
+                                $january = $february = $march = $april = $may1 = $may = $june = $july = $august = $september = $october = $november = $december = $total_amount = $total_prev_year_amount = $total_before_prev_year_amount = $current_year_amount = 0;
 
                                 $row = "<tr class='categories' >";
 
@@ -80,8 +80,8 @@
                                 $row .= "<td></td>";
                                 $row .= "<td></td>";
                                 $row .= "<td></td>";
-                                $row .= "<td></td>";                                  
-                                $row .= "<td></td>";                                  
+                                $row .= "<td></td>";
+                                $row .= "<td></td>";
 
 
                                 $row .= "</tr>";
@@ -94,7 +94,7 @@
                                 $query = $this->db->query($sql);
                                 $counter = 1;
                                 foreach ($query->result_array() as $key => $result) {
-                                    
+
                                     $data = !empty($result['data']) ? json_decode($result['data'], true) : 0;
 
                                     $jan = str_replace(",", "", $data['Jan']);
@@ -134,14 +134,14 @@
                                     $dec = str_replace(",", "", $data['Dec']);
                                     $december = str_replace(",", "", (int)$december) + (int)$dec;
 
-                                    
+
                                     $id = $result['id'];
                                     $row = "<tr>";
 
-                                    $row .= "<td>".$result['code']."</td>";
-                                    $row .= "<td>".$result['title']."</td>";
+                                    $row .= "<td>" . $result['code'] . "</td>";
+                                    $row .= "<td>" . $result['title'] . "</td>";
 
-                                   
+
 
                                     $row .= "<td>" . $data['Jan'] . "</td>";
 
@@ -167,7 +167,7 @@
 
                                     $row .= "<td>" . $data['Dec'] . "</td>";
 
-                                   
+
                                     $row .= "</tr>";
                                     echo $row;
                                 }
@@ -179,34 +179,35 @@
                                 $row .= "<td></td>";
 
 
-                                $row .= "<td>".number_format($january)."</td>";
+                                $row .= "<td>" . number_format($january) . "</td>";
 
-                                $row .= "<td>".number_format($february)."</td>";
+                                $row .= "<td>" . number_format($february) . "</td>";
 
-                                $row .= "<td>".number_format($march)."</td>";
+                                $row .= "<td>" . number_format($march) . "</td>";
 
-                                $row .= "<td>".number_format($april)."</td>";
+                                $row .= "<td>" . number_format($april) . "</td>";
 
-                                $row .= "<td>".number_format($may1)."</td>";
+                                $row .= "<td>" . number_format($may) . "</td>";
 
-                                $row .= "<td>".number_format($june)."</td>";
+                                $row .= "<td>" . number_format($june) . "</td>";
 
-                                $row .= "<td>".number_format($july)."</td>";
+                                $row .= "<td>" . number_format($july) . "</td>";
 
-                                $row .= "<td>".number_format($august)."</td>";
+                                $row .= "<td>" . number_format($august) . "</td>";
 
-                                $row .= "<td>".number_format($september)."</td>";
+                                $row .= "<td>" . number_format($september) . "</td>";
 
-                                $row .= "<td>".number_format($october)."</td>";
+                                $row .= "<td>" . number_format($october) . "</td>";
 
-                                $row .= "<td>".number_format($november)."</td>";
+                                $row .= "<td>" . number_format($november) . "</td>";
 
-                                $row .= "<td>".number_format( $december)." </td>";
-                                $row .= "<td></td>";
+                                $row .= "<td>" . number_format($december) . " </td>";
+                                // $row .= "<td></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
-                               
+                                // Store Data Here For Graph
+                                $graph[$value['name']] = [$january, $february, $march, $april, $may, $june, $july, $august, $september, $october, $november, $december];
                             }
                             ?>
                         </tbody>
@@ -215,6 +216,25 @@
 
                 </div>
             </div>
+
+            <div class="row clearfix col-md-6">
+                <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                    <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Category"); ?><span class="red"> *</span></label>
+                </div>
+                <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <select id="client_id" class="form-control show-tick change_cat" name="client_id">
+                                <?php foreach ($breakdown_cat as $group) : ?>
+                                    <option value="<?= $group['id']; ?>" <?= ($categoryId == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="chartContainer3" style="width: 100%; height: 300px;display: inline-block;"></div>
+
         </div>
     </div>
 </div>
@@ -245,7 +265,97 @@
         dom: 'Bfrtip',
         "ordering": false,
         buttons: [
-           'csv', 'excel'
+            'csv', 'excel'
         ]
     });
+
+    window.onload = function() {
+
+        var chart = new CanvasJS.Chart("chartContainer3", {
+            animationEnabled: true,
+            title: {
+                text: "<?= $categoryName ?>",
+            },
+            axisX: {
+                valueFormatString: "MMM",
+                interval: 1,
+                intervalType: "month"
+            },
+            axisY: {
+                includeZero: false
+            },
+            data: [{
+                type: "line",
+                dataPoints: [{
+                        x: new Date(2012, 00, 1),
+                        y: <?= $graph[$categoryName][0] ?>
+                    },
+                    {
+                        x: new Date(2012, 01, 1),
+                        y: <?= $graph[$categoryName][1] ?>
+                    },
+                    {
+                        x: new Date(2012, 02, 1),
+                        y: <?= $graph[$categoryName][2] ?>
+                        // indexLabel: "highest",
+                        // markerColor: "red",
+                        // markerType: "triangle"
+                    },
+                    {
+                        x: new Date(2012, 03, 1),
+                        y: <?= $graph[$categoryName][3] ?>
+                    },
+                    {
+                        x: new Date(2012, 04, 1),
+                        y: <?= $graph[$categoryName][4] ?>
+                    },
+                    {
+                        x: new Date(2012, 05, 1),
+                        y: <?= $graph[$categoryName][5] ?>
+                    },
+                    {
+                        x: new Date(2012, 06, 1),
+                        y: <?= $graph[$categoryName][6] ?>
+                    },
+                    {
+                        x: new Date(2012, 07, 1),
+                        y: <?= $graph[$categoryName][7] ?>
+                    },
+                    {
+                        x: new Date(2012, 08, 1),
+                        y: <?= $graph[$categoryName][8] ?>
+                        // indexLabel: "lowest",
+                        // markerColor: "DarkSlateGrey",
+                        // markerType: "cross"
+                    },
+                    {
+                        x: new Date(2012, 09, 1),
+                        y: <?= $graph[$categoryName][9] ?>
+                    },
+                    {
+                        x: new Date(2012, 10, 1),
+                        y: <?= $graph[$categoryName][10] ?>
+                    },
+                    {
+                        x: new Date(2012, 11, 1),
+                        y: <?= $graph[$categoryName][11] ?>
+                    }
+                ]
+            }]
+        });
+        chart.render();
+    }
+
+    $(".change_cat").change(function() {
+        var ImageSrcUrl = window.location.href;
+        var NewFileName = $(this).val();
+
+        var parts = ImageSrcUrl.split('/');
+
+        parts[parts.length - 1] = NewFileName;
+        // alert(parts.join('/'));
+        window.location.href = parts.join('/');
+
+    });
 </script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

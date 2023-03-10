@@ -68,7 +68,7 @@
                 <a href="<?= base_url("admin/plcode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
 
 
-                <a target="_blank" href="<?= base_url("admin/plamount/report/$client_id/$year"); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
+                <a target="_blank" href="<?= base_url("admin/plamount/report/$client_id/$year/".$breakdown_cat[0]['id']); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Approve Sheet"); ?></a>
 
                 <a href="<?= base_url("admin/plcode/major_item"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Major Items"); ?></a>
 
