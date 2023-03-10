@@ -500,6 +500,7 @@ class Plamount extends MY_Controller
 			$chart_data[$counter]['x'] = $xAxis;
 			$chart_data[$counter]['y'] = $january + $february + $march + $april + $may + $june + $july + $august + $september + $october + $november + $december;
 			$chart_data[$counter]['label'] = date("Y") - $counter;
+			$chart_data[$counter]['color'] = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
 			$xAxis += 10;
 			$counter++;
 		}
