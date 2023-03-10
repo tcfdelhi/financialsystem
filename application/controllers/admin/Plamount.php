@@ -437,4 +437,81 @@ class Plamount extends MY_Controller
 			}
 		}
 	}
+
+	public function comparison($yearCount, $categoryId)
+	{
+		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
+		$data['categoryName'] = $this->db->get_where('ci_pl_breakdown_cat', array('id' => $categoryId))->row()->name;
+
+		$yearData = date("Y") - $yearCount;
+		$chart_data = [];
+		$counter = 0;
+		$xAxis = 10;
+		for ($i = date("Y"); $i > $yearData; $i--) {
+
+			// Get total here
+			$query = $this->db->get_where('ci_pl_amount_data_new', array('category' => $categoryId, 'year' => date("Y") - $counter, 'client_id' => 10))->result_array();
+
+			if (!empty($query)) {
+				$january = $february = $march = $april = $may1 = $may = $june = $july = $august = $september = $october = $november = $december = 0;
+
+				foreach ($query as $key => $value) {
+					$amount_data = !empty($value['data']) ? json_decode($value['data'], true) : 0;
+
+					$jan = str_replace(",", "", $amount_data['Jan']);
+					$january = str_replace(",", "", (int)$january) + (int)$jan;
+
+					$feb = str_replace(",", "", $amount_data['Feb']);
+					$february = str_replace(",", "", (int)$february) + (int)$feb;
+
+					$mar = str_replace(",", "", $amount_data['Mar']);
+					$march = str_replace(",", "", (int)$march) + (int)$mar;
+
+					$apr = str_replace(",", "", $amount_data['Apr']);
+					$april = str_replace(",", "", (int)$april) + (int)$apr;
+
+					$may1 = str_replace(",", "", $amount_data['May']);
+					$may = str_replace(",", "", (int)$may) + (int)$may1;
+
+					$jun = str_replace(",", "", $amount_data['Jun']);
+					$june = str_replace(",", "", (int)$june) + (int)$jun;
+
+
+					$jul = str_replace(",", "", $amount_data['Jul']);
+					$july = str_replace(",", "", (int)$july) + (int)$jul;
+
+					$aug = str_replace(",", "", $amount_data['Aug']);
+					$august = str_replace(",", "", (int)$august) + (int)$aug;
+
+					$sep = str_replace(",", "", $amount_data['Sep']);
+					$september = str_replace(",", "", (int)$september) + (int)$sep;
+
+					$oct = str_replace(",", "", $amount_data['Oct']);
+					$october = str_replace(",", "", (int)$october) + (int)$oct;
+
+					$nov = str_replace(",", "", $amount_data['Nov']);
+					$november = str_replace(",", "", (int)$november) + (int)$nov;
+
+					$dec = str_replace(",", "", $amount_data['Dec']);
+					$december = str_replace(",", "", (int)$december) + (int)$dec;
+				}
+			}
+
+			$chart_data[$counter]['x'] = $xAxis;
+			$chart_data[$counter]['y'] = $january + $february + $march + $april + $may + $june + $july + $august + $september + $october + $november + $december;
+			$chart_data[$counter]['label'] = date("Y") - $counter;
+			$xAxis += 10;
+			$counter++;
+		}
+
+		// echo "<pre>";
+		// print_r($chart_data);
+		// die;
+		$data['dataPoints'] = $chart_data;
+		$data['yearCount'] =  $yearCount;
+		$data['categoryId'] = $categoryId;
+
+		$data['view'] = 'admin/plamount/comparison';
+		$this->load->view('layout', $data);
+	}
 }

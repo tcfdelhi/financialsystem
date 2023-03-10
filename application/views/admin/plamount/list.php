@@ -63,6 +63,8 @@
 
                 <!-- <a href="<?= base_url('admin/plamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Amount"); ?></a> -->
 
+                <a target="_blank" href="<?= base_url("admin/plamount/comparison/1/1"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Comparison"); ?></a>
+
                 <a href="<?= base_url("admin/plcode/reports/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 
                 <a href="<?= base_url("admin/plcode/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To PL Codes"); ?></a>
@@ -145,6 +147,7 @@
                                 <th><?= languagedata($this->session->userdata('session_language'), "October"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "November"); ?></th>
                                 <th><?= languagedata($this->session->userdata('session_language'), "December"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Total"); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,6 +160,7 @@
 
                                 $row .= "<td></td>";
                                 $row .= "<td>" . $value['name'] . "</td>";
+                                $row .= "<td></td>";
                                 $row .= "<td></td>";
                                 $row .= "<td></td>";
                                 $row .= "<td></td>";
@@ -221,18 +225,18 @@
                                     $december = str_replace(",", "", (int)$december) + (int)$dec;
 
                                     $total_amount =
-                                        (int)str_replace(",", "", $data['jan'])  +
-                                        (int)str_replace(",", "", $data['feb']) +
-                                        (int)str_replace(",", "", $data['mar']) +
-                                        (int)str_replace(",", "", $data['apr']) +
-                                        (int)str_replace(",", "", $data['may']) +
-                                        (int)str_replace(",", "", $data['jun']) +
-                                        (int)str_replace(",", "", $data['jul']) +
-                                        (int)str_replace(",", "", $data['aug']) +
-                                        (int)str_replace(",", "", $data['sep']) +
-                                        (int)str_replace(",", "", $data['oct']) +
-                                        (int)str_replace(",", "", $data['nov']) +
-                                        (int)str_replace(",", "", $data['dec']);
+                                        (int)str_replace(",", "", $data['Jan'])  +
+                                        (int)str_replace(",", "", $data['Feb']) +
+                                        (int)str_replace(",", "", $data['Mar']) +
+                                        (int)str_replace(",", "", $data['Apr']) +
+                                        (int)str_replace(",", "", $data['May']) +
+                                        (int)str_replace(",", "", $data['Jun']) +
+                                        (int)str_replace(",", "", $data['Jul']) +
+                                        (int)str_replace(",", "", $data['Aug']) +
+                                        (int)str_replace(",", "", $data['Sep']) +
+                                        (int)str_replace(",", "", $data['Oct']) +
+                                        (int)str_replace(",", "", $data['Nov']) +
+                                        (int)str_replace(",", "", $data['Dec']);
                                     // echo "<pre>"; print_r($row['code']); die;
                                     $id = $result['id'];
                                     $row = "<tr data-row_id=$id>";
@@ -264,6 +268,9 @@
                                     $row .= "<td><input type='text' class='loop_month nov form-control' name='Nov' value=" . $data['Nov'] . "></td>";
 
                                     $row .= "<td><input type='text' class='loop_month dec form-control' name='Dec' value=" . $data['Dec'] . "></td>";
+
+
+                                    $row .= "<td><input readonly type='text' class='form-control' name='Dec' value=" . $total_amount . "></td>";
 
 
                                     $row .= "</tr>";
