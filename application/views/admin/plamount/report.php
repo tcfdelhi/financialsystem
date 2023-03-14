@@ -222,7 +222,7 @@
                                 $row .= "<td>" . number_format($november) . "</td>";
 
                                 $row .= "<td>" . number_format($december) . " </td>";
-                                // $row .= "<td></td>";
+                                $row .= "<td></td>";
 
                                 $row .= "</tr>";
                                 echo $row;
