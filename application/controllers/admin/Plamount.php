@@ -457,6 +457,7 @@ class Plamount extends MY_Controller
 
 				foreach ($query as $key => $value) {
 					$amount_data = !empty($value['data']) ? json_decode($value['data'], true) : 0;
+					$data['amount_data'][date("Y") - $counter] = $amount_data;
 
 					$jan = str_replace(",", "", $amount_data['Jan']);
 					$january = str_replace(",", "", (int)$january) + (int)$jan;

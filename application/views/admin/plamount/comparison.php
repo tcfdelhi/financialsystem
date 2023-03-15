@@ -101,8 +101,144 @@
             <!-- <div id="chartContainer5" style="width: 45%; height: 300px;display: inline-block;"></div> -->
             <!-- <div id="chartContainer6" style="width: 45%; height: 300px;display: inline-block;"></div> -->
             <!-- <div id="chartContainer7" style="width: 45%; height: 300px;display: inline-block;"></div> -->
+            <?php //print_r($amount_data); 
+            ?>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th><?= languagedata($this->session->userdata('session_language'), "Year"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "January"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "February"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "March"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "April"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "May"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "June"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "July"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "August"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "September"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "October"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "November"); ?></th>
+                            <th><?= languagedata($this->session->userdata('session_language'), "December"); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Budget</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Achievement rate</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>F.Y.2022</td>
+                            <td><?= $amount_data['2022']['Jan'] ?></td>
+                            <td><?= $amount_data['2022']['Feb'] ?></td>
+                            <td><?= $amount_data['2022']['Mar'] ?></td>
+                            <td><?= $amount_data['2022']['Apr'] ?></td>
+                            <td><?= $amount_data['2022']['May'] ?></td>
+                            <td><?= $amount_data['2022']['Jun'] ?></td>
+                            <td><?= $amount_data['2022']['Jul'] ?></td>
+                            <td><?= $amount_data['2022']['Aug'] ?></td>
+                            <td><?= $amount_data['2022']['Sep'] ?></td>
+                            <td><?= $amount_data['2022']['Oct'] ?></td>
+                            <td><?= $amount_data['2022']['Nov'] ?></td>
+                            <td><?= $amount_data['2022']['Dec'] ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Year-on-Year-rate</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>F.Y.2021</td>
+                            <td><?= $amount_data['2021']['Jan'] ?></td>
+                            <td><?= $amount_data['2021']['Feb'] ?></td>
+                            <td><?= $amount_data['2021']['Mar'] ?></td>
+                            <td><?= $amount_data['2021']['Apr'] ?></td>
+                            <td><?= $amount_data['2021']['May'] ?></td>
+                            <td><?= $amount_data['2021']['Jun'] ?></td>
+                            <td><?= $amount_data['2021']['Jul'] ?></td>
+                            <td><?= $amount_data['2021']['Aug'] ?></td>
+                            <td><?= $amount_data['2021']['Sep'] ?></td>
+                            <td><?= $amount_data['2021']['Oct'] ?></td>
+                            <td><?= $amount_data['2021']['Nov'] ?></td>
+                            <td><?= $amount_data['2021']['Dec'] ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Year-on-Year-rate</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>F.Y.2020</td>
+                            <td><?= $amount_data['2020']['Jan'] ?></td>
+                            <td><?= $amount_data['2020']['Feb'] ?></td>
+                            <td><?= $amount_data['2020']['Mar'] ?></td>
+                            <td><?= $amount_data['2020']['Apr'] ?></td>
+                            <td><?= $amount_data['2020']['May'] ?></td>
+                            <td><?= $amount_data['2020']['Jun'] ?></td>
+                            <td><?= $amount_data['2020']['Jul'] ?></td>
+                            <td><?= $amount_data['2020']['Aug'] ?></td>
+                            <td><?= $amount_data['2020']['Sep'] ?></td>
+                            <td><?= $amount_data['2020']['Oct'] ?></td>
+                            <td><?= $amount_data['2020']['Nov'] ?></td>
+                            <td><?= $amount_data['2020']['Dec'] ?></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 </div>
 
 <!-- #END# Exportable Table -->
@@ -338,10 +474,63 @@
         // chart.render();
 
 
+        // var chart = new CanvasJS.Chart("chartContainer4", {
+        //     animationEnabled: true,
+        //     title: {
+        //         text: "Sales Last 3 Year Data"
+
+        //     },
+        //     axisX: {
+        //         valueFormatString: "MMM",
+        //         interval: 1,
+        //         intervalType: "month"
+        //     },
+        //     axisY: {
+        //         includeZero: false
+        //     },
+        //     data: [{
+        //             type: "column",
+        //             showInLegend: true,
+        //             name: 'Sales',
+        //             dataPoints: [{
+        //                     x: 10,
+        //                     y: 171
+        //                 },
+        //                 {
+        //                     x: 20,
+        //                     y: 155
+        //                 },
+        //                 {
+        //                     x: 30,
+        //                     y: 150
+        //                 }
+        //             ]
+        //         },
+        //         {
+        //             type: "column",
+        //             dataPoints: [{
+        //                     x: 10,
+        //                     y: 71
+        //                 },
+        //                 {
+        //                     x: 20,
+        //                     y: 55
+        //                 },
+        //                 {
+        //                     x: 30,
+        //                     y: 50
+        //                 }
+        //             ]
+        //         }
+        //     ]
+        // });
+
+        // chart.render();
+
         var chart = new CanvasJS.Chart("chartContainer4", {
             animationEnabled: true,
             title: {
-                text: "<?= $categoryName?>",
+                text: "<?= $categoryName ?>",
             },
             axisX: {
                 interval: 10,
@@ -351,8 +540,6 @@
                 legendMarkerType: "triangle",
                 legendMarkerColor: "green",
                 color: "rgba(255,12,32,.3)",
-                // showInLegend: true,
-                // legendText: "Country wise population",
                 dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
             }, ]
         });

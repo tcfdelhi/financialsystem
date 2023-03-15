@@ -65,6 +65,7 @@
                         </thead>
                         <tbody>
                             <?php
+                            $chart_data = [];
                             foreach ($breakdown_cat as $key => $value) {
 
                                 $january = $february = $march = $april = $may1 = $may = $june = $july = $august = $september = $october = $november = $december = $total_amount = $total_prev_year_amount = $total_before_prev_year_amount = $current_year_amount = 0;
@@ -186,7 +187,7 @@
 
                                     $row .= "<td>" . $data['Dec'] . "</td>";
 
-                                    $row .= "<td>" . $total_amount ."</td>";
+                                    $row .= "<td>" . $total_amount . "</td>";
 
                                     $row .= "</tr>";
                                     echo $row;
@@ -229,7 +230,12 @@
 
                                 // Store Data Here For Graph
                                 $graph[$value['name']] = [$january, $february, $march, $april, $may, $june, $july, $august, $september, $october, $november, $december];
+
+
+                                $chart_data[$key]['x'] = date('m/d/Y');
+                                $chart_data[$key]['y'] = '';
                             }
+
                             ?>
                         </tbody>
                     </table>
@@ -243,7 +249,7 @@
 
 
 
-            <div class="row clearfix col-md-6">
+            <!-- <div class="row clearfix col-md-6">
                 <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
                     <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Category"); ?><span class="red"> *</span></label>
                 </div>
@@ -258,7 +264,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <!-- <div id="chartContainer1" style="width: 45%; height: 300px;display: inline-block;"></div> -->
@@ -305,10 +311,12 @@
 
     window.onload = function() {
 
+        var graph_data = "<?php echo json_encode($graphData) ?>";
+
         var chart = new CanvasJS.Chart("chartContainer3", {
             animationEnabled: true,
             title: {
-                text: "<?= $categoryName ?>",
+                //text: "<?= $categoryName ?>",
             },
             axisX: {
                 valueFormatString: "MMM",
@@ -318,64 +326,442 @@
             axisY: {
                 includeZero: false
             },
-            data: [{
-                type: "line",
-                dataPoints: [{
-                        x: new Date(2012, 00, 1),
-                        y: <?= $graph[$categoryName][0] ?>
-                    },
-                    {
-                        x: new Date(2012, 01, 1),
-                        y: <?= $graph[$categoryName][1] ?>
-                    },
-                    {
-                        x: new Date(2012, 02, 1),
-                        y: <?= $graph[$categoryName][2] ?>
-                        // indexLabel: "highest",
-                        // markerColor: "red",
-                        // markerType: "triangle"
-                    },
-                    {
-                        x: new Date(2012, 03, 1),
-                        y: <?= $graph[$categoryName][3] ?>
-                    },
-                    {
-                        x: new Date(2012, 04, 1),
-                        y: <?= $graph[$categoryName][4] ?>
-                    },
-                    {
-                        x: new Date(2012, 05, 1),
-                        y: <?= $graph[$categoryName][5] ?>
-                    },
-                    {
-                        x: new Date(2012, 06, 1),
-                        y: <?= $graph[$categoryName][6] ?>
-                    },
-                    {
-                        x: new Date(2012, 07, 1),
-                        y: <?= $graph[$categoryName][7] ?>
-                    },
-                    {
-                        x: new Date(2012, 08, 1),
-                        y: <?= $graph[$categoryName][8] ?>
-                        // indexLabel: "lowest",
-                        // markerColor: "DarkSlateGrey",
-                        // markerType: "cross"
-                    },
-                    {
-                        x: new Date(2012, 09, 1),
-                        y: <?= $graph[$categoryName][9] ?>
-                    },
-                    {
-                        x: new Date(2012, 10, 1),
-                        y: <?= $graph[$categoryName][10] ?>
-                    },
-                    {
-                        x: new Date(2012, 11, 1),
-                        y: <?= $graph[$categoryName][11] ?>
-                    }
-                ]
-            }]
+            data: [
+
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Sales',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Sales'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Sales'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Sales'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Sales'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Sales'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Sales'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Sales'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Sales'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Sales'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Sales'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Sales'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Sales'][11] ?>
+                        }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Variable Expense',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Variable Expense'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Variable Expense'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Variable Expense'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Variable Expense'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Variable Expense'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Variable Expense'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Variable Expense'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Variable Expense'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Variable Expense'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Variable Expense'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Variable Expense'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Variable Expense'][11] ?>
+                        }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Labor Cost',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Labor Cost'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Labor Cost'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Labor Cost'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Labor Cost'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Labor Cost'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Labor Cost'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Labor Cost'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Labor Cost'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Labor Cost'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Labor Cost'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Labor Cost'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Labor Cost'][11] ?>
+                        }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Fixed Expense (Other)',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Fixed Expense (Other)'][11] ?>
+                        }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Non-Operating Income',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Non-Operating Income'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Non-Operating Income'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Non-Operating Income'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Non-Operating Income'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Non-Operating Income'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Non-Operating Income'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Non-Operating Income'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Non-Operating Income'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Non-Operating Income'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Non-Operating Income'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Non-Operating Income'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Non-Operating Income'][11] ?>
+                        }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Interest and Devident Income',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Interest and Devident Income'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Interest and Devident Income'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Interest and Devident Income'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Interest and Devident Income'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Interest and Devident Income'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Interest and Devident Income'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Interest and Devident Income'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Interest and Devident Income'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Interest and Devident Income'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Interest and Devident Income'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Interest and Devident Income'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Interest and Devident Income'][11] ?>
+                        }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Non-Operating Expense',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Non-Operating Expense'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Non-Operating Expense'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Non-Operating Expense'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Non-Operating Expense'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Non-Operating Expense'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Non-Operating Expense'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Non-Operating Expense'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Non-Operating Expense'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Non-Operating Expense'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Non-Operating Expense'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Non-Operating Expense'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Non-Operating Expense'][11] ?>
+                        }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: 'Interest Expense',
+                    dataPoints: [{
+                            x: new Date(2012, 00, 1),
+                            y: <?= $graph['Interest Expense'][0] ?>
+                        },
+                        {
+                            x: new Date(2012, 01, 1),
+                            y: <?= $graph['Interest Expense'][1] ?>
+                        },
+                        {
+                            x: new Date(2012, 02, 1),
+                            y: <?= $graph['Interest Expense'][2] ?>
+                        },
+                        {
+                            x: new Date(2012, 03, 1),
+                            y: <?= $graph['Interest Expense'][3] ?>
+                        },
+                        {
+                            x: new Date(2012, 04, 1),
+                            y: <?= $graph['Interest Expense'][4] ?>
+                        },
+                        {
+                            x: new Date(2012, 05, 1),
+                            y: <?= $graph['Interest Expense'][5] ?>
+                        },
+                        {
+                            x: new Date(2012, 06, 1),
+                            y: <?= $graph['Interest Expense'][6] ?>
+                        },
+                        {
+                            x: new Date(2012, 07, 1),
+                            y: <?= $graph['Interest Expense'][7] ?>
+                        },
+                        {
+                            x: new Date(2012, 08, 1),
+                            y: <?= $graph['Interest Expense'][8] ?>
+                        },
+                        {
+                            x: new Date(2012, 09, 1),
+                            y: <?= $graph['Interest Expense'][9] ?>
+                        },
+                        {
+                            x: new Date(2012, 10, 1),
+                            y: <?= $graph['Interest Expense'][10] ?>
+                        },
+                        {
+                            x: new Date(2012, 11, 1),
+                            y: <?= $graph['Interest Expense'][11] ?>
+                        }
+                    ]
+                }
+
+            ]
         });
         chart.render();
 
