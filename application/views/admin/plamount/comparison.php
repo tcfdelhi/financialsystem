@@ -91,7 +91,7 @@
                 </div>
                 <div class="row clearfix col-md-8">
                     <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                        <h4 for="term"><?= languagedata($this->session->userdata('session_language'), $categoryName." 3 Years Comparison Data"); ?></h4>
+                        <h4 for="term"><?= languagedata($this->session->userdata('session_language'), $categoryName . " 3 Years Comparison Data"); ?></h4>
                     </div>
                 </div>
                 <canvas id="bar_chart" height="150"></canvas>
@@ -118,18 +118,18 @@
                         <tbody>
                             <tr>
                                 <td>Budget</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><input class="form-control budget b_jan" type="number" value=""></td>
+                                <td><input class="form-control budget b_feb" type="number" value=""></td>
+                                <td><input class="form-control budget b_mar" type="number" value=""></td>
+                                <td><input class="form-control budget b_apr" type="number" value=""></td>
+                                <td><input class="form-control budget b_may" type="number" value=""></td>
+                                <td><input class="form-control budget b_jun" type="number" value=""></td>
+                                <td><input class="form-control budget b_jul" type="number" value=""></td>
+                                <td><input class="form-control budget b_aug" type="number" value=""></td>
+                                <td><input class="form-control budget b_sep" type="number" value=""></td>
+                                <td><input class="form-control budget b_oct" type="number" value=""></td>
+                                <td><input class="form-control budget b_nov" type="number" value=""></td>
+                                <td><input class="form-control budget b_dec" type="number" value=""></td>
                             </tr>
                             <tr>
                                 <td>Achievement rate</td>
@@ -165,18 +165,19 @@
 
                             <tr>
                                 <td>Year-on-Year-rate</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?= ($amount_data['2021']['Jan'] != 0 ? round($amount_data['2022']['Jan'] / $amount_data['2021']['Jan'] * 100, 2) : 0) ?>%</td>
+
+                                <td><?= ($amount_data['2021']['Feb'] != 0 ? round($amount_data['2022']['Feb'] / $amount_data['2021']['Feb'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Mar'] != 0 ? round($amount_data['2022']['Mar'] / $amount_data['2021']['Mar'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Apr'] != 0 ? round($amount_data['2022']['Apr'] / $amount_data['2021']['Apr'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['May'] != 0 ? round($amount_data['2022']['May'] / $amount_data['2021']['May'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Jun'] != 0 ? round($amount_data['2022']['Jun'] / $amount_data['2021']['Jun'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Jul'] != 0 ? round($amount_data['2022']['Jul'] / $amount_data['2021']['Jul'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Aug'] != 0 ? round($amount_data['2022']['Aug'] / $amount_data['2021']['Aug'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Sep'] != 0 ? round($amount_data['2022']['Sep'] / $amount_data['2021']['Sep'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Oct'] != 0 ? round($amount_data['2022']['Oct'] / $amount_data['2021']['Oct'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Nov'] != 0 ? round($amount_data['2022']['Nov'] / $amount_data['2021']['Nov'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2021']['Dec'] != 0 ? round($amount_data['2022']['Dec'] / $amount_data['2021']['Dec'] * 100, 2) : 0) ?>%</td>
                             </tr>
                             <tr>
                                 <td>F.Y.2021</td>
@@ -196,18 +197,18 @@
 
                             <tr>
                                 <td>Year-on-Year-rate</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?= ($amount_data['2020']['Jan'] != 0 ? round($amount_data['2021']['Jan'] / $amount_data['2020']['Jan'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Feb'] != 0 ? round($amount_data['2021']['Feb'] / $amount_data['2020']['Feb'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Mar'] != 0 ? round($amount_data['2021']['Mar'] / $amount_data['2020']['Mar'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Apr'] != 0 ? round($amount_data['2021']['Apr'] / $amount_data['2020']['Apr'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['May'] != 0 ? round($amount_data['2021']['May'] / $amount_data['2020']['May'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Jun'] != 0 ? round($amount_data['2021']['Jun'] / $amount_data['2020']['Jun'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Jul'] != 0 ? round($amount_data['2021']['Jul'] / $amount_data['2020']['Jul'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Aug'] != 0 ? round($amount_data['2021']['Aug'] / $amount_data['2020']['Aug'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Sep'] != 0 ? round($amount_data['2021']['Sep'] / $amount_data['2020']['Sep'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Oct'] != 0 ? round($amount_data['2021']['Oct'] / $amount_data['2020']['Oct'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Nov'] != 0 ? round($amount_data['2021']['Nov'] / $amount_data['2020']['Nov'] * 100, 2) : 0) ?>%</td>
+                                <td><?= ($amount_data['2020']['Dec'] != 0 ? round($amount_data['2021']['Dec'] / $amount_data['2020']['Dec'] * 100, 2) : 0) ?>%</td>
                             </tr>
 
                             <tr>
@@ -246,7 +247,27 @@
 <script>
     $(function() {
 
-        new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar'));
+        var data = new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar'));
+
+
+        $('.budget').focusout(function() {
+            console.log(data)
+            // You create the new dataset `Vendas` with new data and color to differentiate
+            var newDataset = {
+                label: "Budget",
+                backgroundColor: 'rgba(99, 255, 132, 0.2)',
+                borderColor: 'rgba(99, 255, 132, 1)',
+                borderWidth: 1,
+                data: [$(".b_jan").val(), $(".b_feb").val(), $(".b_mar").val(), $(".b_apr").val(), $(".b_may").val(), $(".b_jun").val(), $(".b_jul").val(), $(".b_aug").val(), $(".b_sep").val(), $(".b_oct").val(), $(".b_nov").val(), $(".b_dec").val()],
+            }
+
+            // You add the newly created dataset to the list of `data`
+            data.config.data.datasets.splice(3);
+            data.config.data.datasets.push(newDataset);
+
+            // You update the chart to take into account the new dataset
+            data.update();
+        });
 
     });
 
@@ -262,7 +283,7 @@
                     datasets: [{
                             label: "2022",
                             data: [<?= $amount_data['2022']['Jan'] . ',' . $amount_data['2022']['Feb'] . ',' . $amount_data['2022']['Mar'] . ',' . $amount_data['2022']['Apr'] . ',' . $amount_data['2022']['May'] . ',' . $amount_data['2022']['Jun'] . ',' . $amount_data['2022']['Jul'] . ',' . $amount_data['2022']['Aug'] . ',' . $amount_data['2022']['Sep'] . ',' . $amount_data['2022']['Oct'] . ',' . $amount_data['2022']['Nov'] . ',' . $amount_data['2022']['Dec'] ?>],
-                            backgroundColor: 'rgb(255, 248, 220)'
+                            backgroundColor: '#FFFBA2'
                         },
                         {
                             label: "2021",
