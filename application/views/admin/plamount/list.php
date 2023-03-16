@@ -63,7 +63,7 @@
 
                 <!-- <a href="<?= base_url('admin/plamount/add_code'); ?>" class="btn bg-indigo waves-effect pull-right"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Add New PL Amount"); ?></a> -->
 
-                <a target="_blank" href="<?= base_url("admin/plamount/comparison/1/1"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Comparison"); ?></a>
+                <a target="_blank" href="<?= base_url("admin/plamount/comparison/4/1"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Comparison"); ?></a>
 
                 <a href="<?= base_url("admin/plcode/reports/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-l-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Reports"); ?></a>
 

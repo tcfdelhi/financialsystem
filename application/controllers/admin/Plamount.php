@@ -438,7 +438,7 @@ class Plamount extends MY_Controller
 		}
 	}
 
-	public function comparison($yearCount, $categoryId)
+	public function comparison($yearCount = 4, $categoryId = 6)
 	{
 		$data['breakdown_cat'] =  $this->pl_model->get_breakdown_categories();
 		$data['categoryName'] = $this->db->get_where('ci_pl_breakdown_cat', array('id' => $categoryId))->row()->name;
@@ -506,8 +506,24 @@ class Plamount extends MY_Controller
 			$counter++;
 		}
 
+		// Remove comma from amount 
+		foreach($data['amount_data'] as $key => $value){
+			$data['amount_data'][$key]['Jan'] = str_replace(',','', $value['Jan']);
+			$data['amount_data'][$key]['Feb'] = str_replace(',','', $value['Feb']);
+			$data['amount_data'][$key]['Mar'] = str_replace(',','', $value['Mar']);
+			$data['amount_data'][$key]['Apr'] = str_replace(',','', $value['Apr']);
+			$data['amount_data'][$key]['May'] = str_replace(',','', $value['May']);
+			$data['amount_data'][$key]['Jun'] = str_replace(',','', $value['Jun']);
+			$data['amount_data'][$key]['Jul'] = str_replace(',','', $value['Jul']);
+			$data['amount_data'][$key]['Aug'] = str_replace(',','', $value['Aug']);
+			$data['amount_data'][$key]['Sep'] = str_replace(',','', $value['Sep']);
+			$data['amount_data'][$key]['Oct'] = str_replace(',','', $value['Oct']);
+			$data['amount_data'][$key]['Nov'] = str_replace(',','', $value['Nov']);
+			$data['amount_data'][$key]['Dec'] = str_replace(',','', $value['Dec']);
+		}
+
 		// echo "<pre>";
-		// print_r($chart_data);
+		// print_r($data['amount_data']);
 		// die;
 		$data['dataPoints'] = $chart_data;
 		$data['yearCount'] =  $yearCount;
