@@ -164,6 +164,10 @@
 						<a href="<?= base_url('admin/plamount/annual_graph/3'); ?>"><?= languagedata($this->session->userdata('session_language'), "Annual Graph"); ?></a>
 					</li>
 
+					<li id="pl_annual_ordinary_profit_graph">
+						<a href="<?= base_url('admin/plamount/annual_ordinary_graph/3'); ?>"><?= languagedata($this->session->userdata('session_language'), "Annual Ordinary Profit Graph"); ?></a>
+					</li>
+
 					<!-- <li id="signout">
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
 					</li> -->
