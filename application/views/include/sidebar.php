@@ -83,7 +83,7 @@
 					</li>
 
 					<li id="bs_amount_sheet">
-						<a href="<?= base_url('admin/bsamount/list/'.date("Y")); ?>"><?= languagedata($this->session->userdata('session_language'), "Amount Sheet"); ?></a>
+						<a href="<?= base_url('admin/bsamount/list/' . date("Y")); ?>"><?= languagedata($this->session->userdata('session_language'), "Amount Sheet"); ?></a>
 					</li>
 
 					<li id="bs_reports">
@@ -151,6 +151,19 @@
 					<li id="pl_list_view">
 						<a href="<?= base_url('admin/plcode/list_view'); ?>"><?= languagedata($this->session->userdata('session_language'), "List View PL Codes"); ?></a>
 					</li>
+
+					<li id="pl_gross_profit_3">
+						<a href="<?= base_url('admin/plamount/gross_profit/3'); ?>"><?= languagedata($this->session->userdata('session_language'), "Gross Profit 3 Year Comparison"); ?></a>
+					</li>
+
+					<li id="pl_ordinary_profit_3">
+						<a href="<?= base_url('admin/plamount/ordinary_profit/3'); ?>"><?= languagedata($this->session->userdata('session_language'), "Ordinary Profit 3 Year Comparison"); ?></a>
+					</li>
+
+					<li id="pl_annual_graph">
+						<a href="<?= base_url('admin/plamount/annual_graph/3'); ?>"><?= languagedata($this->session->userdata('session_language'), "Annual Graph"); ?></a>
+					</li>
+
 					<!-- <li id="signout">
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
 					</li> -->
