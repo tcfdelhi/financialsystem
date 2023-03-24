@@ -32,6 +32,12 @@
                     </h2>
 
                     <a href="<?= base_url("admin/plamount/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To Breakdown Sheet"); ?></a>
+
+                    <a href="<?= base_url("admin/plamount/ordinary_profit/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Ordinary Profit 3 Year Comparison"); ?></a>
+
+                    <a href="<?= base_url("admin/plamount/annual_graph/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Annual Graph"); ?></a>
+
+                    <a href="<?= base_url("admin/plamount/annual_ordinary_graph/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Annual Ordinary Profit Graph"); ?></a>
                 </div>
                 <!-- Dropdown for filters -->
 

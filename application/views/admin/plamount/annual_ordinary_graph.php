@@ -20,7 +20,8 @@
     #leftsidebar {
         display: none !important;
     }
-    #bar_chart{
+
+    #bar_chart {
         width: 2880px !important;
         /* height: 900px !important; */
     }
@@ -36,6 +37,13 @@
                     </h2>
 
                     <a href="<?= base_url("admin/plamount/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To Breakdown Sheet"); ?></a>
+
+                    <a href="<?= base_url("admin/plamount/ordinary_profit/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Ordinary Profit 3 Year Comparison"); ?></a>
+
+                    <a href="<?= base_url("admin/plamount/gross_profit/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Gross Profit 3 Year Comparison"); ?></a>
+
+                    <a href="<?= base_url("admin/plamount/annual_graph/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Annual Graph"); ?></a>
+
                 </div>
                 <!-- Dropdown for filters -->
 
@@ -52,197 +60,197 @@
                 </div>
 
                 <div class=" row clearfix col-md-4">
-                        <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Category"); ?><span class="red"> *</span></label>
-                        </div>
-                        <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <select id="client_id" class="form-control show-tick change_cat" name="client_id">
-                                        <?php foreach ($breakdown_cat as $group) : ?>
-                                            <option value="<?= $group['id']; ?>" <?= ($categoryId == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
+                    <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                        <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Category"); ?><span class="red"> *</span></label>
+                    </div>
+                    <div class="col-lg-7 col-md-10 col-sm-8 col-xs-7">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select id="client_id" class="form-control show-tick change_cat" name="client_id">
+                                    <?php foreach ($breakdown_cat as $group) : ?>
+                                        <option value="<?= $group['id']; ?>" <?= ($categoryId == $group['id'] ? "selected" : "") ?>><?= $group['name'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="row clearfix col-md-8">
-                        <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                            <h4 for="term"><?= languagedata($this->session->userdata('session_language'), "Gross Profit 3 Year Comparison Graph"); ?></h4>
-                        </div>
+                </div>
+                <div class="row clearfix col-md-8">
+                    <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                        <h4 for="term"><?= languagedata($this->session->userdata('session_language'), "Gross Profit 3 Year Comparison Graph"); ?></h4>
                     </div>
-                    <canvas id="bar_chart" ></canvas>
+                </div>
+                <canvas id="bar_chart"></canvas>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "Year"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "January-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "February-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "March-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "April-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "May-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "June-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "July-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "August-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "September-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "October-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "November-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "December-2019"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "January-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "February-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "March-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "April-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "May-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "June-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "July-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "August-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "September-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "October-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "November-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "December-2020"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "January-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "February-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "March-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "April-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "May-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "June-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "July-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "August-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "September-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "October-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "November-2021"); ?></th>
-                                    <th><?= languagedata($this->session->userdata('session_language'), "December-2021"); ?></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Budget</td>
-                                    <td><input class="form-control budget b_jan" type="number" value=""></td>
-                                    <td><input class="form-control budget b_feb" type="number" value=""></td>
-                                    <td><input class="form-control budget b_mar" type="number" value=""></td>
-                                    <td><input class="form-control budget b_apr" type="number" value=""></td>
-                                    <td><input class="form-control budget b_may" type="number" value=""></td>
-                                    <td><input class="form-control budget b_jun" type="number" value=""></td>
-                                    <td><input class="form-control budget b_jul" type="number" value=""></td>
-                                    <td><input class="form-control budget b_aug" type="number" value=""></td>
-                                    <td><input class="form-control budget b_sep" type="number" value=""></td>
-                                    <td><input class="form-control budget b_oct" type="number" value=""></td>
-                                    <td><input class="form-control budget b_nov" type="number" value=""></td>
-                                    <td><input class="form-control budget b_dec" type="number" value=""></td>
-                                    <td><input class="form-control budget c_jan" type="number" value=""></td>
-                                    <td><input class="form-control budget c_feb" type="number" value=""></td>
-                                    <td><input class="form-control budget c_mar" type="number" value=""></td>
-                                    <td><input class="form-control budget c_apr" type="number" value=""></td>
-                                    <td><input class="form-control budget c_may" type="number" value=""></td>
-                                    <td><input class="form-control budget c_jun" type="number" value=""></td>
-                                    <td><input class="form-control budget c_jul" type="number" value=""></td>
-                                    <td><input class="form-control budget c_aug" type="number" value=""></td>
-                                    <td><input class="form-control budget c_sep" type="number" value=""></td>
-                                    <td><input class="form-control budget c_oct" type="number" value=""></td>
-                                    <td><input class="form-control budget c_nov" type="number" value=""></td>
-                                    <td><input class="form-control budget c_dec" type="number" value=""></td>
-                                    <td><input class="form-control budget d_jan" type="number" value=""></td>
-                                    <td><input class="form-control budget d_feb" type="number" value=""></td>
-                                    <td><input class="form-control budget d_mar" type="number" value=""></td>
-                                    <td><input class="form-control budget d_apr" type="number" value=""></td>
-                                    <td><input class="form-control budget d_may" type="number" value=""></td>
-                                    <td><input class="form-control budget d_jun" type="number" value=""></td>
-                                    <td><input class="form-control budget d_jul" type="number" value=""></td>
-                                    <td><input class="form-control budget d_aug" type="number" value=""></td>
-                                    <td><input class="form-control budget d_sep" type="number" value=""></td>
-                                    <td><input class="form-control budget d_oct" type="number" value=""></td>
-                                    <td><input class="form-control budget d_nov" type="number" value=""></td>
-                                    <td><input class="form-control budget d_dec" type="number" value=""></td>
-                                </tr>
-                                <tr>
-                                    <td>Achievement rate</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><?= languagedata($this->session->userdata('session_language'), "Year"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "January-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "February-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "March-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "April-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "May-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "June-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "July-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "August-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "September-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "October-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "November-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "December-2019"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "January-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "February-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "March-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "April-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "May-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "June-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "July-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "August-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "September-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "October-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "November-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "December-2020"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "January-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "February-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "March-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "April-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "May-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "June-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "July-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "August-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "September-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "October-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "November-2021"); ?></th>
+                                <th><?= languagedata($this->session->userdata('session_language'), "December-2021"); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Budget</td>
+                                <td><input class="form-control budget b_jan" type="number" value=""></td>
+                                <td><input class="form-control budget b_feb" type="number" value=""></td>
+                                <td><input class="form-control budget b_mar" type="number" value=""></td>
+                                <td><input class="form-control budget b_apr" type="number" value=""></td>
+                                <td><input class="form-control budget b_may" type="number" value=""></td>
+                                <td><input class="form-control budget b_jun" type="number" value=""></td>
+                                <td><input class="form-control budget b_jul" type="number" value=""></td>
+                                <td><input class="form-control budget b_aug" type="number" value=""></td>
+                                <td><input class="form-control budget b_sep" type="number" value=""></td>
+                                <td><input class="form-control budget b_oct" type="number" value=""></td>
+                                <td><input class="form-control budget b_nov" type="number" value=""></td>
+                                <td><input class="form-control budget b_dec" type="number" value=""></td>
+                                <td><input class="form-control budget c_jan" type="number" value=""></td>
+                                <td><input class="form-control budget c_feb" type="number" value=""></td>
+                                <td><input class="form-control budget c_mar" type="number" value=""></td>
+                                <td><input class="form-control budget c_apr" type="number" value=""></td>
+                                <td><input class="form-control budget c_may" type="number" value=""></td>
+                                <td><input class="form-control budget c_jun" type="number" value=""></td>
+                                <td><input class="form-control budget c_jul" type="number" value=""></td>
+                                <td><input class="form-control budget c_aug" type="number" value=""></td>
+                                <td><input class="form-control budget c_sep" type="number" value=""></td>
+                                <td><input class="form-control budget c_oct" type="number" value=""></td>
+                                <td><input class="form-control budget c_nov" type="number" value=""></td>
+                                <td><input class="form-control budget c_dec" type="number" value=""></td>
+                                <td><input class="form-control budget d_jan" type="number" value=""></td>
+                                <td><input class="form-control budget d_feb" type="number" value=""></td>
+                                <td><input class="form-control budget d_mar" type="number" value=""></td>
+                                <td><input class="form-control budget d_apr" type="number" value=""></td>
+                                <td><input class="form-control budget d_may" type="number" value=""></td>
+                                <td><input class="form-control budget d_jun" type="number" value=""></td>
+                                <td><input class="form-control budget d_jul" type="number" value=""></td>
+                                <td><input class="form-control budget d_aug" type="number" value=""></td>
+                                <td><input class="form-control budget d_sep" type="number" value=""></td>
+                                <td><input class="form-control budget d_oct" type="number" value=""></td>
+                                <td><input class="form-control budget d_nov" type="number" value=""></td>
+                                <td><input class="form-control budget d_dec" type="number" value=""></td>
+                            </tr>
+                            <tr>
+                                <td>Achievement rate</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
 
-                                <tr>
+                            <tr>
 
-                                    <td>F.Y.<?= $dataPoints[0]['label'] ?></td>
-                                    <?php foreach ($dataPoints[0]['data'] as $key => $value) {
-                                        echo "<td>$value</td>";
-                                    } ?>
-                                </tr>
+                                <td>F.Y.<?= $dataPoints[0]['label'] ?></td>
+                                <?php foreach ($dataPoints[0]['data'] as $key => $value) {
+                                    echo "<td>$value</td>";
+                                } ?>
+                            </tr>
 
-                                <tr>
-                                    <td>Year-on-Year-rate</td>
+                            <tr>
+                                <td>Year-on-Year-rate</td>
 
-                                    <?php foreach ($dataPoints[0]['data'] as $key => $value) {
-                                        echo  "<td>" . ($value != 0 ? round($dataPoints[1]['data'][$key] / $value * 100, 2) : 0) . "%</td>";
-                                    } ?>
-                                </tr>
-                                <tr>
-                                    <td>F.Y.<?= $dataPoints[1]['label'] ?></td>
-                                    <?php foreach ($dataPoints[1]['data'] as $key => $value) {
-                                        echo "<td>$value</td>";
-                                    } ?>
-                                </tr>
+                                <?php foreach ($dataPoints[0]['data'] as $key => $value) {
+                                    echo  "<td>" . ($value != 0 ? round($dataPoints[1]['data'][$key] / $value * 100, 2) : 0) . "%</td>";
+                                } ?>
+                            </tr>
+                            <tr>
+                                <td>F.Y.<?= $dataPoints[1]['label'] ?></td>
+                                <?php foreach ($dataPoints[1]['data'] as $key => $value) {
+                                    echo "<td>$value</td>";
+                                } ?>
+                            </tr>
 
-                                <tr>
-                                    <td>Year-on-Year-rate</td>
-                                    <?php foreach ($dataPoints[1]['data'] as $key => $value) {
-                                        echo  "<td>" . ($value != 0 ? round($dataPoints[2]['data'][$key] / $value * 100, 2) : 0) . "%</td>";
-                                    } ?>
-                                </tr>
+                            <tr>
+                                <td>Year-on-Year-rate</td>
+                                <?php foreach ($dataPoints[1]['data'] as $key => $value) {
+                                    echo  "<td>" . ($value != 0 ? round($dataPoints[2]['data'][$key] / $value * 100, 2) : 0) . "%</td>";
+                                } ?>
+                            </tr>
 
-                                <tr>
-                                    <td>F.Y.<?= $dataPoints[2]['label'] ?></td>
-                                    <?php foreach ($dataPoints[2]['data'] as $key => $value) {
-                                        echo "<td>$value</td>";
-                                    } ?>
-                                </tr>
+                            <tr>
+                                <td>F.Y.<?= $dataPoints[2]['label'] ?></td>
+                                <?php foreach ($dataPoints[2]['data'] as $key => $value) {
+                                    echo "<td>$value</td>";
+                                } ?>
+                            </tr>
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
-
-        <!-- #END# Bar Chart -->
     </div>
+
+
+    <!-- #END# Bar Chart -->
+</div>
 
 </div>
 
