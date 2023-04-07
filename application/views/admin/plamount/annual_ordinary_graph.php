@@ -22,8 +22,8 @@
     }
 
     #bar_chart {
-        width: 2880px !important;
-        /* height: 900px !important; */
+        width: 1850px !important;
+        height: 650px !important;
     }
 </style>
 <div class="container-fluid">
@@ -77,7 +77,7 @@
                 </div>
                 <div class="row clearfix col-md-8">
                     <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                        <h4 for="term"><?= languagedata($this->session->userdata('session_language'), "Gross Profit 3 Year Comparison Graph"); ?></h4>
+                        <h4 for="term"><?= languagedata($this->session->userdata('session_language'), "Annual ordinary Profit 3 Year Comparison Graph"); ?></h4>
                     </div>
                 </div>
                 <canvas id="bar_chart"></canvas>
@@ -297,8 +297,12 @@
                     datasets: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
                 },
                 options: {
-                    responsive: true,
-                    legend: false
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    responsive: true
                 }
             }
         }

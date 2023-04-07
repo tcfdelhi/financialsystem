@@ -712,13 +712,14 @@ class Plamount extends MY_Controller
 		$this->db->limit(3);
 		$last3Years = $this->db->get()->result_array();
 
+		// print_r($data['breakdown_cat']); die;
 		$graphlabels = [];
 
-		foreach ($last3Years as $key => $value) {
-			$query = $this->db->get_where('ci_pl_amount_data_new', array('category' => $categoryId, 'year' => $value['year'], 'client_id' => 10))->result_array();
+		foreach ($data['breakdown_cat'] as $key => $value) {
+
+			$query = $this->db->get_where('ci_pl_amount_data_new', array('year' => 2020,'category' => $value['id'], 'client_id' => 10))->result_array();
 
 
-			//$graphlabels = "Jan-" . $value['year'] . ',' . "Feb-" . $value['year'];
 			if (!empty($query)) {
 				$january = $february = $march = $april = $may1 = $may = $june = $july = $august = $september = $october = $november = $december = 0;
 
@@ -766,15 +767,17 @@ class Plamount extends MY_Controller
 				}
 			}
 
-			$chart_data[$counter]['label'] = $value['year'];
+			$chart_data[$counter]['label'] = $value['name'];
 			$chart_data[$counter]['data'] = [$january, $february, $march, $april, $may, $june, $july, $august, $september, $october, $november, $december, $january, $february, $march, $april, $may, $june, $july, $august, $september, $october, $november, $december, $january, $february, $march, $april, $may, $june, $july, $august, $september, $october, $november, $december];
 			$chart_data[$counter]['fill'] =  false;
 			$chart_data[$counter]['legend'] =  true;
-			$chart_data[$counter]['borderColor'] =  ($counter == 0 ? "#FFCCCB" : '') . ($counter == 1 ? "#90EE90" : '') . ($counter == 2 ? "#ADD8E6" : '');
+			$chart_data[$counter]['borderColor'] =  "#".substr(md5(rand()), 0, 6);
+			// $chart_data[$counter]['borderColor'] =  ($counter == 0 ? "#FFCCCB" : '') . ($counter == 1 ? "#90EE90" : '') . ($counter == 2 ? "#ADD8E6" : '') . ($counter == 3 ? "#ADD8E6" : '');
 			$counter++;
 		}
 
 
+		// print_r($chart_data); die;
 		$data['graphlabels'] = $graphlabels;
 		$data['dataPoints'] = $chart_data;
 		$data['categoryId'] = $categoryId;

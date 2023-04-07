@@ -22,8 +22,8 @@
     }
 
     #bar_chart {
-        width: 2880px !important;
-        /* height: 900px !important; */
+        width: 1860px !important;
+        height: 650px !important;
     }
 </style>
 <div class="container-fluid">
@@ -39,7 +39,7 @@
                     <a href="<?= base_url("admin/plamount/list/$year/$client_id"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Back To Breakdown Sheet"); ?></a>
 
                     <a href="<?= base_url("admin/plamount/gross_profit/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Gross Profit 3 Year Comparison"); ?></a>
-                    
+
                     <a href="<?= base_url("admin/plamount/ordinary_profit/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Ordinary Profit 3 Year Comparison"); ?></a>
 
                     <a href="<?= base_url("admin/plamount/annual_ordinary_graph/3"); ?>" class="btn bg-indigo waves-effect pull-right m-r-25"><i class="material-icons">person_add</i> <?= languagedata($this->session->userdata('session_language'), "Annual Ordinary Profit Graph"); ?></a>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div class=" row clearfix col-md-4">
+                <!-- <div class=" row clearfix col-md-4">
                     <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
                         <label for="term"><?= languagedata($this->session->userdata('session_language'), "Select Category"); ?><span class="red"> *</span></label>
                     </div>
@@ -74,13 +74,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row clearfix col-md-8">
                     <div class="col-lg-5 col-md-2 col-sm-4 col-xs-5 form-control-label">
                         <h4 for="term"><?= languagedata($this->session->userdata('session_language'), "Gross Profit 3 Year Comparison Graph"); ?></h4>
                     </div>
                 </div>
                 <canvas id="bar_chart"></canvas>
+
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
@@ -126,120 +127,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Budget</td>
-                                <td><input class="form-control budget b_jan" type="number" value=""></td>
-                                <td><input class="form-control budget b_feb" type="number" value=""></td>
-                                <td><input class="form-control budget b_mar" type="number" value=""></td>
-                                <td><input class="form-control budget b_apr" type="number" value=""></td>
-                                <td><input class="form-control budget b_may" type="number" value=""></td>
-                                <td><input class="form-control budget b_jun" type="number" value=""></td>
-                                <td><input class="form-control budget b_jul" type="number" value=""></td>
-                                <td><input class="form-control budget b_aug" type="number" value=""></td>
-                                <td><input class="form-control budget b_sep" type="number" value=""></td>
-                                <td><input class="form-control budget b_oct" type="number" value=""></td>
-                                <td><input class="form-control budget b_nov" type="number" value=""></td>
-                                <td><input class="form-control budget b_dec" type="number" value=""></td>
-                                <td><input class="form-control budget c_jan" type="number" value=""></td>
-                                <td><input class="form-control budget c_feb" type="number" value=""></td>
-                                <td><input class="form-control budget c_mar" type="number" value=""></td>
-                                <td><input class="form-control budget c_apr" type="number" value=""></td>
-                                <td><input class="form-control budget c_may" type="number" value=""></td>
-                                <td><input class="form-control budget c_jun" type="number" value=""></td>
-                                <td><input class="form-control budget c_jul" type="number" value=""></td>
-                                <td><input class="form-control budget c_aug" type="number" value=""></td>
-                                <td><input class="form-control budget c_sep" type="number" value=""></td>
-                                <td><input class="form-control budget c_oct" type="number" value=""></td>
-                                <td><input class="form-control budget c_nov" type="number" value=""></td>
-                                <td><input class="form-control budget c_dec" type="number" value=""></td>
-                                <td><input class="form-control budget d_jan" type="number" value=""></td>
-                                <td><input class="form-control budget d_feb" type="number" value=""></td>
-                                <td><input class="form-control budget d_mar" type="number" value=""></td>
-                                <td><input class="form-control budget d_apr" type="number" value=""></td>
-                                <td><input class="form-control budget d_may" type="number" value=""></td>
-                                <td><input class="form-control budget d_jun" type="number" value=""></td>
-                                <td><input class="form-control budget d_jul" type="number" value=""></td>
-                                <td><input class="form-control budget d_aug" type="number" value=""></td>
-                                <td><input class="form-control budget d_sep" type="number" value=""></td>
-                                <td><input class="form-control budget d_oct" type="number" value=""></td>
-                                <td><input class="form-control budget d_nov" type="number" value=""></td>
-                                <td><input class="form-control budget d_dec" type="number" value=""></td>
-                            </tr>
-                            <tr>
-                                <td>Achievement rate</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
 
-                            <tr>
+                            <?php
+                            // print_r($breakdown_cat); die;
+                            $tr = '';
+                            foreach ($breakdown_cat as $key => $value) {
+                                $tr .= "<tr>";
+                                $tr .= "<td>" . $value['name'] . "</td>";
 
-                                <td>F.Y.<?= $dataPoints[0]['label'] ?></td>
-                                <?php foreach ($dataPoints[0]['data'] as $key => $value) {
-                                    echo "<td>$value</td>";
-                                } ?>
-                            </tr>
+                                foreach ($dataPoints[$key]['data'] as $key => $value) {
+                                    $tr .= "<td>$value</td>";
+                                }
+                                $tr .= "</tr>";
+                            }
+                            echo $tr;
+                            ?>
 
-                            <tr>
-                                <td>Year-on-Year-rate</td>
-
-                                <?php foreach ($dataPoints[0]['data'] as $key => $value) {
-                                    echo  "<td>" . ($value != 0 ? round($dataPoints[1]['data'][$key] / $value * 100, 2) : 0) . "%</td>";
-                                } ?>
-                            </tr>
-                            <tr>
-                                <td>F.Y.<?= $dataPoints[1]['label'] ?></td>
-                                <?php foreach ($dataPoints[1]['data'] as $key => $value) {
-                                    echo "<td>$value</td>";
-                                } ?>
-                            </tr>
-
-                            <tr>
-                                <td>Year-on-Year-rate</td>
-                                <?php foreach ($dataPoints[1]['data'] as $key => $value) {
-                                    echo  "<td>" . ($value != 0 ? round($dataPoints[2]['data'][$key] / $value * 100, 2) : 0) . "%</td>";
-                                } ?>
-                            </tr>
-
-                            <tr>
-                                <td>F.Y.<?= $dataPoints[2]['label'] ?></td>
-                                <?php foreach ($dataPoints[2]['data'] as $key => $value) {
-                                    echo "<td>$value</td>";
-                                } ?>
-                            </tr>
 
                         </tbody>
                     </table>
@@ -288,7 +191,7 @@
         var config = null;
 
 
-        console.log(<?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>)
+        // console.log(<?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>)
         if (type === 'line') {
             config = {
                 type: 'line',
@@ -297,8 +200,12 @@
                     datasets: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
                 },
                 options: {
-                    responsive: true,
-                    legend: false
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    responsive: true
                 }
             }
         }
