@@ -576,4 +576,9 @@ class Bscode extends MY_Controller
 		$data['view'] = 'admin/bscode/import_amount';
 		$this->load->view('layout', $data);
 	}
+
+	public function bs_comparison(){
+		$data['view'] = 'admin/bscode/bs_comparison';
+		$this->load->view('layout', $data);
+	}
 }

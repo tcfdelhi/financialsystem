@@ -871,4 +871,9 @@ class Plamount extends MY_Controller
 		$data['view'] = 'admin/plamount/annual_ordinary_graph';
 		$this->load->view('layout', $data);
 	}
+
+	public function pl_comparison(){
+		$data['view'] = 'admin/plamount/pl_comparison';
+		$this->load->view('layout', $data);
+	}
 }

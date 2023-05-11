@@ -97,6 +97,10 @@
 					<li id="list_view">
 						<a href="<?= base_url('admin/bscode/list_view'); ?>"><?= languagedata($this->session->userdata('session_language'), "List View BS Codes"); ?></a>
 					</li>
+
+					<li id="bs_comparison">
+						<a href="<?= base_url('admin/bscode/bs_comparison'); ?>"><?= languagedata($this->session->userdata('session_language'), "Bs Comparison"); ?></a>
+					</li>
 					<!-- <li id="signout">
 						<a href="<?= base_url('auth/logout'); ?>">Sign Out</a>
 					</li> -->
@@ -166,6 +170,10 @@
 
 					<li id="pl_annual_ordinary_profit_graph">
 						<a href="<?= base_url('admin/plamount/annual_ordinary_graph/3'); ?>"><?= languagedata($this->session->userdata('session_language'), "Annual Ordinary Profit Graph"); ?></a>
+					</li>
+
+					<li id="pl_comparison">
+						<a href="<?= base_url('admin/plamount/pl_comparison'); ?>"><?= languagedata($this->session->userdata('session_language'), "Pl Comparison"); ?></a>
 					</li>
 
 					<!-- <li id="signout">
